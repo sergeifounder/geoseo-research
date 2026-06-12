@@ -3,971 +3,553 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GeoSEO — Dashboard v8</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<title>GeoSEO — Full Flow Prototype v9</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0a0f0d; --surface: #111916; --surface2: #1a2420; --border: #2a3a34; --border-light: #1e2e28;
-  --accent: #2dd4a0; --accent-dim: #1a8c68; --accent-glow: rgba(45,212,160,0.15);
-  --text: #e8f0ec; --text-dim: #8a9e94; --text-light: #5a7068;
-  --critical: #ef4444; --warning: #f59e0b; --pass: #22c55e; --info: #3b82f6;
-  --font: 'Inter', -apple-system, sans-serif; --mono: 'JetBrains Mono', monospace;
-  --sidebar-w: 240px; --header-h: 64px; --ease: cubic-bezier(0.16, 1, 0.3, 1);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;overflow-x:hidden}
-a{color:var(--accent);text-decoration:none}
+:root{--bg:#0a0f0d;--surface:#111916;--surface2:#1a2420;--border:#2a3a34;--accent:#2dd4a0;--accent-dim:#1a8c68;--accent-glow:rgba(45,212,160,.15);--text:#e8f0ec;--text-dim:#8a9e94;--text-light:#5a7068;--critical:#ef4444;--warning:#f59e0b;--pass:#22c55e;--info:#3b82f6;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;font-size:14px;overflow-x:hidden}a{color:var(--accent);text-decoration:none}
+
+/* Flow nav bar */
+.flow-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(17,25,22,.95);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:300;backdrop-filter:blur(12px)}
+.flow-step{font-size:12px;color:var(--text-dim);font-weight:500;text-align:center;flex:1}
+.flow-step strong{color:var(--accent);display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.flow-btn{background:var(--accent);color:#000;border:none;padding:8px 24px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;min-width:120px}
+.flow-btn:hover{background:#3ee5b1}
+.flow-btn.back{background:var(--surface2);color:var(--text-dim);border:1px solid var(--border)}
+.flow-btn:disabled{opacity:.3;cursor:not-allowed}
+.flow-dots{display:flex;gap:6px;align-items:center}
+.flow-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s}
+.flow-dot.active{background:var(--accent);width:20px;border-radius:4px}
+.flow-dot.done{background:var(--pass)}
+
+/* Full page states */
+.state{display:none;min-height:100vh;padding-bottom:72px}
+.state.active{display:block;animation:fadeUp .35s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.center-page{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;padding-bottom:80px}
+.center-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;max-width:560px;width:100%;text-align:center}
+
+/* Progress bar animation */
+.scan-progress{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin:20px 0}
+.scan-fill{height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:4px;transition:width 1.5s var(--ease);width:0%}
+.scan-step{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:13px;color:var(--text-dim)}
+.scan-step .icon{width:20px;text-align:center;font-size:14px}
+.scan-step.done{color:var(--pass)}
+.scan-step.active{color:var(--text);font-weight:600}
+.scan-step.pending{opacity:.4}
+
+/* Dashboard layout */
 .app{display:flex;min-height:100vh}
-
-/* Blob */
-.blob{position:fixed;top:20%;left:50%;width:600px;height:600px;background:radial-gradient(circle,rgba(45,212,160,.18) 0%,transparent 70%);border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:breathe 4s ease-in-out infinite alternate}
-@keyframes breathe{0%{transform:translate(-50%,-50%) scale(1);opacity:.15}100%{transform:translate(-50%,-45%) scale(1.1);opacity:.25}}
-
-/* Sidebar */
-.sidebar{width:var(--sidebar-w);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:50;transition:transform .3s var(--ease)}
+.sidebar{width:240px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:56px;z-index:50}
 .sidebar-logo{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.sidebar-logo svg{width:28px;height:28px}
 .sidebar-logo span{font-weight:700;font-size:16px;color:var(--accent)}
 .sidebar-logo small{font-size:10px;color:var(--text-dim);font-weight:500;letter-spacing:1px;text-transform:uppercase}
 .sidebar-nav{flex:1;padding:16px 0;overflow-y:auto}
 .nav-item{display:flex;align-items:center;gap:12px;padding:10px 24px;color:var(--text-dim);font-size:13px;font-weight:500;cursor:pointer;border-left:3px solid transparent;transition:all .2s}
 .nav-item:hover{color:var(--text);background:var(--surface2)}
 .nav-item.active{color:var(--accent);background:var(--accent-glow);border-left-color:var(--accent)}
-.nav-item svg{width:18px;height:18px;opacity:.7;flex-shrink:0}
-.nav-item.active svg{opacity:1}
 .nav-item .badge{margin-left:auto;background:var(--critical);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+.main{flex:1;margin-left:240px;min-height:100vh;position:relative;z-index:1}
+.topbar{height:64px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;background:rgba(10,15,13,.9);backdrop-filter:blur(12px);z-index:40}
+.topbar h1{font-size:16px;font-weight:700}
+.topbar .badge{font-size:10px;background:var(--accent-glow);color:var(--accent);padding:2px 8px;border-radius:4px;font-weight:600;margin-left:12px}
+.content{padding:28px 32px 80px;max-width:1200px}
 
-/* Project switcher */
-.sidebar-project{padding:16px 24px;border-top:1px solid var(--border);position:relative}
-.project-selector{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;transition:border-color .2s}
-.project-selector:hover{border-color:var(--accent)}
-.project-selector .dot{width:8px;height:8px;border-radius:50%;background:var(--pass);flex-shrink:0}
-.project-selector .name{font-size:12px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.project-selector .arrow{color:var(--text-dim);font-size:10px}
-
-/* Mobile */
-.sidebar-backdrop{display:none;position:fixed;inset:0;background:rgba(10,15,13,.7);z-index:45;backdrop-filter:blur(4px)}
-.sidebar-backdrop.visible{display:block}
-.hamburger{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px}
-
-/* Main */
-.main{flex:1;margin-left:var(--sidebar-w);min-height:100vh;position:relative;z-index:1}
-.topbar{height:var(--header-h);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;background:rgba(10,15,13,.9);backdrop-filter:blur(12px);z-index:40}
-.topbar-left{display:flex;align-items:center;gap:16px}
-.topbar-left h1{font-size:16px;font-weight:700}
-.page-badge{font-size:10px;background:var(--accent-glow);color:var(--accent);padding:2px 8px;border-radius:4px;font-weight:600}
-.topbar-right{display:flex;align-items:center;gap:16px}
-.topbar-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text-dim);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s}
-.topbar-btn:hover{border-color:var(--accent);color:var(--text)}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--info));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000}
-.content{padding:28px 32px 64px;max-width:1200px}
-
-/* Screen */
-.screen{display:none}.screen.active{display:block;animation:fadeUp .35s var(--ease)}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-
-/* Cards */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;transition:all .25s var(--ease)}
-.card:hover{border-color:var(--border-light)}
-.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim)}
-.section-link{font-size:12px;color:var(--accent);cursor:pointer;font-weight:500}
-.ds{font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0}
-
-/* Grids */
+/* Common */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:24px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-
-/* Buttons */
-.btn-fix{background:var(--accent);color:#000;border:none;padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
-.btn-fix:hover{background:#3ee5b1;transform:translateY(-1px);box-shadow:0 4px 15px rgba(45,212,160,.3)}
-.btn-guide{background:var(--surface);color:var(--warning);border:1px solid rgba(245,158,11,.3);padding:8px 20px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s}
-.btn-guide:hover{background:rgba(245,158,11,.08)}
-
-/* Task badges */
+.btn{background:var(--accent);color:#000;border:none;padding:10px 28px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn:hover{background:#3ee5b1}
+.btn-ghost{background:transparent;color:var(--text-dim);border:1px solid var(--border);padding:10px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.ds{font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0}
+.section-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.2px;color:var(--text-dim);margin-bottom:16px}
+.tbl{width:100%;border-collapse:collapse}.tbl th{text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface2)}.tbl th:first-child{text-align:left}.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;font-family:var(--mono);font-size:13px}.tbl td:first-child{text-align:left;font-family:var(--font);font-weight:500}
 .tbadge{font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.5px}
-.t-onsite{background:rgba(34,197,94,.1);color:var(--pass);border:1px solid rgba(34,197,94,.2)}
-.t-offsite{background:rgba(245,158,11,.1);color:var(--warning);border:1px solid rgba(245,158,11,.2)}
-.t-high{background:rgba(239,68,68,.12);color:var(--critical);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
-.t-med{background:rgba(245,158,11,.12);color:var(--warning);font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px}
-.t-cat{font-size:9px;font-weight:600;padding:2px 7px;border-radius:4px;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border)}
-.v-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px}
-.v-ok{background:rgba(34,197,94,.12);color:var(--pass)}
+.t-on{background:rgba(34,197,94,.1);color:var(--pass);border:1px solid rgba(34,197,94,.2)}
+.t-off{background:rgba(245,158,11,.1);color:var(--warning);border:1px solid rgba(245,158,11,.2)}
+.ob-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;display:inline-block;margin:3px}
+.ob-chip.active{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
+.ob-chip:hover{border-color:var(--accent);color:var(--text)}
 
 /* Task items */
-.task-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;transition:all .2s;cursor:pointer}
-.task-item:hover{border-color:var(--accent-dim)}
+.task-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden;cursor:pointer}
+.task-item:hover{border-color:rgba(45,212,160,.3)}
 .task-row{padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
 .task-icon{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;font-weight:700}
-.task-title{flex:1;font-size:13px;font-weight:500}
-.task-why{font-size:11px;color:var(--text-light);font-style:italic;margin-top:4px}
-.task-meta{display:flex;align-items:center;gap:8px}
 .task-detail{max-height:0;overflow:hidden;transition:max-height .35s var(--ease),padding .35s;background:var(--surface2);padding:0 16px}
-.task-item.expanded .task-detail{max-height:300px;padding:16px}
-.task-detail p{font-size:13px;color:var(--text-dim);margin-bottom:12px;line-height:1.7}
+.task-item.expanded .task-detail{max-height:400px;padding:16px}
 
-/* Tabs & filters */
-.tabs{display:flex;gap:4px;margin-bottom:16px}
-.tab{padding:6px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-dim);background:transparent;border:1px solid transparent;transition:all .2s}
-.tab.active{color:var(--accent);background:var(--accent-glow);border-color:rgba(45,212,160,.2)}
-.tab:hover:not(.active){color:var(--text)}
-.chips{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
-.chip{padding:4px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);transition:all .2s}
-.chip.active{color:var(--accent);border-color:var(--accent);background:var(--accent-glow)}
+/* Baseline label */
+.baseline{display:inline-block;font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(59,130,246,.12);color:var(--info);letter-spacing:.5px;vertical-align:middle;margin-left:4px}
 
-/* Tables */
-.tbl{width:100%;border-collapse:collapse}
-.tbl th{text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:var(--text-dim);padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface2)}
-.tbl th:first-child{text-align:left}
-.tbl td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:center;font-family:var(--mono);font-size:13px}
-.tbl td:first-child{text-align:left;font-family:var(--font);font-weight:500}
-.tbl tr:hover td{background:var(--surface2)}
-.c-you{background:rgba(45,212,160,.05)}
-.c-win{color:var(--pass);font-weight:700}
-
-/* SWOT */
-.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.sq{background:var(--surface2);border-radius:10px;padding:16px}
-.sq h4{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:10px}
-.sq ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:6px}
-.sq li{font-size:12px;color:var(--text-dim);padding-left:12px;position:relative}
-.sq li::before{content:'';position:absolute;left:0;top:7px;width:4px;height:4px;border-radius:50%;background:currentColor}
-
-/* AI matrix */
-.ai-y{color:var(--pass);font-weight:700}
-.ai-n{color:var(--critical);opacity:.5}
-
-/* Timeline */
-.tl{position:relative;padding-left:24px}
-.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--border)}
-.tl-item{position:relative;margin-bottom:24px}
-.tl-dot{position:absolute;left:-24px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--border);background:var(--bg)}
-.tl-item.pos .tl-dot{border-color:var(--pass);background:rgba(34,197,94,.15)}
-.tl-item.neg .tl-dot{border-color:var(--critical);background:rgba(239,68,68,.15)}
-
-/* Toggles */
-.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);text-align:left}
-.toggle{width:44px;height:24px;background:var(--surface2);border-radius:12px;position:relative;cursor:pointer;border:1px solid var(--border);transition:all .2s;flex-shrink:0}
-.toggle.on{background:var(--accent);border-color:var(--accent)}
-.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:2px;left:2px;transition:transform .2s}
-.toggle.on::after{transform:translateX(20px)}
-
-/* Onboarding */
-.onboard-overlay{position:fixed;inset:0;background:rgba(10,15,13,.95);backdrop-filter:blur(20px);z-index:200;display:flex;align-items:center;justify-content:center}
-.onboard-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:48px;max-width:560px;width:100%;text-align:center}
-.onboard-dots{display:flex;gap:8px;justify-content:center;margin-bottom:32px}
-.onboard-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all .3s}
-.onboard-dot.active{background:var(--accent);width:24px;border-radius:4px}
-.onboard-dot.done{background:var(--pass)}
-.ob-title{font-size:22px;font-weight:800;margin-bottom:8px}
-.ob-sub{font-size:14px;color:var(--text-dim);margin-bottom:28px}
-.ob-input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;color:var(--text);font-size:15px;font-family:var(--font);outline:none;margin-bottom:12px;text-align:center}
-.ob-input:focus{border-color:var(--accent)}
-.ob-btn{background:var(--accent);color:#000;border:none;padding:14px 40px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px;width:100%;transition:all .2s}
-.ob-btn:hover{background:#3ee5b1}
-.ob-back{display:inline-block;margin-top:12px;font-size:13px;color:var(--text-dim);cursor:pointer}
-.ob-back:hover{color:var(--accent)}
-
-/* Onboarding chips */
-.ob-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s}
-.ob-chip:hover{border-color:var(--accent);color:var(--text)}
-.ob-chip.active{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
-
-/* Responsive */
-@media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr}.swot{grid-template-columns:1fr}}
-@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.hamburger{display:block}.content{padding:20px 16px 48px}}
+@media(max-width:768px){.sidebar{display:none}.main{margin-left:0}.g2,.g3{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="blob"></div>
-<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
 
-<div class="app">
-<!-- SIDEBAR (5 items) -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-logo">
-    <svg viewBox="0 0 28 28"><circle cx="14" cy="14" r="13" fill="none" stroke="#2dd4a0" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="14" cy="14" r="5" fill="#2dd4a0" opacity=".3"/><path d="M14 4 L14 24 M4 14 L24 14" stroke="#2dd4a0" stroke-width="1" opacity=".4"/></svg>
-    <div><span>GeoSEO</span><br><small>Dashboard</small></div>
-  </div>
-  <nav class="sidebar-nav">
-    <div class="nav-item active" data-screen="dashboard" onclick="go('dashboard')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      Dashboard
-    </div>
-    <div class="nav-item" data-screen="tasks" onclick="go('tasks')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      Action Plan<span class="badge">35</span>
-    </div>
-    <div class="nav-item" data-screen="visibility" onclick="go('visibility')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      Search Visibility
-    </div>
-    <div class="nav-item" data-screen="competitors" onclick="go('competitors')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-      Competitors
-    </div>
-    <div class="nav-item" data-screen="monitoring" onclick="go('monitoring')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-      Monitoring<span class="badge">2</span>
-    </div>
-  </nav>
-  <div class="sidebar-project">
-    <div class="project-selector" onclick="this.classList.toggle('open')">
-      <span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--pass);flex-shrink:0"></span>
-      <span class="name">rosspaintinggroup.com</span>
-      <span class="arrow">&#9662;</span>
-    </div>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<div class="main">
-  <header class="topbar">
-    <div class="topbar-left">
-      <button class="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open');document.getElementById('sidebarBackdrop').classList.toggle('visible')"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
-      <h1 id="page-title">Dashboard</h1>
-      <span class="page-badge">BETA</span>
-    </div>
-    <div class="topbar-right">
-      <button class="topbar-btn" onclick="showOB()">+ New Project</button>
-      <div class="avatar">SK</div>
-    </div>
-  </header>
-
-  <div class="content">
-
-<!-- ============ DASHBOARD ============ -->
-<div class="screen active" id="screen-dashboard">
-
-  <!-- HERO 1: Google Maps & GBP (most important for local) -->
-  <div style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(59,130,246,.02));border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:24px 28px;margin-bottom:16px;position:relative;z-index:1;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--info);">Google Maps &amp; Reviews</div>
-      <span style="font-size:9px;color:var(--text-light);">via Google Places API</span>
-    </div>
-    <div class="g2" style="margin-bottom:16px;">
-      <div>
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Local 3-Pack for "house painters san diego"</div>
-        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
-          <span style="background:rgba(239,68,68,.12);color:var(--critical);font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;">NOT IN 3-PACK</span>
-        </div>
-        <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
-          #1 CertaPro &middot; #2 AllPro &middot; #3 ColorWorld<br>
-          <span style="color:var(--text-light);">You need more reviews + complete GBP to enter</span><br>
-          <a href="#" onclick="go('tasks');return false;" style="font-size:11px;">How to get into Local Pack &rarr;</a>
+<!-- ============================================================ -->
+<!-- STATE 1: LANDING (enter URL)                                  -->
+<!-- ============================================================ -->
+<div class="state active" id="state-landing">
+  <div class="center-page">
+    <div class="center-card" style="max-width:620px;">
+      <div style="margin-bottom:24px;">
+        <svg viewBox="0 0 28 28" width="40" height="40"><circle cx="14" cy="14" r="13" fill="none" stroke="#2dd4a0" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="14" cy="14" r="5" fill="#2dd4a0" opacity=".3"/></svg>
+      </div>
+      <div style="font-size:28px;font-weight:800;margin-bottom:8px;">See where your business<br>shows up in search</div>
+      <div style="font-size:15px;color:var(--text-dim);margin-bottom:32px;">Google Maps, organic rankings, AI engines — and what competitors are doing better.</div>
+      <input type="text" value="https://rosspaintinggroup.com" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:16px 20px;color:var(--text);font-size:16px;font-family:var(--font);outline:none;text-align:center;margin-bottom:16px;">
+      <div style="margin-bottom:20px;">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">Where are you located?</div>
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <input type="text" value="San Diego" style="width:150px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;text-align:center;">
+          <select style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;min-width:140px;"><option>United States</option><option>Indonesia</option><option>United Kingdom</option><option>Canada</option><option>Australia</option><option>Other</option></select>
         </div>
       </div>
-      <div>
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Your Google Business Profile</div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-          <span style="font-size:20px;font-weight:800;color:var(--warning);">&#9733;</span>
-          <span style="font-size:24px;font-weight:800;font-family:var(--mono);">4.8</span>
-          <span style="font-size:13px;color:var(--text-dim);">47 reviews</span>
-          <span style="font-size:12px;color:var(--text-light);">(+1/week)</span>
+      <div style="margin-bottom:24px;">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">Industry:</div>
+        <div style="max-width:460px;margin:0 auto;">
+          <span class="ob-chip active" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Home Services</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Legal</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Dental / Medical</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Restaurant</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Hotel / Resort</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Beauty / Salon</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Fitness</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Auto Repair</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Staffing / Agency</span>
+          <span class="ob-chip" onclick="document.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">Other</span>
         </div>
-        <div style="font-size:12px;color:var(--text-dim);">
-          GBP completeness: <strong style="color:var(--warning);">75%</strong> &middot; <span style="color:var(--warning);">&#9888;</span> No Google Posts &middot; 12 photos
+      </div>
+      <button class="btn" style="width:100%;padding:16px;" onclick="goState('scanning')">Scan My Business</button>
+      <div style="font-size:11px;color:var(--text-light);margin-top:12px;">Free. No sign-up required. Takes about 60 seconds.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 2: SCANNING (animated progress)                         -->
+<!-- ============================================================ -->
+<div class="state" id="state-scanning">
+  <div class="center-page">
+    <div class="center-card" style="max-width:520px;">
+      <div style="font-size:20px;font-weight:800;margin-bottom:8px;">Analyzing your business</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:4px;">rosspaintinggroup.com &middot; San Diego, CA &middot; Home Services</div>
+      <div class="scan-progress"><div class="scan-fill" id="scanFill"></div></div>
+      <div style="font-size:13px;color:var(--accent);font-weight:600;margin-bottom:20px;" id="scanPct">0%</div>
+      <div style="text-align:left;">
+        <div class="scan-step done" id="ss1"><span class="icon">&#10003;</span> Scanned rosspaintinggroup.com (18 pages found)</div>
+        <div class="scan-step done" id="ss2"><span class="icon">&#10003;</span> Ran 135+ SEO &amp; GEO checks</div>
+        <div class="scan-step done" id="ss3"><span class="icon">&#10003;</span> Detected: Painting Company, San Diego CA</div>
+        <div class="scan-step active" id="ss4"><span class="icon">&#9679;</span> Finding competitors on Google Maps...</div>
+        <div class="scan-step pending" id="ss5"><span class="icon">&#9675;</span> Scanning top 3 competitors</div>
+        <div class="scan-step pending" id="ss6"><span class="icon">&#9675;</span> Checking Google rankings (20 queries)</div>
+        <div class="scan-step pending" id="ss7"><span class="icon">&#9675;</span> Testing AI visibility (ChatGPT, Perplexity)</div>
+        <div class="scan-step pending" id="ss8"><span class="icon">&#9675;</span> Generating your action plan</div>
+      </div>
+      <div style="font-size:11px;color:var(--text-light);margin-top:16px;">This usually takes about 60 seconds.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 3: FREE REPORT (summary + CTA)                         -->
+<!-- ============================================================ -->
+<div class="state" id="state-report">
+  <div style="max-width:700px;margin:0 auto;padding:40px 20px 100px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:8px;">Free Audit Complete</div>
+      <div style="font-size:24px;font-weight:800;">Ross Painting Group</div>
+      <div style="font-size:14px;color:var(--text-dim);">rosspaintinggroup.com &middot; San Diego, CA</div>
+    </div>
+
+    <!-- Key finding: the paradox -->
+    <div class="card" style="border-color:var(--warning);border-width:2px;margin-bottom:24px;">
+      <div style="text-align:center;">
+        <div style="font-size:48px;font-weight:900;font-family:var(--mono);color:var(--accent);">85<span style="font-size:20px;color:var(--text-dim);">/100</span></div>
+        <div style="font-size:14px;font-weight:600;color:var(--pass);margin:4px 0;">Site Health: Excellent</div>
+        <div style="height:1px;background:var(--border);margin:16px 0;"></div>
+        <div style="font-size:15px;font-weight:600;color:var(--warning);">But you're #15 in Google and NOT in Local Pack</div>
+        <div style="font-size:13px;color:var(--text-dim);margin-top:8px;line-height:1.7;">Your site is technically excellent. But search rankings depend on<br>reviews, backlinks, and presence on platforms — not just your website.</div>
+      </div>
+    </div>
+
+    <!-- Quick stats -->
+    <div class="g3" style="margin-bottom:24px;">
+      <div class="card" style="text-align:center;"><div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Local 3-Pack</div><div style="font-size:18px;font-weight:800;color:var(--critical);">NOT IN</div><div style="font-size:11px;color:var(--text-light);">CertaPro is #1</div></div>
+      <div class="card" style="text-align:center;"><div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Google Reviews</div><div style="font-size:18px;font-weight:800;">&#9733; 4.9 <span style="font-size:13px;color:var(--text-dim);">(52)</span></div><div style="font-size:11px;color:var(--text-light);">CertaPro has 312</div></div>
+      <div class="card" style="text-align:center;"><div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">AI Mentions</div><div style="font-size:18px;font-weight:800;color:var(--warning);">2 / 15</div><div style="font-size:11px;color:var(--text-light);">prompts mention you</div></div>
+    </div>
+
+    <!-- Top 3 issues -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="section-title">Top 3 Issues Holding You Back</div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="width:24px;height:24px;border-radius:50%;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--critical);flex-shrink:0;">1</span><div><div style="font-size:14px;font-weight:600;">Only 52 reviews vs CertaPro's 312</div><div style="font-size:12px;color:var(--text-dim);">Reviews are the #1 factor for Local Pack ranking.</div></div></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="width:24px;height:24px;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--warning);flex-shrink:0;">2</span><div><div style="font-size:14px;font-weight:600;">Google Business Profile only 80% complete</div><div style="font-size:12px;color:var(--text-dim);">Missing: Google Posts, service areas, more photos.</div></div></div>
+        <div style="display:flex;gap:12px;align-items:flex-start;"><span style="width:24px;height:24px;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--warning);flex-shrink:0;">3</span><div><div style="font-size:14px;font-weight:600;">Missing from 5 platforms AI uses</div><div style="font-size:12px;color:var(--text-dim);">Houzz, YouTube, BBB, LinkedIn, Nextdoor. Competitors are on 3+.</div></div></div>
+      </div>
+    </div>
+
+    <!-- 7 competitors found -->
+    <div class="card" style="margin-bottom:24px;">
+      <div class="section-title">7 Competitors Found in Your Market</div>
+      <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;">
+        <div style="min-width:110px;text-align:center;padding:12px;background:var(--accent-glow);border:2px solid var(--accent);border-radius:10px;"><div style="font-size:10px;color:var(--accent);font-weight:700;">YOU #4</div><div style="font-size:11px;font-weight:700;">Ross Painting</div><div style="font-size:16px;font-weight:800;font-family:var(--mono);color:var(--accent);">85</div><div style="font-size:10px;color:var(--text-dim);">&#9733;4.9 52rev</div></div>
+        <div style="min-width:110px;text-align:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;"><div style="font-size:10px;color:var(--critical);font-weight:700;">#1</div><div style="font-size:11px;font-weight:700;">CertaPro</div><div style="font-size:16px;font-weight:800;font-family:var(--mono);">78</div><div style="font-size:10px;color:var(--text-dim);">&#9733;4.7 312rev</div></div>
+        <div style="min-width:110px;text-align:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;"><div style="font-size:10px;color:var(--warning);font-weight:700;">#2</div><div style="font-size:11px;font-weight:700;">AllPro</div><div style="font-size:16px;font-weight:800;font-family:var(--mono);">72</div><div style="font-size:10px;color:var(--text-dim);">&#9733;4.6 89rev</div></div>
+        <div style="min-width:110px;text-align:center;padding:12px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;"><div style="font-size:10px;font-weight:700;color:var(--text-dim);">#3</div><div style="font-size:11px;font-weight:700;">ColorWorld</div><div style="font-size:16px;font-weight:800;font-family:var(--mono);">65</div><div style="font-size:10px;color:var(--text-dim);">&#9733;4.5 63rev</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Note: Site Health 85 but Market Position #4 — CertaPro ranks higher due to 6x more reviews and Local Pack presence.</div>
+    </div>
+
+    <!-- 135+ checks audit summary (collapsed) -->
+    <div class="card" style="margin-bottom:32px;cursor:pointer;" onclick="this.querySelector('#auditDetail').style.display=this.querySelector('#auditDetail').style.display==='none'?'block':'none'">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div><span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);">Full Audit Report</span><span style="font-size:12px;color:var(--text-dim);margin-left:12px;">135+ checks &middot; 13 SEO + 8 GEO categories</span></div>
+        <span style="color:var(--text-dim);">&#9660;</span>
+      </div>
+      <div id="auditDetail" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:var(--text-dim);line-height:1.8;">
+        SEO: 85/100 &middot; GEO: 62/100 &middot; Speed: 91<br>
+        Content Quality: 88% &middot; Meta Tags: 75% &middot; Schema: 60% &middot; Links: 82%<br>
+        Technical: 95% &middot; Images: 70% &middot; Robots: 90% &middot; Security: 100%<br>
+        AI Readiness: 45% &middot; E-E-A-T: 55% &middot; Freshness: 40% &middot; BLUF: 50%<br>
+        <strong>35 open issues found. 12 high impact.</strong>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="background:linear-gradient(135deg,rgba(45,212,160,.1),rgba(45,212,160,.03));border:2px solid rgba(45,212,160,.3);border-radius:16px;padding:32px;text-align:center;">
+      <div style="font-size:18px;font-weight:800;margin-bottom:8px;">Track your position. See competitor moves.</div>
+      <div style="font-size:14px;color:var(--text-dim);margin-bottom:20px;">Weekly auto-scans. Action plan. Competitor alerts. No credit card.</div>
+      <button class="btn" style="padding:16px 48px;font-size:16px;" onclick="goState('auth')">Track My Business Free</button>
+      <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Sign in with Google. 10 seconds.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 4: GOOGLE AUTH (mock)                                   -->
+<!-- ============================================================ -->
+<div class="state" id="state-auth">
+  <div class="center-page">
+    <div class="center-card" style="max-width:400px;">
+      <div style="font-size:36px;margin-bottom:16px;">G</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Sign in with Google</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:24px;">Choose your Google account to continue to GeoSEO</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:12px;" onclick="goState('onboard-competitors')">
+        <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--info));display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#000;">VR</div>
+        <div style="text-align:left;"><div style="font-size:14px;font-weight:600;">Victor Ross</div><div style="font-size:12px;color:var(--text-dim);">victor@rosspaintinggroup.com</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--text-light);margin-top:16px;">We only read your name and email. Never modify your data.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 5: ONBOARDING — Confirm Competitors                     -->
+<!-- ============================================================ -->
+<div class="state" id="state-onboard-competitors">
+  <div class="center-page">
+    <div class="center-card" style="max-width:520px;">
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:24px;"><div style="width:24px;height:4px;border-radius:2px;background:var(--accent);"></div><div style="width:24px;height:4px;border-radius:2px;background:var(--border);"></div></div>
+      <div style="font-size:20px;font-weight:800;margin-bottom:8px;">We found 7 competitors</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:24px;">Based on Google Maps for "painters San Diego"</div>
+      <div style="text-align:left;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">certapro.com/san-diego</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">&#9733;4.7 &middot; 312 rev</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">allpropaintingsd.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">&#9733;4.6 &middot; 89 rev</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">colorworldpainting.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">&#9733;4.5 &middot; 63 rev</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;"><span style="color:var(--text-dim);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">lajollapainting.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">&#9733;4.8 &middot; 28 rev</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;"><span style="color:var(--text-dim);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">procoatpainters.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">&#9733;4.3 &middot; 22 rev</span></div>
+      </div>
+      <button class="btn" style="width:100%;" onclick="goState('onboard-notifications')">Track These Competitors</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 6: ONBOARDING — Notifications                           -->
+<!-- ============================================================ -->
+<div class="state" id="state-onboard-notifications">
+  <div class="center-page">
+    <div class="center-card" style="max-width:520px;">
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:24px;"><div style="width:24px;height:4px;border-radius:2px;background:var(--pass);"></div><div style="width:24px;height:4px;border-radius:2px;background:var(--accent);"></div></div>
+      <div style="font-size:20px;font-weight:800;margin-bottom:8px;">Stay updated</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:24px;">Get notified when your visibility changes or competitors make moves</div>
+      <div style="text-align:left;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);"><div><div style="font-size:14px;font-weight:500;">Weekly email report</div><div style="font-size:12px;color:var(--text-dim);">victor@rosspaintinggroup.com</div></div><div style="width:44px;height:24px;background:var(--accent);border-radius:12px;position:relative;cursor:pointer;"><div style="position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;right:3px;"></div></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);"><div><div style="font-size:14px;font-weight:500;">Competitor move alerts</div><div style="font-size:12px;color:var(--text-dim);">When competitors add schema, get reviews, etc.</div></div><div style="width:44px;height:24px;background:var(--accent);border-radius:12px;position:relative;cursor:pointer;"><div style="position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;right:3px;"></div></div></div>
+      </div>
+      <div style="padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-align:left;margin-bottom:20px;">
+        <div style="font-size:13px;font-weight:600;margin-bottom:4px;">&#128200; Connect Google Search Console (optional)</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">See real clicks &amp; impressions. Read-only.</div>
+        <button class="btn-ghost" style="font-size:12px;padding:6px 14px;">Connect GSC</button>
+      </div>
+      <button class="btn" style="width:100%;" onclick="goState('dashboard-first')">Open My Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- STATE 7: DASHBOARD — FIRST VISIT (baseline, no history)       -->
+<!-- ============================================================ -->
+<div class="state" id="state-dashboard-first">
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-logo"><svg viewBox="0 0 28 28" width="28" height="28"><circle cx="14" cy="14" r="13" fill="none" stroke="#2dd4a0" stroke-width="1.5" stroke-dasharray="4 3"/><circle cx="14" cy="14" r="5" fill="#2dd4a0" opacity=".3"/></svg><div><span>GeoSEO</span><br><small>Dashboard</small></div></div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active">Dashboard</div>
+        <div class="nav-item">Action Plan <span class="badge">35</span></div>
+        <div class="nav-item">Search Visibility</div>
+        <div class="nav-item">Competitors</div>
+        <div class="nav-item">Monitoring</div>
+      </nav>
+    </aside>
+    <div class="main">
+      <div class="topbar"><div style="display:flex;align-items:center;"><h1>Dashboard</h1><span class="badge">FIRST SCAN</span></div><div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);">rosspaintinggroup.com</span><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--info));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#000;">VR</div></div></div>
+      <div class="content">
+
+        <!-- Welcome banner -->
+        <div style="background:linear-gradient(135deg,rgba(45,212,160,.1),rgba(45,212,160,.03));border:1px solid rgba(45,212,160,.3);border-radius:12px;padding:20px 24px;margin-bottom:24px;">
+          <div style="font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px;">Welcome, Victor! Your first scan is complete.</div>
+          <div style="font-size:13px;color:var(--text-dim);">This is your baseline. Trends, velocity, and competitor changes will appear after your next scan on <strong>Monday, Jun 16</strong>.</div>
         </div>
-        <div style="font-size:12px;color:var(--critical);margin-top:4px;">
-          vs CertaPro: 156 reviews (+3/week) &mdash; gap widening
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- HERO 2: Search Visibility -->
-  <div style="background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:16px;padding:24px 28px;margin-bottom:24px;position:relative;z-index:1;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);">Search Visibility</div>
-    </div>
-    <div class="g2" style="margin-bottom:12px;">
-      <div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">Google Organic</span><span style="font-size:9px;color:var(--text-light);">DataForSEO</span></div>
-        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">8<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 20 queries</span></div>
-        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:40%;height:100%;background:var(--accent);border-radius:3px;"></div></div>
-        <div style="font-size:12px;color:var(--text-dim);">Avg <strong style="font-family:var(--mono);">#18</strong> &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+3</span> this month</div>
-      </div>
-      <div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">AI Engines</span><span style="font-size:9px;color:var(--text-light);">Perplexity + OpenAI</span></div>
-        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">5<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 15 prompts</span></div>
-        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:33%;height:100%;background:var(--warning);border-radius:3px;"></div></div>
-        <div style="font-size:12px;color:var(--text-dim);">ChatGPT 2 &middot; Perplexity 5 &middot; Gemini 0 &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+2 new</span></div>
-      </div>
-    </div>
-    <div style="font-size:12px;color:var(--text-dim);padding-top:12px;border-top:1px solid rgba(45,212,160,.1);">
-      <strong style="color:var(--warning);">CertaPro</strong> #1 on 10 queries &middot; <strong>AllPro</strong> #1 on 7 &middot; <strong style="color:var(--accent);">You #1</strong> on 3
-    </div>
-  </div>
-
-  <!-- #1 Priority -->
-  <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--critical);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="go('tasks')">
-    <div>
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--critical);margin-bottom:4px;">Highest Impact Issue</div>
-      <div style="font-size:15px;font-weight:600;">Fix robots.txt &mdash; AI engines can't find you</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">5 min &middot; Blocks AI visibility completely &middot; ON-SITE fix</div>
-    </div>
-    <button class="btn-fix" style="white-space:nowrap;">Fix now &rarr;</button>
-  </div>
-
-  <!-- 3 metric cards -->
-  <div class="g3">
-    <div class="card" style="text-align:center;">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">Market Position</div>
-      <div style="font-size:36px;font-weight:900;font-family:var(--mono);color:var(--warning);">#3</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">of 8 competitors</div>
-      <div style="font-size:11px;color:var(--text-light);margin-top:2px;">Behind CertaPro, AllPro</div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">Site Health</div>
-      <div style="font-size:36px;font-weight:900;font-family:var(--mono);color:var(--accent);">72</div>
-      <div style="font-size:12px;color:var(--pass);margin-top:4px;">&#9650; +8 this month</div>
-      <div style="font-size:11px;color:var(--text-light);margin-top:2px;">35 open issues</div>
-    </div>
-    <div class="card" style="text-align:center;">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">This Week</div>
-      <div style="font-size:14px;color:var(--text);margin-top:12px;line-height:2;">
-        <span style="color:var(--pass);font-weight:700;">+3</span> avg position up<br>
-        <span style="color:var(--pass);font-weight:700;">+2</span> AI mentions<br>
-        <span style="color:var(--pass);font-weight:700;">2</span> issues auto-fixed
-      </div>
-    </div>
-  </div>
-
-  <!-- Top queries (compact) -->
-  <div class="card" style="margin-bottom:24px;cursor:pointer;" onclick="go('visibility')">
-    <div class="section-header"><span class="section-title">Top Queries <span class="ds">via DataForSEO</span></span><span class="section-link">All 20 queries &rarr;</span></div>
-    <table class="tbl">
-      <thead><tr><th>Query</th><th>You</th><th>Change</th><th>#1 Competitor</th></tr></thead>
-      <tbody>
-        <tr><td>"exterior painting san diego"</td><td class="c-you" style="color:var(--pass);font-weight:700;">#7</td><td style="color:var(--pass);font-weight:600;">&#8593;5</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #2</td></tr>
-        <tr><td>"house painters san diego"</td><td class="c-you" style="color:var(--warning);font-weight:700;">#12</td><td style="color:var(--pass);font-weight:600;">&#8593;3</td><td style="font-size:12px;color:var(--text-dim);">AllPro #4</td></tr>
-        <tr><td>"painting company near me"</td><td class="c-you" style="color:var(--warning);font-weight:700;">#18</td><td style="color:var(--pass);font-weight:600;">&#8593;1</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #3</td></tr>
-        <tr><td>"best painters la jolla"</td><td class="c-you" style="font-weight:700;">#24</td><td style="color:var(--pass);font-weight:600;">NEW</td><td style="font-size:12px;color:var(--text-dim);">La Jolla Paint #1</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Tasks preview + Competitor moves -->
-  <div class="g2">
-    <div class="card" style="cursor:pointer;" onclick="go('tasks')">
-      <div class="section-header"><span class="section-title">Open Issues</span><span class="section-link">All 35 &rarr;</span></div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><span class="tbadge t-onsite">ON-SITE</span><span style="flex:1;font-size:12px;">Fix robots.txt</span><span class="t-high">HIGH</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><span class="tbadge t-onsite">ON-SITE</span><span style="flex:1;font-size:12px;">Add expert quote</span><span class="t-high">HIGH</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><span class="tbadge t-offsite">OFF-SITE</span><span style="flex:1;font-size:12px;">Register on Houzz</span><span class="t-high">HIGH</span></div>
-      </div>
-    </div>
-    <div class="card" style="cursor:pointer;" onclick="go('competitors')">
-      <div class="section-header"><span class="section-title">Competitor Moves</span><span class="section-link">View all &rarr;</span></div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><div style="min-width:70px;font-size:11px;font-weight:600;color:var(--critical);">CertaPro</div><div style="font-size:12px;color:var(--text-dim);">Added Service schema &middot; Jun 9</div></div>
-        <div style="display:flex;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><div style="min-width:70px;font-size:11px;font-weight:600;color:var(--warning);">AllPro</div><div style="font-size:12px;color:var(--text-dim);">Published 2 blog posts &middot; Jun 5</div></div>
-        <div style="display:flex;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;"><div style="min-width:70px;font-size:11px;font-weight:600;">CertaPro</div><div style="font-size:12px;color:var(--text-dim);">+12 reviews (156 total) &middot; May 28</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GSC Traffic (toggle between connected/disconnected) -->
-  <div class="card" style="margin-bottom:24px;" id="gscCard">
-    <div class="section-header"><span class="section-title">Traffic <span class="ds">via Google Search Console</span></span><span style="font-size:11px;color:var(--accent);cursor:pointer;" onclick="toggleGSC()">Toggle state</span></div>
-    <div id="gscConnected">
-      <div style="display:flex;gap:32px;align-items:center;">
-        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);">460</div><div style="font-size:11px;color:var(--text-dim);">clicks/week <span style="color:var(--pass);font-weight:600;">&#9650;+40</span></div></div>
-        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">8.2K</div><div style="font-size:11px;color:var(--text-dim);">impressions <span style="color:var(--pass);font-weight:600;">&#9650;+1.1K</span></div></div>
-        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">5.6%</div><div style="font-size:11px;color:var(--text-dim);">avg CTR</div></div>
-      </div>
-    </div>
-    <div id="gscDisconnected" style="display:none;text-align:center;padding:16px 0;">
-      <div style="font-size:16px;margin-bottom:6px;">&#128200;</div>
-      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">See your real traffic data</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Connect Google Search Console to see clicks, impressions, and CTR. Read-only, we never modify data.</div>
-      <button class="btn-fix" style="display:inline-block;width:auto;">Connect Google Search Console</button>
-    </div>
-  </div>
-
-  <!-- Full Audit Report (our core product — 135+ checks) -->
-  <div class="card" style="margin-bottom:16px;border-color:var(--accent);">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div>
-        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:4px;">Full Audit Report</div>
-        <div style="font-size:13px;color:var(--text-dim);">135+ checks &middot; 13 SEO categories &middot; 8 GEO categories &middot; AI recommendations</div>
-        <div style="font-size:11px;color:var(--text-light);margin-top:4px;">Last scan: Jun 9, 2026 &middot; Next auto-scan: Jun 16</div>
-      </div>
-      <div style="display:flex;gap:8px;">
-        <button class="btn-fix" onclick="return false">View Report</button>
-        <button class="btn-guide" onclick="return false">Scan Now</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Domain Health -->
-  <div class="card" id="domainCard" style="margin-bottom:16px;cursor:pointer;" onclick="toggleDomain()">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);" id="domainToggle">&#9654; Domain Health</span>
-        <span style="font-size:12px;color:var(--pass);font-weight:600;">&#10003; Healthy</span>
-      </div>
-      <span style="font-size:11px;color:var(--text-light);">DA 25 &middot; 5 yrs old &middot; 124 backlinks</span>
-    </div>
-    <div id="domainDetail" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Domain Authority <span class="ds">Moz</span></div>
-          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">25 <span style="font-size:12px;color:var(--text-dim);font-weight:500;">/100</span></div>
-          <div style="font-size:11px;color:var(--text-light);">CertaPro: 42 &middot; AllPro: 35</div>
-        </div>
-        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Backlinks <span class="ds">Bing Webmaster</span></div>
-          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">124</div>
-          <div style="font-size:11px;color:var(--text-light);">from 47 domains</div>
-        </div>
-        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Domain Age</div>
-          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">5 yrs</div>
-          <div style="font-size:11px;color:var(--text-light);">Registered Mar 2021</div>
-        </div>
-        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Security &amp; Status</div>
-          <div style="font-size:12px;line-height:1.8;">
-            <span style="color:var(--pass);">&#10003;</span> SSL valid (exp Dec 2026)<br>
-            <span style="color:var(--pass);">&#10003;</span> Not blacklisted<br>
-            <span style="color:var(--pass);">&#10003;</span> Spam score: 2% (low)<br>
-            <span style="color:var(--pass);">&#10003;</span> 18 pages indexed
+        <!-- Google Maps hero — BASELINE -->
+        <div style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(59,130,246,.02));border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:24px 28px;margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--info);">Google Maps &amp; Reviews</div><span class="baseline">BASELINE</span></div>
+          <div class="g2" style="margin-bottom:0;">
+            <div>
+              <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Local 3-Pack for "house painters san diego"</div>
+              <div style="margin-bottom:6px;"><span style="background:rgba(239,68,68,.12);color:var(--critical);font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;">NOT IN 3-PACK</span></div>
+              <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">#1 CertaPro &middot; #2 AllPro &middot; #3 ColorWorld<br><a href="#" onclick="return false" style="font-size:11px;">How to get into Local Pack &rarr;</a></div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Your Google Business Profile</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;"><span style="font-size:18px;font-weight:800;color:var(--warning);">&#9733;</span><span style="font-size:22px;font-weight:800;font-family:var(--mono);">4.9</span><span style="font-size:13px;color:var(--text-dim);">52 reviews</span></div>
+              <div style="font-size:12px;color:var(--text-dim);">GBP: <strong style="color:var(--warning);">80%</strong> complete &middot; No Google Posts &middot; 18 photos</div>
+              <div style="font-size:12px;color:var(--critical);margin-top:4px;">vs CertaPro: 312 reviews (6x more)</div>
+              <div style="font-size:11px;color:var(--text-light);margin-top:4px;">Review velocity available after next scan</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Site Health (collapsed) -->
-  <div class="card" id="healthCard" style="cursor:pointer;" onclick="toggleHealth()">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div style="display:flex;align-items:center;gap:12px;">
-        <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);" id="healthToggle">&#9654; Site Health Check</span>
-        <span style="font-size:20px;font-weight:800;font-family:var(--mono);color:var(--accent);">72<span style="font-size:12px;color:var(--text-dim);">/100</span></span>
-        <span style="font-size:12px;color:var(--pass);font-weight:600;">&#9650;+8</span>
-      </div>
-      <span style="font-size:11px;color:var(--text-light);">SEO 72 &middot; GEO 56 &middot; Speed 89</span>
-    </div>
-    <div id="healthDetail" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
-      <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
-        On-site quality score. Measures technical SEO, content structure, AI-readiness, and page speed.<br>
-        <strong>13 categories &middot; 135+ checks</strong><br>
-        This is a quality checklist, not a ranking predictor. Rankings depend on reviews, backlinks, and competition.
+        <!-- Search Visibility — BASELINE -->
+        <div style="background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:16px;padding:24px 28px;margin-bottom:24px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);">Search Visibility</div><span class="baseline">BASELINE</span></div>
+          <div class="g2" style="margin-bottom:12px;">
+            <div>
+              <div style="font-size:11px;color:var(--text-dim);font-weight:600;margin-bottom:6px;">Google Organic <span class="ds">DataForSEO</span></div>
+              <div style="font-size:22px;font-weight:800;font-family:var(--mono);">6 <span style="font-size:13px;color:var(--text-dim);font-weight:500;">/ 20 queries</span></div>
+              <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:30%;height:100%;background:var(--accent);border-radius:3px;"></div></div>
+              <div style="font-size:12px;color:var(--text-dim);">Avg position <strong style="font-family:var(--mono);">#15</strong></div>
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--text-dim);font-weight:600;margin-bottom:6px;">AI Engines <span class="ds">Perplexity + OpenAI</span></div>
+              <div style="font-size:22px;font-weight:800;font-family:var(--mono);">2 <span style="font-size:13px;color:var(--text-dim);font-weight:500;">/ 15 prompts</span></div>
+              <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:13%;height:100%;background:var(--warning);border-radius:3px;"></div></div>
+              <div style="font-size:12px;color:var(--text-dim);">ChatGPT 1 &middot; Perplexity 2 &middot; Gemini 0</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);padding-top:12px;border-top:1px solid rgba(45,212,160,.1);">CertaPro #1 on 11 queries &middot; AllPro #1 on 6 &middot; You #1 on 3 (branded only)</div>
+        </div>
+
+        <!-- #1 Priority -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--critical);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;">
+          <div><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--critical);margin-bottom:4px;">Highest Impact Issue</div><div style="font-size:15px;font-weight:600;">Get more Google reviews (52 vs CertaPro's 312)</div><div style="font-size:12px;color:var(--text-dim);margin-top:2px;">OFF-SITE &middot; Ongoing &middot; #1 factor for Local Pack</div></div>
+          <button class="btn" style="white-space:nowrap;font-size:12px;padding:8px 20px;">View plan &rarr;</button>
+        </div>
+
+        <!-- 3 cards -->
+        <div class="g3">
+          <div class="card" style="text-align:center;"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">Market Position</div><div style="font-size:36px;font-weight:900;font-family:var(--mono);color:var(--warning);">#4</div><div style="font-size:12px;color:var(--text-dim);">of 8 competitors</div></div>
+          <div class="card" style="text-align:center;"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">Site Health</div><div style="font-size:36px;font-weight:900;font-family:var(--mono);color:var(--accent);">85</div><div style="font-size:12px;color:var(--text-dim);">35 open issues</div></div>
+          <div class="card" style="text-align:center;"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">Next Scan</div><div style="font-size:18px;font-weight:700;color:var(--text);margin-top:8px;">Monday<br>Jun 16</div><div style="font-size:11px;color:var(--text-light);margin-top:4px;">Trends start week 2</div></div>
+        </div>
+
+        <!-- Top queries baseline -->
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;margin-bottom:16px;"><span class="section-title" style="margin:0;">Top Queries <span class="ds">DataForSEO</span></span><span class="baseline">BASELINE</span></div>
+          <table class="tbl">
+            <thead><tr><th>Query</th><th>Position</th><th>#1 Competitor</th></tr></thead>
+            <tbody>
+              <tr><td>"ross painting group"</td><td style="color:var(--pass);font-weight:700;">#1</td><td style="font-size:12px;color:var(--text-light);">branded</td></tr>
+              <tr><td>"exterior painting san diego"</td><td style="font-weight:700;">#11</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #3</td></tr>
+              <tr><td>"house painters san diego"</td><td style="font-weight:700;">#15</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #2</td></tr>
+              <tr><td>"painters near me san diego"</td><td style="font-weight:700;">#22</td><td style="font-size:12px;color:var(--text-dim);">AllPro #5</td></tr>
+              <tr><td>"interior painting san diego"</td><td style="color:var(--text-dim);">#31</td><td style="font-size:12px;color:var(--text-dim);">ColorWorld #9</td></tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
     </div>
   </div>
 </div>
 
-<!-- ============ ACTION PLAN ============ -->
-<div class="screen" id="screen-tasks">
-  <div style="background:rgba(45,212,160,.06);border:1px solid rgba(45,212,160,.15);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;">
-    <span style="font-size:18px;">&#128260;</span>
-    <div><div style="font-size:13px;font-weight:600;color:var(--accent);">Issues update automatically</div><div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Each scan detects what you've fixed and discovers new problems. Prioritized by impact on your search visibility.</div></div>
-  </div>
-
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-    <div style="font-size:12px;color:var(--text-dim);">12 fixed &middot; 35 open &middot; 3 new this scan &middot; <a href="#" onclick="return false" style="font-size:12px;">View full audit report &rarr;</a></div>
-    <div style="font-size:12px;color:var(--accent);font-weight:600;">25% resolved</div>
-  </div>
-  <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:20px;"><div style="width:25%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:4px;"></div></div>
-
-  <div class="tabs">
-    <div class="tab active" data-f="open" onclick="stab(this)">Open (35)</div>
-    <div class="tab" data-f="new" onclick="stab(this)">New This Scan (3)</div>
-    <div class="tab" data-f="fixed" onclick="stab(this)">Fixed (12)</div>
-  </div>
-  <div class="chips">
-    <div class="chip active" data-c="all" onclick="scat(this)">All</div>
-    <div class="chip" data-c="seo" onclick="scat(this)">SEO</div>
-    <div class="chip" data-c="geo" onclick="scat(this)">GEO</div>
-    <div class="chip" data-c="technical" onclick="scat(this)">Technical</div>
-    <div class="chip" data-c="content" onclick="scat(this)">Content</div>
-    <div class="chip" data-c="speed" onclick="scat(this)">Speed</div>
-    <div class="chip" data-c="channels" onclick="scat(this)">Channels</div>
-    <div class="chip" data-c="gbp" onclick="scat(this)">GBP</div>
-  </div>
-
-  <!-- Open issues -->
-  <div class="task-item" data-t="open" data-c="technical" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
-      <div style="flex:1;"><span class="task-title">Fix robots.txt &mdash; AI engines can't find you</span><div class="task-why">GPTBot + ClaudeBot blocked &rarr; 0% AI visibility</div></div>
-      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-cat">Technical</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~5 min</span></div>
-    </div>
-    <div class="task-detail">
-      <p>GPTBot and ClaudeBot are blocked in your robots.txt. They cannot learn about your business and will never recommend you to users.</p>
-      <p style="font-size:11px;color:var(--accent);">&#128260; Auto-closes when our scanner detects the fix.</p>
-      <div style="display:flex;gap:8px;"><button class="btn-fix">Fix with AI &mdash; Download robots.txt</button><button class="btn-guide">Ask AI about this</button></div>
-    </div>
-  </div>
-
-  <div class="task-item" data-t="open" data-c="geo" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
-      <div style="flex:1;"><span class="task-title">Add expert quote to homepage</span><div class="task-why">Pages with quotes cited 2x more in AI answers (Princeton 2024)</div></div>
-      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-cat">GEO</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~15 min</span></div>
-    </div>
-    <div class="task-detail">
-      <p>Your homepage has no expert quotes. AI engines prefer to cite pages with credentials and experience. Auto-verified on next scan.</p>
-      <div style="display:flex;gap:8px;"><button class="btn-fix">Generate Quote with AI</button><button class="btn-guide">Ask AI about this</button></div>
-    </div>
-  </div>
-
-  <div class="task-item" data-t="open" data-c="channels" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(245,158,11,.15);border:2px solid var(--warning);color:var(--warning);">&#8599;</div>
-      <div style="flex:1;"><span class="task-title">Register on Houzz &mdash; upload project photos</span><div class="task-why">AI cites Houzz in 15% of painter queries. CertaPro has 23 projects, you have 0.</div></div>
-      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">Channels</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~30 min</span></div>
-    </div>
-    <div class="task-detail">
-      <p>Houzz is one of the top AI data sources for painters. CertaPro gets 3 AI mentions from their Houzz portfolio alone.</p>
-      <p style="font-size:11px;color:var(--warning);">&#128269; Partially verified: we check for Houzz profile on next scan.</p>
-      <button class="btn-guide">Open Houzz Registration Guide</button>
-    </div>
-  </div>
-
-  <div class="task-item" data-t="open" data-c="content" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(245,158,11,.15);border:2px solid var(--warning);color:var(--warning);">!</div>
-      <span class="task-title" style="flex:1;">Write meta description for /services</span>
-      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-cat">Content</span><span class="t-med">MED</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~5 min</span></div>
-    </div>
-  </div>
-
-  <!-- GBP task (#19) -->
-  <div class="task-item" data-t="open" data-c="gbp" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
-      <div style="flex:1;"><span class="task-title">Complete your Google Business Profile (75% &rarr; 100%)</span><div class="task-why">GBP completeness is a key factor for Local Pack ranking. Missing: Google Posts, business description, service areas.</div></div>
-      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">GBP</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~20 min</span></div>
-    </div>
-    <div class="task-detail">
-      <p>Your GBP is 75% complete. Missing: regular Google Posts (competitors post weekly), detailed business description, service area definitions, and more photos (you have 12, CertaPro has 45).</p>
-      <p style="font-size:11px;color:var(--warning);">&#128269; Partially verified: we track GBP completeness via Places API.</p>
-      <button class="btn-guide">Open Google Business Profile</button>
-    </div>
-  </div>
-
-  <!-- Reviews task (#20) -->
-  <div class="task-item" data-t="open" data-c="gbp" onclick="toggleTask(this)">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
-      <div style="flex:1;"><span class="task-title">Get more Google reviews &mdash; you need 5+/week</span><div class="task-why">47 reviews (+1/wk) vs CertaPro 156 (+3/wk). Gap is widening. Reviews = #1 Local Pack factor.</div></div>
-      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">GBP</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">ongoing</span></div>
-    </div>
-    <div class="task-detail">
-      <p>Send a review request link to every completed job within 24 hours. Add QR code to invoices. Follow up 3 days later. Respond to every review (Google rewards active profiles).</p>
-      <p style="font-size:11px;color:var(--warning);">&#128269; Auto-tracked: we monitor your review count and velocity each scan.</p>
-      <button class="btn-guide">Generate Review Request Template</button>
-    </div>
-  </div>
-
-  <!-- New this scan (3 items to match tab count) -->
-  <div class="task-item" data-t="new" data-c="seo" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
-      <div style="flex:1;"><span class="task-title">Competitor CertaPro added Service schema</span><div class="task-why">Detected Jun 9 &mdash; they now have 7 schema types vs your 3</div></div>
-      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-high">HIGH</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="new" data-c="channels" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
-      <div style="flex:1;"><span class="task-title">ColorWorld created YouTube channel</span><div class="task-why">Detected Jun 9 &mdash; 3 timelapse videos, 2K views. New competitive threat.</div></div>
-      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-med">MED</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="new" data-c="content" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
-      <div style="flex:1;"><span class="task-title">AllPro published 2 blog posts</span><div class="task-why">Detected Jun 5 &mdash; content gap widening. They now have 12 blog posts, you have 0.</div></div>
-      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-med">MED</span></div>
-    </div>
-  </div>
-
-  <!-- Fixed (5 items to be more realistic for "12 fixed") -->
-  <div class="task-item" data-t="fixed" data-c="seo" style="display:none;opacity:.5;">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">LocalBusiness schema added</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-verified Jun 9</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+4 pts</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="fixed" data-c="speed" style="display:none;opacity:.5;">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">Mobile speed optimized (images compressed)</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-verified Jun 2</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+7 pts</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="fixed" data-c="technical" style="display:none;opacity:.5;">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">Mobile viewport meta tag added</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-verified May 12</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+1 pt</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="fixed" data-c="technical" style="display:none;opacity:.5;">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">HTTPS redirect configured</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-verified May 5</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+2 pts</span></div>
-    </div>
-  </div>
-  <div class="task-item" data-t="fixed" data-c="channels" style="display:none;opacity:.5;">
-    <div class="task-row">
-      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">Facebook page detected</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-detected Jun 2</span></div>
+<!-- ============================================================ -->
+<!-- STATE 8: ERROR — Bad URL                                      -->
+<!-- ============================================================ -->
+<div class="state" id="state-error-url">
+  <div class="center-page">
+    <div class="center-card" style="max-width:440px;">
+      <div style="font-size:48px;margin-bottom:16px;">&#9888;</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">We couldn't reach this website</div>
+      <div style="font-size:14px;color:var(--text-dim);margin-bottom:24px;">"rosspaintinggroup" doesn't appear to be a valid URL.</div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:24px;">
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:8px;">Did you mean:</div>
+        <div style="font-size:15px;font-weight:600;color:var(--accent);cursor:pointer;" onclick="goState('scanning')">rosspaintinggroup.com &rarr;</div>
+      </div>
+      <button class="btn-ghost" style="width:100%;" onclick="goState('landing')">Try again</button>
     </div>
   </div>
 </div>
 
-<!-- ============ SEARCH VISIBILITY ============ -->
-<div class="screen" id="screen-visibility">
-  <!-- Google Rankings -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Google Rankings <span class="ds">via DataForSEO &middot; updated weekly</span></span><span style="font-size:11px;color:var(--text-dim);">20 tracked queries</span></div>
-    <table class="tbl">
-      <thead><tr><th>Query</th><th>Position</th><th>Change</th><th>#1 Competitor</th></tr></thead>
-      <tbody>
-        <tr><td>"exterior painting san diego"</td><td style="color:var(--pass);font-weight:700;">#7</td><td style="color:var(--pass);font-weight:600;">&#8593;5</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #2</td></tr>
-        <tr><td>"house painters san diego"</td><td style="color:var(--warning);font-weight:700;">#12</td><td style="color:var(--pass);font-weight:600;">&#8593;3</td><td style="font-size:12px;color:var(--text-dim);">AllPro #4</td></tr>
-        <tr><td>"painting company near me"</td><td style="color:var(--warning);font-weight:700;">#18</td><td style="color:var(--pass);font-weight:600;">&#8593;1</td><td style="font-size:12px;color:var(--text-dim);">CertaPro #3</td></tr>
-        <tr><td>"best painters la jolla"</td><td style="font-weight:700;">#24</td><td style="color:var(--pass);font-weight:600;">NEW</td><td style="font-size:12px;color:var(--text-dim);">La Jolla Paint #1</td></tr>
-        <tr><td>"interior painting cost sd"</td><td style="font-weight:700;">#47</td><td style="color:var(--critical);font-weight:600;">&#8595;2</td><td style="font-size:12px;color:var(--text-dim);">ColorWorld #8</td></tr>
-      </tbody>
-    </table>
-    <div style="text-align:center;margin-top:12px;"><a href="#" onclick="return false">View all 20 &middot; Download CSV &rarr;</a></div>
-  </div>
-
-  <!-- AI Mentions Matrix -->
-  <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-    <div class="section-header"><span class="section-title">AI Mentions <span class="ds">via Perplexity Sonar + OpenAI API</span></span><span style="font-size:11px;color:var(--text-dim);">5 of 15 prompts mention you (33%)</span></div>
-    <table class="tbl">
-      <thead><tr><th>Prompt</th><th>ChatGPT</th><th>Perplexity</th><th>AIO</th><th>Gemini</th></tr></thead>
-      <tbody>
-        <tr><td>"Best painters San Diego"</td><td class="ai-n">&times;</td><td class="ai-y">&#10003; #3</td><td class="ai-y">&#10003;</td><td class="ai-n">&times;</td></tr>
-        <tr><td>"Exterior painting La Jolla"</td><td class="ai-n">&times;</td><td class="ai-y">&#10003; #2</td><td class="ai-n">&times;</td><td class="ai-n">&times;</td></tr>
-        <tr><td>"Painting cost San Diego"</td><td class="ai-y">&#10003; #5</td><td class="ai-y">&#10003; #1</td><td class="ai-y">&#10003;</td><td class="ai-n">&times;</td></tr>
-        <tr><td>"Ross Painting reviews"</td><td class="ai-y">&#10003; #1</td><td class="ai-y">&#10003; #1</td><td class="ai-y">&#10003;</td><td class="ai-n">&times;</td></tr>
-        <tr><td>"Reliable painters SD"</td><td class="ai-n">&times;</td><td class="ai-n">&times;</td><td class="ai-n">&times;</td><td class="ai-n">&times;</td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
-      <div style="font-size:13px;font-weight:600;">0/4 engines for "reliable painters SD"</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Your site doesn't use "reliable" anywhere. AI matches queries to content. <a href="#" onclick="go('tasks');return false;">Create task &rarr;</a></div>
-    </div>
-  </div>
-
-  <div style="display:flex;gap:12px;">
-    <button class="btn-fix" onclick="return false">Download Full Report (PDF)</button>
-    <button class="btn-guide" onclick="return false">Download Raw Data (CSV)</button>
-  </div>
-</div>
-
-<!-- ============ COMPETITORS ============ -->
-<div class="screen" id="screen-competitors">
-  <!-- Scrollable competitor bar -->
-  <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-    <div class="section-header"><span class="section-title">Your Market &mdash; 7 competitors <span class="ds">via Google Maps + SERP</span></span></div>
-    <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;">
-      <div style="min-width:130px;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:2px solid var(--accent);border-radius:12px;">
-        <div style="font-size:10px;color:var(--accent);font-weight:700;margin-bottom:4px;">YOU &mdash; #3</div>
-        <div style="font-size:12px;font-weight:700;">Ross Painting</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);color:var(--accent);">72</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.8&#9733; 47 rev</div>
+<!-- ============================================================ -->
+<!-- STATE 9: ERROR — Site Down                                    -->
+<!-- ============================================================ -->
+<div class="state" id="state-error-down">
+  <div class="center-page">
+    <div class="center-card" style="max-width:440px;">
+      <div style="font-size:48px;margin-bottom:16px;">&#128533;</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">This site is not responding</div>
+      <div style="font-size:14px;color:var(--text-dim);margin-bottom:8px;">rosspaintinggroup.com returned a 503 error.</div>
+      <div style="font-size:13px;color:var(--text-light);margin-bottom:24px;">This might be temporary. The site could be under maintenance.</div>
+      <div style="display:flex;gap:12px;justify-content:center;">
+        <button class="btn" onclick="goState('scanning')">Retry now</button>
+        <button class="btn-ghost">Notify me when it's up</button>
       </div>
-      <div style="min-width:130px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
-        <div style="font-size:10px;color:var(--critical);font-weight:700;margin-bottom:4px;">#1</div>
-        <div style="font-size:12px;font-weight:700;">CertaPro</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);">82</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.7&#9733; 156 rev</div>
-      </div>
-      <div style="min-width:130px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
-        <div style="font-size:10px;color:var(--warning);font-weight:700;margin-bottom:4px;">#2</div>
-        <div style="font-size:12px;font-weight:700;">AllPro</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);">78</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.6&#9733; 89 rev</div>
-      </div>
-      <div style="min-width:130px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
-        <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:4px;">#4</div>
-        <div style="font-size:12px;font-weight:700;">ColorWorld</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);">71</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.5&#9733; 63 rev</div>
-      </div>
-      <div style="min-width:130px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
-        <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:4px;">#5</div>
-        <div style="font-size:12px;font-weight:700;">La Jolla Paint</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);">64</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.4&#9733; 31 rev</div>
-      </div>
-      <div style="min-width:130px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
-        <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:4px;">#6</div>
-        <div style="font-size:12px;font-weight:700;">ProCoat</div>
-        <div style="font-size:20px;font-weight:800;font-family:var(--mono);">58</div>
-        <div style="font-size:10px;color:var(--text-dim);">4.3&#9733; 22 rev</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Competitor Moves -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Competitor Moves <span class="ds">detected by weekly scans</span></span></div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
-        <div style="min-width:80px;"><div style="font-size:12px;font-weight:700;">CertaPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 9</div></div>
-        <div><div style="font-size:13px;font-weight:500;">Added Service schema to all pages</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Now 7 schema types (you: 3) &rarr; <a href="#" onclick="go('tasks');return false">New task created</a></div></div>
-      </div>
-      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
-        <div style="min-width:80px;"><div style="font-size:12px;font-weight:700;">AllPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 5</div></div>
-        <div><div style="font-size:13px;font-weight:500;">Published 2 blog posts</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">"How to choose a painter" + "Interior vs Exterior costs"</div></div>
-      </div>
-      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
-        <div style="min-width:80px;"><div style="font-size:12px;font-weight:700;">CertaPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 28</div></div>
-        <div><div style="font-size:13px;font-weight:500;">+12 Google reviews (144&rarr;156)</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Velocity ~3/week &middot; Your pace ~1/week</div></div>
-      </div>
-      <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--info);">
-        <div style="min-width:80px;"><div style="font-size:12px;font-weight:700;">ColorWorld</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 22</div></div>
-        <div><div style="font-size:13px;font-weight:500;">Created YouTube channel (3 videos)</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">"Painting timelapse" &mdash; 2K views</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Head-to-head (simplified: 4 metrics that matter for local) -->
-  <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-    <div class="section-header"><span class="section-title">Head-to-Head <span class="ds">4 metrics that matter most</span></span></div>
-    <table class="tbl">
-      <thead><tr><th>Metric</th><th>You</th><th>CertaPro</th><th>AllPro</th></tr></thead>
-      <tbody>
-        <tr><td>Reviews <span class="ds">(velocity)</span></td><td class="c-you">47 <span style="color:var(--text-light);font-size:11px;">(+1/wk)</span></td><td class="c-win">156 <span style="color:var(--text-light);font-size:11px;">(+3/wk)</span></td><td>89 <span style="color:var(--text-light);font-size:11px;">(+2/wk)</span></td></tr>
-        <tr><td>Avg Google Position</td><td class="c-you">#18</td><td class="c-win">#4</td><td>#8</td></tr>
-        <tr><td>Local 3-Pack</td><td class="c-you" style="color:var(--critical);">&#10007; No</td><td class="c-win">&#10003; #1</td><td>&#10003; #2</td></tr>
-        <tr><td>Site Health</td><td class="c-you">72</td><td class="c-win">82</td><td>78</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Top 3 Gaps vs #1 (replaces SWOT — data, not generic advice) -->
-  <div class="card" style="margin-bottom:24px;border-left:4px solid var(--warning);">
-    <div class="section-header"><span class="section-title">Your Top 3 Gaps vs CertaPro (#1)</span><span style="font-size:11px;color:var(--text-dim);">Based on data, not guesses</span></div>
-    <div style="display:flex;flex-direction:column;gap:14px;">
-      <div style="display:flex;gap:12px;align-items:flex-start;">
-        <span style="width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--critical);flex-shrink:0;">1</span>
-        <div>
-          <div style="font-size:14px;font-weight:600;">Reviews: 47 vs 156 (gap: 109)</div>
-          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Your pace: +1/week. Their pace: +3/week. Gap is <strong style="color:var(--critical);">widening</strong>.</div>
-          <div style="font-size:12px;color:var(--text-dim);">Need: minimum <strong>5 reviews/week</strong> to start closing the gap.</div>
-          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Set up review request flow</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start;">
-        <span style="width:28px;height:28px;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--warning);flex-shrink:0;">2</span>
-        <div>
-          <div style="font-size:14px;font-weight:600;">Local Pack: you're not in it, they're #1</div>
-          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Main factors: review count + GBP completeness + proximity. You can fix 2 of 3.</div>
-          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Complete GBP profile (75% &rarr; 100%)</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:12px;align-items:flex-start;">
-        <span style="width:28px;height:28px;border-radius:50%;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--info);flex-shrink:0;">3</span>
-        <div>
-          <div style="font-size:14px;font-weight:600;">Platforms: you're on 3/8, they're on 6/8</div>
-          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Missing: Houzz (15% AI citations), YouTube (12%), BBB (8%). CertaPro is on all three.</div>
-          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Register on Houzz first (highest impact)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Where AI Gets Data -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Where AI Gets Data <span class="ds">citation analysis</span></span></div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">Google Biz</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:38%;height:100%;background:var(--accent);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">38%</span></div><span style="font-size:13px;color:var(--pass);">&#10003;</span></div>
-      <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">Yelp</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:22%;height:100%;background:var(--accent);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">22%</span></div><span style="font-size:13px;color:var(--warning);">!</span></div>
-      <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">Houzz</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:15%;height:100%;background:var(--warning);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">15%</span></div><span style="font-size:13px;color:var(--critical);">&times;</span></div>
-      <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">YouTube</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:12%;height:100%;background:var(--warning);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">12%</span></div><span style="font-size:13px;color:var(--critical);">&times;</span></div>
     </div>
   </div>
 </div>
 
-<!-- ============ MONITORING ============ -->
-<div class="screen" id="screen-monitoring">
-  <div class="g2" style="margin-bottom:24px;">
-    <div class="card">
-      <div class="section-header"><span class="section-title">Scan Schedule</span></div>
-      <div style="display:flex;align-items:center;gap:12px;"><div style="width:40px;height:40px;border-radius:10px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:18px;">&#128337;</div><div><div style="font-size:14px;font-weight:600;">Next: Monday 9:00 AM</div><div style="font-size:12px;color:var(--text-dim);">Weekly auto-scan enabled</div></div></div>
-    </div>
-    <div class="card">
-      <div class="section-header"><span class="section-title">Notifications</span></div>
-      <div class="toggle-row" style="border:none;padding:8px 0;"><div><div style="font-size:14px;font-weight:500;">Email alerts</div><div style="font-size:12px;color:var(--text-dim);">sergei@example.com</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="toggle-row" style="border:none;padding:8px 0;"><div><div style="font-size:14px;font-weight:500;">Telegram</div><div style="font-size:12px;color:var(--text-dim);">@sergeifounder</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
-    </div>
-  </div>
-
-  <!-- Recent Alerts (#33) -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Recent Alerts</span></div>
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9650;</div><div><div style="font-size:13px;font-weight:600;">Site Health: 64 &rarr; 72 (+8)</div><div style="font-size:11px;color:var(--text-dim);">Schema + expert quotes &middot; Jun 9</div></div></div>
-      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9888;</div><div><div style="font-size:13px;font-weight:600;">Competitor: CertaPro added Service schema</div><div style="font-size:11px;color:var(--text-dim);">New task created in Action Plan &middot; Jun 9</div></div></div>
-      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9660;</div><div><div style="font-size:13px;font-weight:600;">Review gap widening: CertaPro +12 this month</div><div style="font-size:11px;color:var(--text-dim);">Their velocity 3x yours &middot; May 28</div></div></div>
-    </div>
-  </div>
-
-  <!-- Week-by-week history (#32: added Local Pack + reviews) -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Week-by-Week History</span></div>
-    <div style="display:flex;flex-direction:column;gap:0;">
-      <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
-        <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;color:var(--accent);">Jun 9</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong style="color:var(--accent);">72</strong> health</span><span><strong style="color:var(--info);">460</strong> clicks</span><span><strong>#18</strong> avg</span><span><strong style="color:var(--warning);">5</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>47 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Expert quotes (+5) &middot; <span style="color:var(--pass);">&#10003;</span> Schema (+3) &middot; <span style="color:var(--info);">&#9733;</span> Perplexity citing you</div></div>
-        <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+8</div>
-      </div>
-      <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
-        <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">Jun 2</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>64</strong> health</span><span><strong style="color:var(--info);">450</strong> clicks</span><span><strong>#21</strong> avg</span><span><strong style="color:var(--warning);">3</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>46 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Speed +7 &middot; <span style="color:var(--warning);">&#9888;</span> CertaPro added FAQ schema</div></div>
-        <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+3</div>
-      </div>
-      <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
-        <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">May 26</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>61</strong> health</span><span><strong style="color:var(--info);">310</strong> clicks</span><span><strong>#24</strong> avg</span><span><strong style="color:var(--warning);">2</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>45 rev</span></div><div style="font-size:12px;color:var(--text-dim);">No site changes. Clicks up +90 from schema fix 2 weeks ago.</div></div>
-        <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--text-dim);min-width:40px;text-align:right;">+0</div>
-      </div>
-      <div style="display:flex;gap:16px;padding:16px 0;">
-        <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">May 12</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>43</strong> health</span><span><strong style="color:var(--info);">180</strong> clicks</span><span><strong>#35</strong> avg</span><span><strong style="color:var(--warning);">0</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>42 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> robots.txt +3 &middot; <span style="color:var(--pass);">&#10003;</span> Schema +4 &middot; <span style="color:var(--pass);">&#10003;</span> Viewport +1</div></div>
-        <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+8</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GSC connect -->
-  <div class="card" style="margin-bottom:24px;border-color:var(--info);border-style:dashed;text-align:center;padding:32px;">
-    <div style="font-size:18px;margin-bottom:8px;">&#128200;</div>
-    <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Google Search Console Connected</div>
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:4px;">Showing real clicks &amp; impressions. Read-only access.</div>
-    <div style="font-size:11px;color:var(--pass);">&#10003; Connected Jun 1, 2026</div>
-  </div>
-
-  <!-- Export -->
-  <div class="card">
-    <div class="section-header"><span class="section-title">Export Data</span></div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;">
-      <button class="btn-fix" onclick="return false">Latest Audit (PDF)</button>
-      <button class="btn-guide" onclick="return false">Scan History (CSV)</button>
-      <button class="btn-guide" onclick="return false">Competitor Data (CSV)</button>
-      <button class="btn-guide" onclick="return false">Query Positions (CSV)</button>
+<!-- ============================================================ -->
+<!-- STATE 10: ERROR — Rate Limit                                  -->
+<!-- ============================================================ -->
+<div class="state" id="state-error-rate">
+  <div class="center-page">
+    <div class="center-card" style="max-width:440px;">
+      <div style="font-size:48px;margin-bottom:16px;">&#9203;</div>
+      <div style="font-size:18px;font-weight:700;margin-bottom:8px;">Too many scans</div>
+      <div style="font-size:14px;color:var(--text-dim);margin-bottom:8px;">Free tier: 3 scans per hour.</div>
+      <div style="font-size:13px;color:var(--text-light);margin-bottom:24px;">Try again in <strong style="color:var(--text);">23 minutes</strong>.</div>
+      <button class="btn" onclick="goState('landing')">Back to home</button>
     </div>
   </div>
 </div>
 
-  </div><!-- content -->
-</div><!-- main -->
-</div><!-- app -->
-
-<!-- ONBOARDING -->
-<div class="onboard-overlay" id="onboarding" style="display:none;">
-  <div class="onboard-card">
-    <div class="onboard-dots"><div class="onboard-dot active" id="dot-1"></div><div class="onboard-dot" id="dot-2"></div><div class="onboard-dot" id="dot-3"></div></div>
-    <div id="ob-1">
-      <div class="ob-title">What's your business?</div>
-      <div class="ob-sub">We'll scan your site, find local competitors, and check your visibility in Google &amp; AI</div>
-      <input class="ob-input" type="text" placeholder="https://yoursite.com" value="https://rosspaintinggroup.com">
-      <div style="margin-bottom:12px;">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;text-align:center;">Where are you located?</div>
-        <div style="display:flex;gap:8px;justify-content:center;">
-          <input class="ob-input" type="text" placeholder="City" value="San Diego" style="width:160px;text-align:center;margin:0;">
-          <select style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;appearance:none;cursor:pointer;min-width:120px;text-align:center;">
-            <option>United States</option>
-            <option>Indonesia</option>
-            <option>United Kingdom</option>
-            <option>Australia</option>
-            <option>Canada</option>
-            <option>Germany</option>
-            <option>France</option>
-            <option>Other</option>
-          </select>
-        </div>
-      </div>
-      <div style="margin-bottom:16px;">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;text-align:center;">Industry:</div>
-        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto;">
-          <span class="ob-chip active" onclick="pickChip(this)">Home Services</span>
-          <span class="ob-chip" onclick="pickChip(this)">Legal</span>
-          <span class="ob-chip" onclick="pickChip(this)">Dental / Medical</span>
-          <span class="ob-chip" onclick="pickChip(this)">Restaurant / Cafe</span>
-          <span class="ob-chip" onclick="pickChip(this)">Hotel / Resort</span>
-          <span class="ob-chip" onclick="pickChip(this)">Beauty / Salon</span>
-          <span class="ob-chip" onclick="pickChip(this)">Fitness / Gym</span>
-          <span class="ob-chip" onclick="pickChip(this)">Auto Repair</span>
-          <span class="ob-chip" onclick="pickChip(this)">Real Estate</span>
-          <span class="ob-chip" onclick="pickChip(this)">Staffing / Agency</span>
-          <span class="ob-chip" onclick="pickChip(this)">Education</span>
-          <span class="ob-chip" onclick="pickChip(this)">Other</span>
-        </div>
-      </div>
-      <button class="ob-btn" onclick="obGo(2)">Scan My Business</button>
-    </div>
-    <div id="ob-2" style="display:none;">
-      <div class="ob-title">We found 7 competitors</div>
-      <div class="ob-sub">Based on Google Maps + search results for your niche &amp; location</div>
-      <div style="text-align:left;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">certapro-sandiego.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">82 &middot; 156 rev</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">allpropaintingsd.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">78 &middot; 89 rev</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;"><span style="color:var(--pass);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">colorworldpainting.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">71 &middot; 63 rev</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:6px;"><span style="color:var(--text-dim);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">lajollapainting.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">64 &middot; 31 rev</span></div>
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;"><span style="color:var(--text-dim);">&#10003;</span><div style="flex:1;font-size:13px;font-weight:500;">procoatpainting.com</div><span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">58 &middot; 22 rev</span></div>
-      </div>
-      <button class="ob-btn" onclick="obGo(3)">Track These Competitors</button>
-      <div class="ob-back" onclick="obGo(1)">&larr; Back</div>
-    </div>
-    <div id="ob-3" style="display:none;">
-      <div class="ob-title">Stay updated</div>
-      <div class="ob-sub">Get notified when your visibility changes or competitors make moves</div>
-      <div class="toggle-row"><div><div style="font-size:14px;font-weight:500;">Weekly email report</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="toggle-row"><div><div style="font-size:14px;font-weight:500;">Competitor alerts</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-      <div style="margin-top:20px;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;text-align:left;">
-        <div style="font-size:13px;font-weight:600;margin-bottom:4px;">&#128200; Optional: Connect Google Search Console</div>
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">See real clicks &amp; impressions. Read-only, we never modify data.</div>
-        <button class="btn-guide" style="font-size:11px;padding:6px 14px;">Connect GSC</button>
-      </div>
-      <button class="ob-btn" onclick="closeOB()" style="margin-top:20px;">Open Dashboard</button>
-      <div class="ob-back" onclick="obGo(2)">&larr; Back</div>
-    </div>
+<!-- ============================================================ -->
+<!-- FLOW NAVIGATION BAR                                          -->
+<!-- ============================================================ -->
+<div class="flow-bar">
+  <button class="flow-btn back" id="flowBack" onclick="flowPrev()" disabled>&larr; Back</button>
+  <div class="flow-step">
+    <strong id="flowLabel">Landing</strong>
+    <div class="flow-dots" id="flowDots" style="justify-content:center;margin-top:4px;"></div>
   </div>
+  <button class="flow-btn" id="flowNext" onclick="flowNext()">Next &rarr;</button>
 </div>
 
 <script>
-function go(n){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-'+n).classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(i=>i.classList.remove('active'));
-  const nav=document.querySelector('[data-screen="'+n+'"]');if(nav)nav.classList.add('active');
-  const t={dashboard:'Dashboard',tasks:'Action Plan',visibility:'Search Visibility',competitors:'Competitors',monitoring:'Monitoring'};
-  document.getElementById('page-title').textContent=t[n]||n;
-  closeSidebar();window.scrollTo(0,0);
+const STATES = [
+  {id:'landing', label:'Landing Page'},
+  {id:'scanning', label:'Scanning (60s)'},
+  {id:'report', label:'Free Report + CTA'},
+  {id:'auth', label:'Google Auth'},
+  {id:'onboard-competitors', label:'Onboarding: Competitors'},
+  {id:'onboard-notifications', label:'Onboarding: Notifications'},
+  {id:'dashboard-first', label:'Dashboard: First Visit'},
+  {id:'error-url', label:'Error: Bad URL'},
+  {id:'error-down', label:'Error: Site Down'},
+  {id:'error-rate', label:'Error: Rate Limit'}
+];
+let currentState = 0;
+
+function goState(id) {
+  const idx = STATES.findIndex(s => s.id === id);
+  if (idx >= 0) { currentState = idx; renderState(); }
 }
-function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('visible')}
-function toggleTask(el){el.classList.toggle('expanded')}
-function toggleHealth(){const d=document.getElementById('healthDetail'),t=document.getElementById('healthToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Site Health Check'}else{d.style.display='none';t.textContent='▶ Site Health Check'}}
-function toggleDomain(){const d=document.getElementById('domainDetail'),t=document.getElementById('domainToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Domain Health'}else{d.style.display='none';t.textContent='▶ Domain Health'}}
-function toggleGSC(){const c=document.getElementById('gscConnected'),d=document.getElementById('gscDisconnected');if(c.style.display==='none'){c.style.display='';d.style.display='none'}else{c.style.display='none';d.style.display=''}}
 
-let curTab='open',curCat='all';
-function stab(el){el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');curTab=el.getAttribute('data-f');filterTasks()}
-function scat(el){el.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');curCat=el.getAttribute('data-c');filterTasks()}
-function filterTasks(){document.querySelectorAll('#screen-tasks .task-item').forEach(i=>{const t=i.getAttribute('data-t'),c=i.getAttribute('data-c');let show=(t===curTab)&&(curCat==='all'||c===curCat);i.style.display=show?'':'none'})}
+function flowNext() {
+  if (currentState < STATES.length - 1) { currentState++; renderState(); }
+}
 
-function showOB(){document.getElementById('onboarding').style.display='flex';obStep(1)}
-function closeOB(){document.getElementById('onboarding').style.display='none'}
-function obGo(s){obStep(s)}
-function obStep(s){for(let i=1;i<=3;i++){document.getElementById('ob-'+i).style.display=i===s?'block':'none';const d=document.getElementById('dot-'+i);d.className='onboard-dot';if(i<s)d.classList.add('done');if(i===s)d.classList.add('active')}}
-function pickChip(el){el.parentElement.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
+function flowPrev() {
+  if (currentState > 0) { currentState--; renderState(); }
+}
+
+function renderState() {
+  document.querySelectorAll('.state').forEach(s => s.classList.remove('active'));
+  const st = STATES[currentState];
+  document.getElementById('state-' + st.id).classList.add('active');
+  document.getElementById('flowLabel').textContent = st.label;
+  document.getElementById('flowBack').disabled = currentState === 0;
+  document.getElementById('flowNext').disabled = currentState === STATES.length - 1;
+
+  // Dots
+  const dots = document.getElementById('flowDots');
+  dots.innerHTML = STATES.map((s, i) => {
+    const cls = i < currentState ? 'done' : i === currentState ? 'active' : '';
+    return '<div class="flow-dot ' + cls + '" onclick="currentState='+i+';renderState()" style="cursor:pointer" title="'+s.label+'"></div>';
+  }).join('');
+
+  // Animate scanning progress
+  if (st.id === 'scanning') { animateScan(); }
+
+  window.scrollTo(0, 0);
+}
+
+function animateScan() {
+  const fill = document.getElementById('scanFill');
+  const pct = document.getElementById('scanPct');
+  const steps = [
+    {el:'ss1',p:10},{el:'ss2',p:25},{el:'ss3',p:30},{el:'ss4',p:45},
+    {el:'ss5',p:60},{el:'ss6',p:75},{el:'ss7',p:88},{el:'ss8',p:100}
+  ];
+  // Reset
+  steps.forEach(s => {
+    const el = document.getElementById(s.el);
+    el.className = 'scan-step pending';
+    el.querySelector('.icon').textContent = '○';
+  });
+  fill.style.width = '0%';
+  pct.textContent = '0%';
+
+  let i = 0;
+  function next() {
+    if (i >= steps.length) return;
+    const s = steps[i];
+    const el = document.getElementById(s.el);
+    // Mark previous as done
+    if (i > 0) {
+      const prev = document.getElementById(steps[i-1].el);
+      prev.className = 'scan-step done';
+      prev.querySelector('.icon').textContent = '✓';
+    }
+    el.className = 'scan-step active';
+    el.querySelector('.icon').textContent = '●';
+    fill.style.width = s.p + '%';
+    pct.textContent = s.p + '%';
+    i++;
+    if (i < steps.length) setTimeout(next, 800);
+    else {
+      setTimeout(() => {
+        el.className = 'scan-step done';
+        el.querySelector('.icon').textContent = '✓';
+        fill.style.width = '100%';
+        pct.textContent = '100% — Done!';
+      }, 600);
+    }
+  }
+  setTimeout(next, 400);
+}
+
+function toggleTask(el) { el.classList.toggle('expanded'); }
+
+// Init
+renderState();
 </script>
 </body>
 </html>
