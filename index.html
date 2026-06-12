@@ -477,12 +477,13 @@ a { color: var(--accent); text-decoration: none; }
             Platforms: 3/8 active
           </div>
         </div>
-        <!-- Layer 3: AI Visibility (coming soon) -->
-        <div class="layer-card coming-soon">
-          <div class="layer-label">AI Visibility</div>
-          <div class="layer-number" style="color:var(--text-light);">--%</div>
-          <div class="layer-trend" style="color:var(--text-light);">Requires API setup</div>
-          <div class="layer-sub">Citation monitoring across<br>ChatGPT, Perplexity, Gemini, AIO</div>
+        <!-- Layer 3: AI Readiness (from existing GEO data) -->
+        <div class="layer-card">
+          <div class="layer-label">AI Readiness</div>
+          <div class="layer-number" style="color:var(--warning);">45<small>/100</small></div>
+          <div class="layer-trend" style="color:var(--pass);">&#9650; +15 this month</div>
+          <div class="layer-bar"><div class="layer-bar-fill" style="width:45%;background:linear-gradient(90deg,#b8860b,var(--warning));"></div></div>
+          <div class="layer-sub">AI bot access, content structure,<br>citation-readiness, BLUF, evidence</div>
         </div>
       </div>
 
@@ -628,16 +629,26 @@ a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
-    <!-- ==================== SCREEN 2: ACTION PLAN ==================== -->
+    <!-- ==================== SCREEN 2: ACTION PLAN (auto-verified) ==================== -->
     <div class="screen" id="screen-tasks">
+
+      <!-- How it works banner -->
+      <div style="background:rgba(45,212,160,.06);border:1px solid rgba(45,212,160,.15);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;">
+        <span style="font-size:18px;">&#128260;</span>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:var(--accent);">Tasks update automatically</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Each weekly scan detects what you've fixed and adds new issues. No manual checkboxes &mdash; your site is the source of truth.</div>
+        </div>
+      </div>
+
       <div class="task-progress">
-        <div class="task-progress-label"><span>12 of 47 tasks completed</span><span style="color:var(--accent);font-weight:600;">25%</span></div>
+        <div class="task-progress-label"><span>12 issues fixed &middot; 35 remaining &middot; 3 new since last scan</span><span style="color:var(--accent);font-weight:600;">25%</span></div>
         <div class="task-progress-bar"><div class="task-progress-fill"></div></div>
       </div>
 
-      <!-- Impact Preview (qualitative, no $ values) -->
+      <!-- Impact Preview (qualitative) -->
       <div class="impact-card">
-        <div class="impact-title">If you complete this week's 3 on-site tasks:</div>
+        <div class="impact-title">Top 3 issues by estimated impact on Site Health:</div>
         <div class="impact-row">
           <div class="impact-label">Site Health</div>
           <div class="impact-bar-wrap">
@@ -647,23 +658,22 @@ a { color: var(--accent); text-decoration: none; }
           <div class="impact-values">72 &rarr; ~80 <span style="color:var(--pass);font-weight:600;">(+8)</span></div>
         </div>
         <div class="impact-row" style="margin-bottom:0;">
-          <div class="impact-label">GEO Score</div>
+          <div class="impact-label">AI Readiness</div>
           <div class="impact-bar-wrap">
-            <div class="impact-bar-before" style="width:56%;"></div>
-            <div class="impact-bar-after" style="width:68%;"></div>
+            <div class="impact-bar-before" style="width:45%;"></div>
+            <div class="impact-bar-after" style="width:62%;"></div>
           </div>
-          <div class="impact-values">56 &rarr; ~68 <span style="color:var(--pass);font-weight:600;">(+12)</span></div>
+          <div class="impact-values">45 &rarr; ~62 <span style="color:var(--pass);font-weight:600;">(+17)</span></div>
         </div>
-        <div style="font-size:10px;color:var(--text-light);margin-top:12px;font-style:italic;">Estimates based on score weight of each check. Actual results may vary.</div>
+        <div style="font-size:10px;color:var(--text-light);margin-top:12px;font-style:italic;">Estimates based on score weight of each check. Verified on next scan.</div>
       </div>
 
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
         <div class="task-tabs" style="margin-bottom:0;">
-          <div class="task-tab active" data-filter="week" onclick="switchTab(this)">This Week (3)</div>
-          <div class="task-tab" data-filter="all" onclick="switchTab(this)">All Tasks (47)</div>
-          <div class="task-tab" data-filter="done" onclick="switchTab(this)">Completed (12)</div>
+          <div class="task-tab active" data-filter="week" onclick="switchTab(this)">Open Issues (35)</div>
+          <div class="task-tab" data-filter="new" onclick="switchTab(this)">New This Scan (3)</div>
+          <div class="task-tab" data-filter="done" onclick="switchTab(this)">Fixed (12)</div>
         </div>
-        <button class="add-task-btn" onclick="toggleAddTaskForm()" title="Add custom task">+</button>
       </div>
 
       <div class="cat-filters">
@@ -676,26 +686,10 @@ a { color: var(--accent); text-decoration: none; }
         <div class="cat-chip" data-cat="channels" onclick="filterCategory(this)">Channels</div>
       </div>
 
-      <!-- Add Task Form -->
-      <div class="add-task-form" id="addTaskForm">
-        <input type="text" id="newTaskName" placeholder="Enter task name...">
-        <div class="add-task-cats">
-          <div class="add-task-cat-chip selected" onclick="selectAddTaskCat(this)" data-cat="seo">SEO</div>
-          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="geo">GEO</div>
-          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="content">Content</div>
-          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="technical">Technical</div>
-          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="channels">Channels</div>
-        </div>
-        <div class="add-task-actions">
-          <button class="btn-fix" onclick="addCustomTask()">Add Task</button>
-          <button class="add-task-cancel" onclick="toggleAddTaskForm()">Cancel</button>
-        </div>
-      </div>
-
-      <!-- ON-SITE TASKS (green indicator, "Fix with AI" buttons) -->
+      <!-- ON-SITE ISSUES (auto-detected, auto-verified) -->
       <div class="task-item" data-tab="week" data-cat="technical" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(239,68,68,.15);border:2px solid var(--critical);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--critical);font-weight:700;">!</div>
           <div style="flex:1;">
             <span class="task-title">Fix robots.txt &mdash; allow AI bots to crawl your site</span>
             <div class="task-why">3 AI engines blocked &rarr; 0% visibility on ChatGPT &amp; Claude</div>
@@ -704,11 +698,12 @@ a { color: var(--accent); text-decoration: none; }
             <span class="task-type-badge type-onsite">ON-SITE</span>
             <span class="task-cat-badge">Technical</span>
             <span class="task-badge badge-high">HIGH</span>
-            <span class="task-time">5 min</span>
+            <span class="task-time">~5 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>GPTBot and ClaudeBot are currently blocked in your robots.txt. This means ChatGPT and Claude cannot learn about your business and will never recommend you.</p>
+          <p>GPTBot and ClaudeBot are currently blocked in your robots.txt. This means ChatGPT and Claude cannot learn about your business.</p>
+          <p style="font-size:11px;color:var(--accent);">&#128260; This issue will be automatically resolved when we detect the fix on your next scan.</p>
           <div style="display:flex;gap:8px;align-items:center;">
             <button class="btn-fix">Fix with AI &mdash; Download robots.txt</button>
             <button class="btn-guide" onclick="event.stopPropagation();">Ask AI about this</button>
@@ -718,7 +713,7 @@ a { color: var(--accent); text-decoration: none; }
 
       <div class="task-item" data-tab="week" data-cat="geo" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(239,68,68,.15);border:2px solid var(--critical);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--critical);font-weight:700;">!</div>
           <div style="flex:1;">
             <span class="task-title">Add an expert quote to your homepage</span>
             <div class="task-why">Pages with quotes cited 2x more (Princeton 2024)</div>
@@ -727,12 +722,12 @@ a { color: var(--accent); text-decoration: none; }
             <span class="task-type-badge type-onsite">ON-SITE</span>
             <span class="task-cat-badge">GEO</span>
             <span class="task-badge badge-high">HIGH</span>
-            <span class="task-time">15 min</span>
+            <span class="task-time">~15 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>Pages with expert quotes and credentials get cited 2x more in AI answers (Princeton 2024). Your homepage has zero expert attribution.</p>
-          <p>Suggested: <em>"With 15 years of experience painting homes across San Diego, we've completed over 2,000 projects" &mdash; Victor Ross, Owner</em></p>
+          <p>Your homepage has zero expert attribution. Adding quotes with credentials increases AI citation likelihood.</p>
+          <p style="font-size:11px;color:var(--accent);">&#128260; Auto-verified: we detect expert quotes and credentials on next scan.</p>
           <div style="display:flex;gap:8px;align-items:center;">
             <button class="btn-fix">Generate Quote with AI</button>
             <button class="btn-guide" onclick="event.stopPropagation();">Ask AI about this</button>
@@ -742,85 +737,101 @@ a { color: var(--accent); text-decoration: none; }
 
       <div class="task-item" data-tab="week" data-cat="content" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Write meta description for /services page</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,.15);border:2px solid var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--warning);font-weight:700;">!</div>
+          <span class="task-title" style="flex:1;">Write meta description for /services page</span>
           <div class="task-meta">
             <span class="task-type-badge type-onsite">ON-SITE</span>
             <span class="task-cat-badge">Content</span>
             <span class="task-badge badge-med">MED</span>
-            <span class="task-time">5 min</span>
+            <span class="task-time">~5 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>Google currently shows "No description available" for your /services page. A good meta description increases click-through rate by 5-10%.</p>
+          <p>Google shows "No description available" for /services. Auto-verified on next scan.</p>
           <button class="btn-fix">Generate Meta Description</button>
         </div>
       </div>
 
       <div class="task-item" data-tab="week" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,.15);border:2px solid var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--warning);font-weight:700;">!</div>
           <div style="flex:1;">
             <span class="task-title">Add FAQ schema to your services page</span>
-            <div class="task-why">Competitor CertaPro has this &rarr; +5 GEO score</div>
+            <div class="task-why">Competitor CertaPro has this &rarr; auto-detected gap</div>
           </div>
           <div class="task-meta">
             <span class="task-type-badge type-onsite">ON-SITE</span>
             <span class="task-cat-badge">Schema</span>
             <span class="task-badge badge-med">MED</span>
-            <span class="task-time">10 min</span>
+            <span class="task-time">~10 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>Your competitor certapro-sandiego.com already has FAQ schema. Adding it helps Google show your FAQ in search results and makes your content more structured for AI to cite.</p>
+          <p>CertaPro has FAQ schema on every service page. Auto-verified when we detect JSON-LD on next scan.</p>
           <button class="btn-fix">Generate FAQ Schema</button>
         </div>
       </div>
 
-      <!-- OFF-SITE TASKS (orange indicator, "View Guide" buttons) -->
+      <!-- OFF-SITE ISSUES (partially verifiable via API) -->
       <div class="task-item" data-tab="week" data-cat="channels" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Register on Houzz &mdash; upload 10 project photos</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,.15);border:2px solid var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--warning);font-weight:700;">&#8599;</div>
+          <span class="task-title" style="flex:1;">Register on Houzz &mdash; upload 10 project photos</span>
           <div class="task-meta">
             <span class="task-type-badge type-offsite">OFF-SITE</span>
             <span class="task-cat-badge">Channels</span>
             <span class="task-badge badge-high">HIGH</span>
-            <span class="task-time">30 min</span>
+            <span class="task-time">~30 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>AI cites Houzz in 15% of painter queries. CertaPro gets 3 AI mentions from their Houzz portfolio. Register a free business profile and upload your best project photos.</p>
+          <p>AI cites Houzz in 15% of painter queries. CertaPro has 23 projects there.</p>
+          <p style="font-size:11px;color:var(--warning);">&#128269; Partially verified: we check for Houzz profile existence on next scan.</p>
           <button class="btn-guide">View Guide &mdash; Open Houzz Registration</button>
         </div>
       </div>
 
       <div class="task-item" data-tab="week" data-cat="channels" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Get 5 more Yelp reviews &mdash; send requests to recent clients</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(245,158,11,.15);border:2px solid var(--warning);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:10px;color:var(--warning);font-weight:700;">&#8599;</div>
+          <span class="task-title" style="flex:1;">Get 5 more Yelp reviews &mdash; 2 reviews vs CertaPro's 34</span>
           <div class="task-meta">
             <span class="task-type-badge type-offsite">OFF-SITE</span>
             <span class="task-cat-badge">Channels</span>
             <span class="task-badge badge-med">MED</span>
-            <span class="task-time">15 min</span>
+            <span class="task-time">~15 min</span>
           </div>
         </div>
         <div class="task-detail">
-          <p>You have 2 Yelp reviews vs CertaPro's 34. Yelp is the 2nd most-cited source (22%). Send review request links to your last 5 completed projects.</p>
+          <p>Yelp is the 2nd most-cited source (22%). We track your review count via API.</p>
+          <p style="font-size:11px;color:var(--warning);">&#128269; Auto-tracked: we monitor Yelp review count on each scan.</p>
           <button class="btn-guide">View Guide &mdash; Generate Review Request Email</button>
         </div>
       </div>
 
-      <!-- Completed tasks with verification badges -->
+      <!-- NEW THIS SCAN (auto-discovered) -->
+      <div class="task-item" data-tab="new" data-cat="seo" onclick="toggleTask(this)" style="border-left:3px solid var(--info);">
+        <div class="task-row">
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(59,130,246,.15);border:2px solid var(--info);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:9px;color:var(--info);font-weight:700;">NEW</div>
+          <div style="flex:1;">
+            <span class="task-title">Competitor CertaPro added Service schema</span>
+            <div class="task-why">Detected Jun 9 scan &mdash; they now have 7 schema types vs your 3</div>
+          </div>
+          <div class="task-meta">
+            <span class="task-type-badge type-onsite">ON-SITE</span>
+            <span class="task-cat-badge">Schema</span>
+            <span class="task-badge badge-high">HIGH</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FIXED (auto-verified by scanner) -->
       <div class="task-item done" data-tab="done" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Added LocalBusiness schema markup</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--pass);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:12px;color:var(--pass);font-weight:700;">&#10003;</div>
+          <span class="task-title" style="text-decoration:line-through;opacity:0.6;">Added LocalBusiness schema markup</span>
           <div class="task-meta">
-            <span class="verify-badge badge-verified">Verified &#10003;</span>
-            <span class="task-cat-badge">Schema</span>
-            <span class="task-time">Done</span>
+            <span class="verify-badge badge-verified">Auto-verified Jun 9</span>
             <span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+4 pts</span>
           </div>
         </div>
@@ -828,12 +839,10 @@ a { color: var(--accent); text-decoration: none; }
 
       <div class="task-item done" data-tab="done" data-cat="speed" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Fixed mobile page speed (images compressed)</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--pass);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:12px;color:var(--pass);font-weight:700;">&#10003;</div>
+          <span class="task-title" style="text-decoration:line-through;opacity:0.6;">Fixed mobile page speed (images compressed)</span>
           <div class="task-meta">
-            <span class="verify-badge badge-verified">Verified &#10003;</span>
-            <span class="task-cat-badge">Speed</span>
-            <span class="task-time">Done</span>
+            <span class="verify-badge badge-verified">Auto-verified Jun 2</span>
             <span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+7 pts</span>
           </div>
         </div>
@@ -841,12 +850,10 @@ a { color: var(--accent); text-decoration: none; }
 
       <div class="task-item done" data-tab="done" data-cat="channels" onclick="toggleTask(this)">
         <div class="task-row">
-          <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Created Facebook business page</span>
+          <div style="width:20px;height:20px;border-radius:50%;background:rgba(34,197,94,.15);border:2px solid var(--pass);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;font-size:12px;color:var(--pass);font-weight:700;">&#10003;</div>
+          <span class="task-title" style="text-decoration:line-through;opacity:0.6;">Facebook page detected</span>
           <div class="task-meta">
-            <span class="verify-badge badge-self-reported">Self-reported</span>
-            <span class="task-cat-badge">Channels</span>
-            <span class="task-time">Done</span>
+            <span class="verify-badge badge-verified">Auto-detected Jun 2</span>
           </div>
         </div>
       </div>
@@ -1184,12 +1191,37 @@ a { color: var(--accent); text-decoration: none; }
       <button class="onboard-btn" onclick="onboardNext(2)">Continue</button>
     </div>
     <div id="onboard-step-2" style="display:none;">
-      <div class="onboard-title">Who are your competitors?</div>
-      <div class="onboard-subtitle">Add up to 2 competitor websites to compare against</div>
-      <input class="onboard-input" type="text" placeholder="https://competitor1.com" value="https://allpropaintingsd.com">
-      <input class="onboard-input" type="text" placeholder="https://competitor2.com (optional)" value="https://certapro-sandiego.com">
-      <button class="onboard-btn-ghost" style="margin-bottom:8px;" onclick="onboardNext(3)">Find competitors automatically</button>
-      <button class="onboard-btn" onclick="onboardNext(3)">Continue</button>
+      <div class="onboard-title">We found your competitors</div>
+      <div class="onboard-subtitle">Based on your niche &amp; location, these businesses compete with you in search results</div>
+      <div style="text-align:left;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:8px;">
+          <span style="color:var(--pass);font-size:14px;">&#10003;</span>
+          <div style="flex:1;font-size:13px;font-weight:500;">certapro-sandiego.com</div>
+          <span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">Score 82</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--accent);border-radius:8px;margin-bottom:8px;">
+          <span style="color:var(--pass);font-size:14px;">&#10003;</span>
+          <div style="flex:1;font-size:13px;font-weight:500;">allpropaintingsd.com</div>
+          <span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">Score 78</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;">
+          <span style="color:var(--pass);font-size:14px;">&#10003;</span>
+          <div style="flex:1;font-size:13px;font-weight:500;">colorworldpainting.com</div>
+          <span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">Score 71</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;">
+          <span style="color:var(--text-dim);font-size:14px;">&#10003;</span>
+          <div style="flex:1;font-size:13px;font-weight:500;">lajollapainting.com</div>
+          <span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">Score 64</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;">
+          <span style="color:var(--text-dim);font-size:14px;">&#10003;</span>
+          <div style="flex:1;font-size:13px;font-weight:500;">procoatpainting.com</div>
+          <span style="font-size:10px;color:var(--text-dim);font-family:var(--mono);">Score 58</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text-light);margin-bottom:12px;text-align:center;">Found via Google Maps + SERP analysis for "house painters San Diego"</div>
+      <button class="onboard-btn" onclick="onboardNext(3)">Track these competitors</button>
       <div class="onboard-back" onclick="onboardNext(1)">&larr; Back</div>
     </div>
     <div id="onboard-step-3" style="display:none;">
@@ -1219,15 +1251,6 @@ function showScreen(name) {
 
 function toggleTask(el) { el.classList.toggle('expanded'); }
 
-function toggleCheck(el) {
-  el.classList.toggle('checked');
-  const item = el.closest('.task-item');
-  item.classList.toggle('done');
-  item.classList.add('just-checked');
-  setTimeout(() => item.classList.remove('just-checked'), 300);
-  applyTaskFilters();
-}
-
 let currentTabFilter = 'week';
 let currentCatFilter = 'all';
 
@@ -1250,7 +1273,10 @@ function applyTaskFilters() {
     const tab = item.getAttribute('data-tab');
     const cat = item.getAttribute('data-cat');
     const isDone = item.classList.contains('done');
-    let showByTab = currentTabFilter === 'all' || (currentTabFilter === 'week' && tab === 'week' && !isDone) || (currentTabFilter === 'done' && isDone);
+    let showByTab = false;
+    if (currentTabFilter === 'week') showByTab = (tab === 'week');
+    else if (currentTabFilter === 'new') showByTab = (tab === 'new');
+    else if (currentTabFilter === 'done') showByTab = isDone;
     let showByCat = currentCatFilter === 'all' || cat === currentCatFilter;
     item.style.display = (showByTab && showByCat) ? '' : 'none';
   });
