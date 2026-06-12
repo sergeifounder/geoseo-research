@@ -928,6 +928,11 @@ a { color: var(--accent); text-decoration: none; }
       Growth Channels
       <span class="badge">5</span>
     </div>
+    <div class="nav-item" data-screen="strategy" onclick="showScreen('strategy')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Strategy
+      <span class="badge" style="background:var(--accent);color:#000;">NEW</span>
+    </div>
     <div class="nav-item" data-screen="monitoring" onclick="showScreen('monitoring')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
       Monitoring
@@ -983,6 +988,16 @@ a { color: var(--accent); text-decoration: none; }
 
     <!-- ==================== SCREEN 1: DASHBOARD ==================== -->
     <div class="screen active" id="screen-dashboard">
+
+      <!-- YOUR #1 PRIORITY card -->
+      <div style="background:linear-gradient(135deg,rgba(45,212,160,.1),rgba(45,212,160,.03));border:1px solid rgba(45,212,160,.3);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="showScreen('tasks')">
+        <div>
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:4px;">Your #1 Priority Right Now</div>
+          <div style="font-size:15px;font-weight:600;">Fix robots.txt — allow AI bots to discover your business</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:2px;">5 minutes · HIGH impact · ChatGPT & Claude currently blocked</div>
+        </div>
+        <button class="btn-fix" style="white-space:nowrap;">Do it now &rarr;</button>
+      </div>
 
       <!-- Hero Score -->
       <div class="hero-score">
@@ -1101,7 +1116,7 @@ a { color: var(--accent); text-decoration: none; }
       <div class="card" style="margin-bottom:24px;">
         <div class="card-header">
           <div>
-            <span class="card-title">KEYWORD RANKINGS</span>
+            <span class="card-title">KEYWORD RANKINGS <span style="font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0;">via DataForSEO</span></span>
             <div style="font-size:11px;color:var(--text-light);margin-top:4px;">via DataForSEO &bull; updated weekly</div>
           </div>
           <a href="#" style="font-size:12px;font-weight:500;" onclick="return false;">View all 20 keywords &rarr;</a>
@@ -1538,7 +1553,7 @@ a { color: var(--accent); text-decoration: none; }
       </div>
 
       <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-        <div class="section-header"><span class="section-title">Visibility Matrix</span><span style="font-size:11px;color:var(--text-dim);">Auto-generated prompts from your site content</span></div>
+        <div class="section-header"><span class="section-title">Visibility Matrix <span style="font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0;">via Perplexity Sonar + OpenAI API</span></span><span style="font-size:11px;color:var(--text-dim);">Auto-generated prompts from your site content</span></div>
         <table class="ai-matrix">
           <thead><tr><th style="text-align:left;">Test Prompt</th><th>ChatGPT</th><th>Perplexity</th><th>Google AIO</th><th>Gemini</th><th>Claude</th></tr></thead>
           <tbody>
@@ -1550,6 +1565,15 @@ a { color: var(--accent); text-decoration: none; }
             <tr><td>"Interior painting company San Diego reviews"</td><td class="ai-no">&times;</td><td class="ai-yes">&#10003; <span class="ai-rank">#4</span></td><td class="ai-no">&times;</td><td class="ai-no">&times;</td><td class="ai-no">&times;</td></tr>
           </tbody>
         </table>
+
+        <!-- Actionable insight for "Reliable painters" row -->
+        <div style="margin-top:16px;padding:14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+          <div style="font-size:13px;font-weight:600;">0/5 engines mention you for "reliable painters near me San Diego"</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">
+            <strong>Why:</strong> Your site doesn't use the word "reliable" anywhere. AI matches query terms to content.
+            <br><strong>Fix:</strong> Add a testimonial section with "reliable" in the heading. <a href="#" onclick="showScreen('tasks');return false;">Create task &rarr;</a>
+          </div>
+        </div>
       </div>
 
       <div class="card">
@@ -1582,7 +1606,7 @@ a { color: var(--accent); text-decoration: none; }
       </div>
 
       <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-        <div class="section-header"><span class="section-title">Head-to-Head Comparison</span></div>
+        <div class="section-header"><span class="section-title">Head-to-Head Comparison <span style="font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0;">via site audit + DataForSEO</span></span></div>
         <table class="comp-table">
           <thead><tr><th style="text-align:left;">Metric</th><th>You</th><th>AllPro</th><th>CertaPro</th></tr></thead>
           <tbody>
@@ -1733,7 +1757,7 @@ a { color: var(--accent); text-decoration: none; }
         <div class="review-insight">You have the best rating (4.8) but the fewest reviews (47). CertaPro has 3.3x more reviews &mdash; increasing volume will boost your local SEO ranking.</div>
       </div>
 
-      <div class="card">
+      <div class="card" style="margin-bottom:24px;">
         <div class="section-header"><span class="section-title">What They Do Better</span></div>
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
@@ -1747,6 +1771,25 @@ a { color: var(--accent); text-decoration: none; }
           <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--pass);">
             <div style="font-size:13px;font-weight:600;color:var(--pass);">You lead in AI Visibility (15% vs 8% vs 5%)</div>
             <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Your expert quotes and evidence-based content give you an edge in AI citations.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Competitive Strategy (3 moves) -->
+      <div style="margin-top:24px;padding:20px;background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:12px;">
+        <div style="font-size:13px;font-weight:700;color:var(--accent);margin-bottom:12px;">YOUR COMPETITIVE STRATEGY (3 moves)</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">1</span>
+            <div><div style="font-size:13px;font-weight:600;">Close the schema gap with CertaPro</div><div style="font-size:11px;color:var(--text-dim);">They have 7 schema types, you have 3. Add FAQ + Service + Review schema. Est. impact: GEO +10</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">2</span>
+            <div><div style="font-size:13px;font-weight:600;">Win the review volume game</div><div style="font-size:11px;color:var(--text-dim);">You have the best rating (4.8) but fewest reviews (47). Target: 100 reviews by Month 3. Send 5 review requests per completed job.</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="width:24px;height:24px;border-radius:50%;background:var(--accent);color:#000;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex-shrink:0;">3</span>
+            <div><div style="font-size:13px;font-weight:600;">Own AI visibility before they catch up</div><div style="font-size:11px;color:var(--text-dim);">You're at 15%, they're at 5-8%. This is your biggest advantage. Protect it by staying on Houzz, YouTube, and maintaining expert content.</div></div>
           </div>
         </div>
       </div>
@@ -1845,7 +1888,7 @@ a { color: var(--accent); text-decoration: none; }
 
       <!-- Where AI Cites Your Niche -->
       <div class="card" style="margin-bottom:24px;border-color:var(--accent);">
-        <div class="section-header"><span class="section-title">Where AI Gets Data in Your Niche</span><span style="font-size:11px;color:var(--text-dim);">Based on citation source analysis</span></div>
+        <div class="section-header"><span class="section-title">Where AI Gets Data in Your Niche <span style="font-size:9px;color:var(--text-light);font-weight:400;text-transform:none;letter-spacing:0;">via citation analysis (Perplexity + ChatGPT responses)</span></span><span style="font-size:11px;color:var(--text-dim);">Based on citation source analysis</span></div>
         <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">We analyzed where ChatGPT, Perplexity, and Google AIO source information about house painters in San Diego:</p>
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="display:flex;align-items:center;gap:12px;">
@@ -2011,6 +2054,135 @@ a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
+    <!-- ==================== SCREEN: STRATEGY ==================== -->
+    <div class="screen" id="screen-strategy">
+
+      <!-- A) Your Growth Roadmap -->
+      <div style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Your Growth Roadmap</span></div>
+        <div class="grid-3">
+          <div class="card" style="border-color:var(--accent);border-width:2px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;">Month 1: Foundation <span style="font-size:9px;background:var(--accent);color:#000;padding:1px 6px;border-radius:3px;margin-left:6px;">CURRENT</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Fix technical issues</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Add schema markup</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Allow AI bots</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Expert quotes</div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">80</strong></div>
+            <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:72%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
+            <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">20%</strong></div>
+            <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+40%</strong></div>
+          </div>
+          <div class="card">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Month 2: Growth</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Start YouTube channel</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Get 20+ Yelp reviews</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Register on Houzz</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> FAQ schema all pages</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> BBB accreditation</div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">88</strong></div>
+            <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:0%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
+            <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">35%</strong></div>
+            <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+80%</strong></div>
+          </div>
+          <div class="card">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Month 3: Scale</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Blog: 2 posts/month</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Outreach to local dirs</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Guest posts on SD blogs</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Video testimonials</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Nextdoor profile</div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">92+</strong></div>
+            <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:0%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
+            <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">50%+</strong></div>
+            <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+150%</strong></div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--text-light);font-style:italic;">* Targets based on industry benchmarks. Progress depends on execution consistency.</div>
+      </div>
+
+      <!-- B) Where You'll Be in 90 Days -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Where You'll Be in 90 Days</span></div>
+        <div class="grid-2" style="margin-bottom:0;">
+          <div style="background:var(--surface2);border-radius:10px;padding:20px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-light);margin-bottom:16px;">Today</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text-dim);">Health Score</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text-dim);">72</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text-dim);">AI Visibility</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text-dim);">15%</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text-dim);">Google Rankings</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text-dim);">avg #18</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text-dim);">Traffic Value</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text-dim);">~$2,400/mo</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text-dim);">Platforms</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text-dim);">3/8</span></div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:10px;padding:20px;">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:16px;">90-Day Projection</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text);">Health Score</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent);">88-92</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text);">AI Visibility</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent);">40-50%</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text);">Google Rankings</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent);">avg #8-12</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text);">Traffic Value</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent);">~$5,500-7,000/mo</span></div>
+              <div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--text);">Platforms</span><span style="font-size:13px;font-weight:700;font-family:var(--mono);color:var(--accent);">7/8</span></div>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--text-light);font-style:italic;margin-top:12px;">Projection assumes completing 80% of recommended tasks on schedule.</div>
+      </div>
+
+      <!-- C) Industry Benchmark -->
+      <div class="card" style="margin-bottom:24px;overflow-x:auto;">
+        <div class="section-header"><span class="section-title">Industry Benchmark</span><span style="font-size:11px;color:var(--text-dim);">How you compare to industry average</span></div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:10px 14px;border-bottom:1px solid var(--border);">Metric</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:10px 14px;border-bottom:1px solid var(--border);">You</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:10px 14px;border-bottom:1px solid var(--border);">Industry Avg</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:10px 14px;border-bottom:1px solid var(--border);">Top 10%</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left;font-size:13px;font-weight:500;padding:12px 14px;border-bottom:1px solid var(--border);">SEO Score</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--pass);">72</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">65</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">90+</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-size:13px;font-weight:500;padding:12px 14px;border-bottom:1px solid var(--border);">AI Visibility</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--pass);">15%</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">8%</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">45%+</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-size:13px;font-weight:500;padding:12px 14px;border-bottom:1px solid var(--border);">Page Speed</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--pass);">89</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">72</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">95+</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-size:13px;font-weight:500;padding:12px 14px;border-bottom:1px solid var(--border);">Reviews</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--warning);">47</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">85</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;border-bottom:1px solid var(--border);color:var(--text-dim);">200+</td>
+            </tr>
+            <tr>
+              <td style="text-align:left;font-size:13px;font-weight:500;padding:12px 14px;">Backlinks</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;font-weight:700;padding:12px 14px;color:var(--warning);">124</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;color:var(--text-dim);">250</td>
+              <td style="text-align:center;font-family:var(--mono);font-size:13px;padding:12px 14px;color:var(--text-dim);">800+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
     <!-- ==================== SCREEN 6: MONITORING ==================== -->
     <div class="screen" id="screen-monitoring">
       <div class="grid-2" style="margin-bottom:24px;">
@@ -2136,7 +2308,7 @@ function showScreen(name) {
   document.getElementById('screen-' + name).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelector('[data-screen="' + name + '"]').classList.add('active');
-  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', chat:'AI Chat', channels:'Growth Channels', monitoring:'Monitoring' };
+  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', chat:'AI Chat', channels:'Growth Channels', strategy:'Strategy', monitoring:'Monitoring' };
   document.getElementById('page-title').textContent = titles[name] || name;
   // Close mobile sidebar
   closeSidebar();
