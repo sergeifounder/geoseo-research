@@ -236,41 +236,62 @@ a{color:var(--accent);text-decoration:none}
 <!-- ============ DASHBOARD ============ -->
 <div class="screen active" id="screen-dashboard">
 
-  <!-- HERO: Visibility Summary -->
-  <div style="background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:16px;padding:28px 32px;margin-bottom:24px;position:relative;z-index:1;">
-    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);margin-bottom:20px;">Your Search Visibility</div>
-
+  <!-- HERO 1: Google Maps & GBP (most important for local) -->
+  <div style="background:linear-gradient(135deg,rgba(59,130,246,.08),rgba(59,130,246,.02));border:1px solid rgba(59,130,246,.2);border-radius:16px;padding:24px 28px;margin-bottom:16px;position:relative;z-index:1;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--info);">Google Maps &amp; Reviews</div>
+      <span style="font-size:9px;color:var(--text-light);">via Google Places API</span>
+    </div>
     <div class="g2" style="margin-bottom:16px;">
-      <!-- Google -->
       <div>
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px;">
-          <span style="font-size:11px;color:var(--text-dim);font-weight:600;">Google</span>
-          <span style="font-size:9px;color:var(--text-light);">via DataForSEO</span>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Local 3-Pack for "house painters san diego"</div>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:6px;">
+          <span style="background:rgba(239,68,68,.12);color:var(--critical);font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;">NOT IN 3-PACK</span>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-          <span style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text);">8<span style="font-size:14px;color:var(--text-dim);font-weight:500;"> / 20 queries</span></span>
+        <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
+          #1 CertaPro &middot; #2 AllPro &middot; #3 ColorWorld<br>
+          <span style="color:var(--text-light);">You need more reviews + complete GBP to enter</span>
         </div>
-        <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="width:40%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:4px;"></div></div>
-        <div style="font-size:12px;color:var(--text-dim);">Avg position <strong style="color:var(--text);font-family:var(--mono);">#18</strong> &middot; <span style="color:var(--pass);font-weight:600;">&#9650; +3 this month</span></div>
       </div>
-      <!-- AI -->
       <div>
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:8px;">
-          <span style="font-size:11px;color:var(--text-dim);font-weight:600;">AI Engines</span>
-          <span style="font-size:9px;color:var(--text-light);">via Perplexity + OpenAI</span>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;">Your Google Business Profile</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;font-weight:800;color:var(--warning);">&#9733;</span>
+          <span style="font-size:24px;font-weight:800;font-family:var(--mono);">4.8</span>
+          <span style="font-size:13px;color:var(--text-dim);">47 reviews</span>
+          <span style="font-size:12px;color:var(--text-light);">(+1/week)</span>
         </div>
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
-          <span style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text);">5<span style="font-size:14px;color:var(--text-dim);font-weight:500;"> / 15 prompts</span></span>
+        <div style="font-size:12px;color:var(--text-dim);">
+          GBP completeness: <strong style="color:var(--warning);">75%</strong> &middot; <span style="color:var(--warning);">&#9888;</span> No Google Posts &middot; 12 photos
         </div>
-        <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:6px;"><div style="width:33%;height:100%;background:linear-gradient(90deg,#b8860b,var(--warning));border-radius:4px;"></div></div>
-        <div style="font-size:12px;color:var(--text-dim);">ChatGPT 2 &middot; Perplexity 5 &middot; Gemini 0 &middot; <span style="color:var(--pass);font-weight:600;">&#9650; +2 new</span></div>
+        <div style="font-size:12px;color:var(--critical);margin-top:4px;">
+          vs CertaPro: 156 reviews (+3/week) &mdash; gap widening
+        </div>
       </div>
     </div>
+  </div>
 
-    <div style="padding-top:16px;border-top:1px solid rgba(45,212,160,.15);font-size:13px;color:var(--text-dim);">
-      <strong style="color:var(--warning);">CertaPro</strong> ahead on 12/20 queries &middot;
-      <strong style="color:var(--text);">AllPro</strong> ahead on 9/20 &middot;
-      <strong style="color:var(--accent);">You lead</strong> on 3 queries
+  <!-- HERO 2: Search Visibility -->
+  <div style="background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:1px solid rgba(45,212,160,.2);border-radius:16px;padding:24px 28px;margin-bottom:24px;position:relative;z-index:1;">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);">Search Visibility</div>
+    </div>
+    <div class="g2" style="margin-bottom:12px;">
+      <div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">Google Organic</span><span style="font-size:9px;color:var(--text-light);">DataForSEO</span></div>
+        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">8<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 20 queries</span></span></div>
+        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:40%;height:100%;background:var(--accent);border-radius:3px;"></div></div>
+        <div style="font-size:12px;color:var(--text-dim);">Avg <strong style="font-family:var(--mono);">#18</strong> &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+3</span> this month</div>
+      </div>
+      <div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">AI Engines</span><span style="font-size:9px;color:var(--text-light);">Perplexity + OpenAI</span></div>
+        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">5<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 15 prompts</span></span></div>
+        <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:33%;height:100%;background:var(--warning);border-radius:3px;"></div></div>
+        <div style="font-size:12px;color:var(--text-dim);">ChatGPT 2 &middot; Perplexity 5 &middot; Gemini 0 &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+2 new</span></div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text-dim);padding-top:12px;border-top:1px solid rgba(45,212,160,.1);">
+      <strong style="color:var(--warning);">CertaPro</strong> ahead on 12/20 &middot; <strong>AllPro</strong> ahead on 9/20 &middot; <strong style="color:var(--accent);">You lead</strong> on 3
     </div>
   </div>
 
@@ -582,22 +603,50 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
-  <!-- Head-to-head -->
+  <!-- Head-to-head (simplified: 4 metrics that matter for local) -->
   <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-    <div class="section-header"><span class="section-title">Head-to-Head</span></div>
+    <div class="section-header"><span class="section-title">Head-to-Head <span class="ds">4 metrics that matter most</span></span></div>
     <table class="tbl">
-      <thead><tr><th>Metric</th><th>You</th><th>CertaPro</th><th>AllPro</th><th>ColorWorld</th></tr></thead>
+      <thead><tr><th>Metric</th><th>You</th><th>CertaPro</th><th>AllPro</th></tr></thead>
       <tbody>
-        <tr><td>Site Health</td><td class="c-you">72</td><td class="c-win">82</td><td>78</td><td>71</td></tr>
-        <tr><td>GEO Score</td><td class="c-you c-win">56</td><td>38</td><td>42</td><td>35</td></tr>
-        <tr><td>Speed</td><td class="c-you c-win">89</td><td>67</td><td>72</td><td>81</td></tr>
-        <tr><td>Backlinks <span class="ds">Bing</span></td><td class="c-you">124</td><td class="c-win">412</td><td>287</td><td>98</td></tr>
-        <tr><td>Reviews <span class="ds">Places API</span></td><td class="c-you">4.8 (47)</td><td class="c-win">4.7 (156)</td><td>4.6 (89)</td><td>4.5 (63)</td></tr>
-        <tr><td>Avg Google Pos</td><td class="c-you">#18</td><td class="c-win">#4</td><td>#8</td><td>#15</td></tr>
-        <tr><td>AI Mentions /15</td><td class="c-you">5</td><td>3</td><td class="c-win">6</td><td>1</td></tr>
-        <tr><td>Platforms</td><td class="c-you">3/8</td><td class="c-win">6/8</td><td>4/8</td><td>3/8</td></tr>
+        <tr><td>Reviews <span class="ds">(velocity)</span></td><td class="c-you">47 <span style="color:var(--text-light);font-size:11px;">(+1/wk)</span></td><td class="c-win">156 <span style="color:var(--text-light);font-size:11px;">(+3/wk)</span></td><td>89 <span style="color:var(--text-light);font-size:11px;">(+2/wk)</span></td></tr>
+        <tr><td>Avg Google Position</td><td class="c-you">#18</td><td class="c-win">#4</td><td>#8</td></tr>
+        <tr><td>Local 3-Pack</td><td class="c-you" style="color:var(--critical);">&#10007; No</td><td class="c-win">&#10003; #1</td><td>&#10003; #2</td></tr>
+        <tr><td>Site Health</td><td class="c-you">72</td><td class="c-win">82</td><td>78</td></tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Top 3 Gaps vs #1 (replaces SWOT — data, not generic advice) -->
+  <div class="card" style="margin-bottom:24px;border-left:4px solid var(--warning);">
+    <div class="section-header"><span class="section-title">Your Top 3 Gaps vs CertaPro (#1)</span><span style="font-size:11px;color:var(--text-dim);">Based on data, not guesses</span></div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="width:28px;height:28px;border-radius:50%;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--critical);flex-shrink:0;">1</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Reviews: 47 vs 156 (gap: 109)</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Your pace: +1/week. Their pace: +3/week. Gap is <strong style="color:var(--critical);">widening</strong>.</div>
+          <div style="font-size:12px;color:var(--text-dim);">Need: minimum <strong>5 reviews/week</strong> to start closing the gap.</div>
+          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Set up review request flow</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="width:28px;height:28px;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--warning);flex-shrink:0;">2</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Local Pack: you're not in it, they're #1</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Main factors: review count + GBP completeness + proximity. You can fix 2 of 3.</div>
+          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Complete GBP profile (75% &rarr; 100%)</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <span style="width:28px;height:28px;border-radius:50%;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--info);flex-shrink:0;">3</span>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Platforms: you're on 3/8, they're on 6/8</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Missing: Houzz (15% AI citations), YouTube (12%), BBB (8%). CertaPro is on all three.</div>
+          <div style="font-size:11px;color:var(--accent);margin-top:4px;cursor:pointer;" onclick="go('tasks')">&#8594; Task: Register on Houzz first (highest impact)</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Where AI Gets Data -->
@@ -608,17 +657,6 @@ a{color:var(--accent);text-decoration:none}
       <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">Yelp</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:22%;height:100%;background:var(--accent);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">22%</span></div><span style="font-size:13px;color:var(--warning);">!</span></div>
       <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">Houzz</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:15%;height:100%;background:var(--warning);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">15%</span></div><span style="font-size:13px;color:var(--critical);">&times;</span></div>
       <div style="display:flex;align-items:center;gap:12px;"><span style="font-size:12px;color:var(--text-dim);width:110px;text-align:right;font-family:var(--mono);">YouTube</span><div style="flex:1;height:18px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;"><div style="width:12%;height:100%;background:var(--warning);border-radius:6px;"></div><span style="position:absolute;right:6px;top:0;font-size:10px;font-family:var(--mono);color:var(--text);">12%</span></div><span style="font-size:13px;color:var(--critical);">&times;</span></div>
-    </div>
-  </div>
-
-  <!-- SWOT -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">SWOT</span></div>
-    <div class="swot">
-      <div class="sq" style="border-left:3px solid var(--pass);"><h4 style="color:var(--pass);">Strengths</h4><ul><li style="color:var(--pass);">Best rating 4.8&#9733;</li><li style="color:var(--pass);">Fastest site (89)</li><li style="color:var(--pass);">Highest GEO score (56)</li></ul></div>
-      <div class="sq" style="border-left:3px solid var(--critical);"><h4 style="color:var(--critical);">Weaknesses</h4><ul><li style="color:var(--critical);">Fewest reviews (47 vs 156)</li><li style="color:var(--critical);">124 backlinks vs 412</li><li style="color:var(--critical);">Missing 5 platforms</li></ul></div>
-      <div class="sq" style="border-left:3px solid var(--info);"><h4 style="color:var(--info);">Opportunities</h4><ul><li style="color:var(--info);">Houzz (15% AI citations)</li><li style="color:var(--info);">YouTube timelapses</li><li style="color:var(--info);">Blog content (competitors do 2/mo)</li></ul></div>
-      <div class="sq" style="border-left:3px solid var(--warning);"><h4 style="color:var(--warning);">Threats</h4><ul><li style="color:var(--warning);">CertaPro growing +5 GEO/mo</li><li style="color:var(--warning);">ColorWorld started YouTube</li><li style="color:var(--warning);">Review gap widening</li></ul></div>
     </div>
   </div>
 </div>
@@ -693,10 +731,23 @@ a{color:var(--accent);text-decoration:none}
   <div class="onboard-card">
     <div class="onboard-dots"><div class="onboard-dot active" id="dot-1"></div><div class="onboard-dot" id="dot-2"></div><div class="onboard-dot" id="dot-3"></div></div>
     <div id="ob-1">
-      <div class="ob-title">What's your website?</div>
-      <div class="ob-sub">We'll scan it, find competitors, and check your search visibility</div>
+      <div class="ob-title">What's your business?</div>
+      <div class="ob-sub">We'll scan your site, find local competitors, and check your visibility</div>
       <input class="ob-input" type="text" placeholder="https://yoursite.com" value="https://rosspaintinggroup.com">
-      <button class="ob-btn" onclick="obGo(2)">Scan My Site</button>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;text-align:center;">Business type:</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent);">Painter</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Plumber</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Dentist</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Lawyer</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Restaurant</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Salon</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Contractor</span>
+          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Other</span>
+        </div>
+      </div>
+      <button class="ob-btn" onclick="obGo(2)">Scan My Business</button>
     </div>
     <div id="ob-2" style="display:none;">
       <div class="ob-title">We found 7 competitors</div>
