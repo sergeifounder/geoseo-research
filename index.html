@@ -341,7 +341,7 @@ a { color: var(--accent); text-decoration: none; }
 
 .task-row {
   padding: 14px 16px;
-  display: flex; align-items: center; gap: 12px;
+  display: flex; align-items: flex-start; gap: 12px;
   cursor: pointer;
 }
 .task-check {
@@ -352,6 +352,7 @@ a { color: var(--accent); text-decoration: none; }
   display: flex; align-items: center; justify-content: center;
   transition: all 0.2s;
   cursor: pointer;
+  margin-top: 2px;
 }
 .task-check.checked { background: var(--accent); border-color: var(--accent); }
 .task-check.checked::after { content: '\2713'; color: #000; font-size: 12px; font-weight: 700; }
@@ -402,6 +403,200 @@ a { color: var(--accent); text-decoration: none; }
   transition: all 0.2s;
 }
 .btn-fix:hover { background: #3ee5b1; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(45,212,160,.3); }
+
+/* Priority reasoning (#5 - why text) */
+.task-why {
+  font-size: 11px;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ========== SWOT GRID ========== */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.swot-quadrant {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 16px;
+}
+.swot-quadrant h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 10px;
+}
+.swot-quadrant ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.swot-quadrant li {
+  font-size: 12px;
+  color: var(--text-dim);
+  padding-left: 12px;
+  position: relative;
+}
+.swot-quadrant li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ========== IMPACT PREVIEW ========== */
+.impact-card {
+  background: linear-gradient(135deg, rgba(45,212,160,.06), rgba(45,212,160,.02));
+  border: 1px solid rgba(45,212,160,.15);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+.impact-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.impact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.impact-label {
+  font-size: 12px;
+  color: var(--text-dim);
+  width: 120px;
+  font-weight: 500;
+}
+.impact-bar-wrap {
+  flex: 1;
+  height: 20px;
+  background: var(--surface2);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.impact-bar-before {
+  height: 100%;
+  background: var(--text-light);
+  opacity: 0.4;
+  border-radius: 6px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.impact-bar-after {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-dim), var(--accent));
+  border-radius: 6px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.impact-values {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text);
+  white-space: nowrap;
+  min-width: 140px;
+  text-align: right;
+}
+.impact-values .delta {
+  color: var(--pass);
+  font-weight: 600;
+}
+.impact-footnote {
+  font-size: 11px;
+  color: var(--text-light);
+  font-style: italic;
+  margin-top: 8px;
+}
+
+/* ========== ADD TASK FORM ========== */
+.add-task-btn {
+  background: var(--accent);
+  color: #000;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.add-task-btn:hover { background: #3ee5b1; transform: scale(1.05); }
+.add-task-form {
+  display: none;
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  animation: fadeUp 0.25s var(--ease);
+}
+.add-task-form.visible { display: block; }
+.add-task-form input[type="text"] {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: var(--font);
+  outline: none;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.add-task-form input[type="text"]:focus { border-color: var(--accent); }
+.add-task-form input[type="text"]::placeholder { color: var(--text-light); }
+.add-task-cats { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.add-task-cat-chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-dim);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.add-task-cat-chip.selected { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
+.add-task-actions { display: flex; gap: 8px; }
+.add-task-actions .btn-fix { padding: 6px 16px; font-size: 12px; }
+.add-task-cancel {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.add-task-cancel:hover { border-color: var(--text-dim); color: var(--text); }
 
 /* ========== AI VISIBILITY ========== */
 .ai-matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
@@ -662,6 +857,7 @@ a { color: var(--accent); text-decoration: none; }
 @media (max-width: 900px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
   .grid-3, .grid-2, .grid-1-2 { grid-template-columns: 1fr; }
+  .swot-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
@@ -672,6 +868,7 @@ a { color: var(--accent); text-decoration: none; }
   .hero-number { font-size: 48px; }
   .grid-4 { grid-template-columns: 1fr 1fr; }
   .content { padding: 20px 16px 48px; }
+  .swot-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -926,7 +1123,7 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <!-- AI Visibility Mini + Competitors Mini -->
+      <!-- AI Visibility Mini + Mini SWOT (#8 - replaced vs Competitors) -->
       <div class="grid-2">
         <div class="card" style="cursor:pointer" onclick="showScreen('ai')">
           <div class="section-header"><span class="section-title">AI Visibility</span><span class="section-link">Details &rarr;</span></div>
@@ -936,12 +1133,18 @@ a { color: var(--accent); text-decoration: none; }
             <div style="background:var(--surface2);border-radius:8px;padding:12px;"><div style="font-size:10px;color:var(--text-dim);margin-bottom:4px;">Google AIO</div><div style="font-size:18px;font-weight:700;font-family:var(--mono);color:var(--warning);">3<small style="font-size:11px;color:var(--text-dim);">/10</small></div></div>
           </div>
         </div>
+        <!-- Mini SWOT Summary (Change #8) -->
         <div class="card" style="cursor:pointer" onclick="showScreen('competitors')">
-          <div class="section-header"><span class="section-title">vs Competitors</span><span class="section-link">Compare &rarr;</span></div>
-          <div style="display:flex;flex-direction:column;gap:6px;">
-            <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border);"><span style="color:var(--text-dim);">SEO Score</span><span><span style="color:var(--warning);">72</span> vs <span>85</span> vs <span>91</span></span></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;border-bottom:1px solid var(--border);"><span style="color:var(--text-dim);">GEO Score</span><span><span style="color:var(--pass);">56</span> vs <span>42</span> vs <span>38</span></span></div>
-            <div style="display:flex;justify-content:space-between;font-size:12px;padding:6px 0;"><span style="color:var(--text-dim);">AI Mentions</span><span><span style="color:var(--pass);">15%</span> vs <span>8%</span> vs <span>5%</span></span></div>
+          <div class="section-header"><span class="section-title">Competitive Position</span><span class="section-link" onclick="event.stopPropagation();showScreen('competitors')">View SWOT &rarr;</span></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;">
+              <span style="color:var(--pass);font-size:14px;margin-top:1px;flex-shrink:0;">&#9650;</span>
+              <span style="font-size:12px;color:var(--text-dim);"><strong style="color:var(--text);">Your edge:</strong> Best rating, fastest site, highest AI visibility</span>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;">
+              <span style="color:var(--warning);font-size:14px;margin-top:1px;flex-shrink:0;">&#9679;</span>
+              <span style="font-size:12px;color:var(--text-dim);"><strong style="color:var(--text);">Focus:</strong> More reviews, FAQ schema, Houzz profile</span>
+            </div>
           </div>
         </div>
       </div>
@@ -954,14 +1157,48 @@ a { color: var(--accent); text-decoration: none; }
         <div class="task-progress-bar"><div class="task-progress-fill"></div></div>
       </div>
 
-      <!-- Task tabs with filtering (#4) -->
-      <div class="task-tabs">
-        <div class="task-tab active" data-filter="week" onclick="switchTab(this)">This Week (3)</div>
-        <div class="task-tab" data-filter="all" onclick="switchTab(this)">All Tasks (47)</div>
-        <div class="task-tab" data-filter="done" onclick="switchTab(this)">Completed (12)</div>
+      <!-- Impact Preview (Change #3) -->
+      <div class="impact-card">
+        <div class="impact-title">If you complete this week's 3 tasks:</div>
+        <div class="impact-row">
+          <div class="impact-label">Health Score</div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-before" style="width:72%;"></div>
+            <div class="impact-bar-after" style="width:80%;"></div>
+          </div>
+          <div class="impact-values">72 &rarr; ~80 <span class="delta">(+8)</span></div>
+        </div>
+        <div class="impact-row">
+          <div class="impact-label">AI Visibility</div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-before" style="width:37.5%;"></div>
+            <div class="impact-bar-after" style="width:50%;"></div>
+          </div>
+          <div class="impact-values">15% &rarr; ~20% <span class="delta">(+5%)</span></div>
+        </div>
+        <div class="impact-row" style="margin-bottom:0;">
+          <div class="impact-label">Traffic Value</div>
+          <div class="impact-bar-wrap">
+            <div class="impact-bar-before" style="width:48%;"></div>
+            <div class="impact-bar-after" style="width:62%;"></div>
+          </div>
+          <div class="impact-values">$2,400 &rarr; ~$3,100/mo <span class="delta">(+$700)</span></div>
+        </div>
+        <div class="impact-footnote">Estimated based on similar businesses that made these improvements</div>
       </div>
 
-      <!-- Category filters (#5) -->
+      <!-- Task tabs with filtering (#4) -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div class="task-tabs" style="margin-bottom:0;">
+          <div class="task-tab active" data-filter="week" onclick="switchTab(this)">This Week (3)</div>
+          <div class="task-tab" data-filter="all" onclick="switchTab(this)">All Tasks (47)</div>
+          <div class="task-tab" data-filter="done" onclick="switchTab(this)">Completed (12)</div>
+        </div>
+        <!-- Add Task Button (Change #4) -->
+        <button class="add-task-btn" onclick="toggleAddTaskForm()" title="Add custom task">+</button>
+      </div>
+
+      <!-- Category filters (#5) — with Channels added (Change #6) -->
       <div class="cat-filters">
         <div class="cat-chip active" data-cat="all" onclick="filterCategory(this)">All</div>
         <div class="cat-chip" data-cat="seo" onclick="filterCategory(this)">SEO</div>
@@ -969,13 +1206,34 @@ a { color: var(--accent); text-decoration: none; }
         <div class="cat-chip" data-cat="content" onclick="filterCategory(this)">Content</div>
         <div class="cat-chip" data-cat="technical" onclick="filterCategory(this)">Technical</div>
         <div class="cat-chip" data-cat="speed" onclick="filterCategory(this)">Speed</div>
+        <div class="cat-chip" data-cat="channels" onclick="filterCategory(this)">Channels</div>
+      </div>
+
+      <!-- Add Task Form (Change #4) -->
+      <div class="add-task-form" id="addTaskForm">
+        <input type="text" id="newTaskName" placeholder="Enter task name...">
+        <div class="add-task-cats">
+          <div class="add-task-cat-chip selected" onclick="selectAddTaskCat(this)" data-cat="seo">SEO</div>
+          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="geo">GEO</div>
+          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="content">Content</div>
+          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="technical">Technical</div>
+          <div class="add-task-cat-chip" onclick="selectAddTaskCat(this)" data-cat="channels">Channels</div>
+        </div>
+        <div class="add-task-actions">
+          <button class="btn-fix" onclick="addCustomTask()">Add Task</button>
+          <button class="add-task-cancel" onclick="toggleAddTaskForm()">Cancel</button>
+        </div>
       </div>
 
       <!-- Tasks with data-tab and data-cat (#4, #5, #15) -->
       <div class="task-item" data-tab="week" data-cat="technical" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Fix robots.txt &mdash; allow AI bots to crawl your site</span>
+          <div style="flex:1;">
+            <span class="task-title">Fix robots.txt &mdash; allow AI bots to crawl your site</span>
+            <!-- Priority reasoning (Change #5) -->
+            <div class="task-why">3 AI engines blocked &rarr; 0% visibility on ChatGPT &amp; Claude</div>
+          </div>
           <div class="task-meta">
             <span class="task-cat-badge">Technical</span>
             <span class="task-badge badge-high">HIGH</span>
@@ -993,7 +1251,11 @@ a { color: var(--accent); text-decoration: none; }
       <div class="task-item" data-tab="week" data-cat="geo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Add an expert quote to your homepage</span>
+          <div style="flex:1;">
+            <span class="task-title">Add an expert quote to your homepage</span>
+            <!-- Priority reasoning (Change #5) -->
+            <div class="task-why">Pages with quotes cited 2x more (Princeton 2024)</div>
+          </div>
           <div class="task-meta">
             <span class="task-cat-badge">GEO</span>
             <span class="task-badge badge-high">HIGH</span>
@@ -1028,7 +1290,11 @@ a { color: var(--accent); text-decoration: none; }
       <div class="task-item" data-tab="week" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
-          <span class="task-title">Add FAQ schema to your services page</span>
+          <div style="flex:1;">
+            <span class="task-title">Add FAQ schema to your services page</span>
+            <!-- Priority reasoning (Change #5) -->
+            <div class="task-why">Competitor CertaPro has this &rarr; +5 GEO score</div>
+          </div>
           <div class="task-meta">
             <span class="task-cat-badge">Schema</span>
             <span class="task-badge badge-med">MED</span>
@@ -1042,6 +1308,59 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
+      <!-- External Channel Tasks (Change #6) -->
+      <div class="task-item" data-tab="week" data-cat="channels" onclick="toggleTask(this)">
+        <div class="task-row">
+          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <span class="task-title">Register on Houzz &mdash; upload 10 project photos</span>
+          <div class="task-meta">
+            <span class="task-cat-badge">Channels</span>
+            <span class="task-badge badge-high">HIGH</span>
+            <span class="task-time">30 min</span>
+            <span class="task-dollar">~$200/mo</span>
+          </div>
+        </div>
+        <div class="task-detail">
+          <p>AI cites Houzz in 15% of painter queries. CertaPro gets 3 AI mentions from their Houzz portfolio alone. Register a free business profile and upload your best project photos.</p>
+          <button class="btn-fix">Open Houzz Registration</button>
+        </div>
+      </div>
+
+      <div class="task-item" data-tab="week" data-cat="channels" onclick="toggleTask(this)">
+        <div class="task-row">
+          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <span class="task-title">Create YouTube channel &mdash; record first timelapse video</span>
+          <div class="task-meta">
+            <span class="task-cat-badge">Channels</span>
+            <span class="task-badge badge-high">HIGH</span>
+            <span class="task-time">2 hrs</span>
+            <span class="task-dollar">~$150/mo</span>
+          </div>
+        </div>
+        <div class="task-detail">
+          <p>YouTube is the 4th most-cited source for painters. "House painting timelapse" gets 50K+ searches/month. Record a timelapse of your next project with your phone.</p>
+          <button class="btn-fix">YouTube Channel Setup Guide</button>
+        </div>
+      </div>
+
+      <div class="task-item" data-tab="week" data-cat="channels" onclick="toggleTask(this)">
+        <div class="task-row">
+          <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
+          <span class="task-title">Get 5 more Yelp reviews &mdash; send requests to recent clients</span>
+          <div class="task-meta">
+            <span class="task-cat-badge">Channels</span>
+            <span class="task-badge badge-med">MED</span>
+            <span class="task-time">15 min</span>
+            <span class="task-dollar">~$90/mo</span>
+          </div>
+        </div>
+        <div class="task-detail">
+          <p>You have 2 Yelp reviews vs CertaPro's 34. Yelp is the 2nd most-cited source (22%). Send review request links to your last 5 completed projects.</p>
+          <button class="btn-fix">Generate Review Request Email</button>
+        </div>
+      </div>
+
+      <!-- Completed tasks -->
       <div class="task-item done" data-tab="done" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
@@ -1187,6 +1506,104 @@ a { color: var(--accent); text-decoration: none; }
         </table>
       </div>
 
+      <!-- SWOT Analysis Card (Change #1) -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">SWOT Analysis</span><span style="font-size:11px;color:var(--text-dim);">Based on competitive audit data</span></div>
+        <div class="swot-grid">
+          <div class="swot-quadrant" style="border-left:3px solid var(--pass);">
+            <h4 style="color:var(--pass);">Strengths</h4>
+            <ul>
+              <li style="color:var(--pass);">Best rating 4.8 stars</li>
+              <li style="color:var(--pass);">Fastest site (89 speed)</li>
+              <li style="color:var(--pass);">Highest AI visibility 15%</li>
+              <li style="color:var(--pass);">Expert quotes on homepage</li>
+            </ul>
+          </div>
+          <div class="swot-quadrant" style="border-left:3px solid var(--critical);">
+            <h4 style="color:var(--critical);">Weaknesses</h4>
+            <ul>
+              <li style="color:var(--critical);">Fewest reviews (47 vs 156)</li>
+              <li style="color:var(--critical);">No FAQ schema</li>
+              <li style="color:var(--critical);">No Houzz/YouTube presence</li>
+              <li style="color:var(--critical);">124 backlinks vs 412</li>
+            </ul>
+          </div>
+          <div class="swot-quadrant" style="border-left:3px solid var(--info);">
+            <h4 style="color:var(--info);">Opportunities</h4>
+            <ul>
+              <li style="color:var(--info);">Register Houzz (+15% AI citations)</li>
+              <li style="color:var(--info);">YouTube timelapse videos</li>
+              <li style="color:var(--info);">BBB accreditation</li>
+              <li style="color:var(--info);">Blog content (competitors publish 2/mo)</li>
+            </ul>
+          </div>
+          <div class="swot-quadrant" style="border-left:3px solid var(--warning);">
+            <h4 style="color:var(--warning);">Threats</h4>
+            <ul>
+              <li style="color:var(--warning);">CertaPro growing fast (+5 GEO this month)</li>
+              <li style="color:var(--warning);">AllPro has 2.3x backlinks</li>
+              <li style="color:var(--warning);">AI visibility gap closing</li>
+              <li style="color:var(--warning);">New competitors entering SD market</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Competitive Positioning Map (Change #2) -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Competitive Positioning Map</span><span style="font-size:11px;color:var(--text-dim);">SEO Score vs AI Visibility</span></div>
+        <svg viewBox="0 0 700 300" style="width:100%;max-width:700px;height:auto;">
+          <!-- Background -->
+          <rect x="60" y="20" width="620" height="240" fill="var(--surface2)" rx="4"/>
+          <!-- Grid lines -->
+          <line x1="60" y1="260" x2="680" y2="260" stroke="var(--border)" stroke-width="1"/>
+          <line x1="60" y1="20" x2="60" y2="260" stroke="var(--border)" stroke-width="1"/>
+          <!-- Horizontal grid -->
+          <line x1="60" y1="200" x2="680" y2="200" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="60" y1="140" x2="680" y2="140" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="60" y1="80" x2="680" y2="80" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Vertical grid -->
+          <line x1="214" y1="20" x2="214" y2="260" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="370" y1="20" x2="370" y2="260" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="524" y1="20" x2="524" y2="260" stroke="var(--border)" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Y axis labels (AI Visibility 0-20%) -->
+          <text x="50" y="264" fill="var(--text-light)" font-size="10" text-anchor="end" font-family="JetBrains Mono">0%</text>
+          <text x="50" y="204" fill="var(--text-light)" font-size="10" text-anchor="end" font-family="JetBrains Mono">5%</text>
+          <text x="50" y="144" fill="var(--text-light)" font-size="10" text-anchor="end" font-family="JetBrains Mono">10%</text>
+          <text x="50" y="84" fill="var(--text-light)" font-size="10" text-anchor="end" font-family="JetBrains Mono">15%</text>
+          <text x="50" y="24" fill="var(--text-light)" font-size="10" text-anchor="end" font-family="JetBrains Mono">20%</text>
+          <!-- X axis labels (SEO Score 0-100) -->
+          <text x="60" y="280" fill="var(--text-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">0</text>
+          <text x="214" y="280" fill="var(--text-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">25</text>
+          <text x="370" y="280" fill="var(--text-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">50</text>
+          <text x="524" y="280" fill="var(--text-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">75</text>
+          <text x="680" y="280" fill="var(--text-light)" font-size="10" text-anchor="middle" font-family="JetBrains Mono">100</text>
+          <!-- Axis titles -->
+          <text x="370" y="296" fill="var(--text-dim)" font-size="11" text-anchor="middle" font-family="Inter" font-weight="600">SEO Score</text>
+          <text x="14" y="140" fill="var(--text-dim)" font-size="11" text-anchor="middle" font-family="Inter" font-weight="600" transform="rotate(-90,14,140)">AI Visibility</text>
+          <!-- Target Zone (dashed rectangle top-right) -->
+          <rect x="555" y="20" width="125" height="80" rx="6" fill="rgba(45,212,160,0.08)" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="6 3"/>
+          <text x="617" y="38" fill="var(--accent)" font-size="10" text-anchor="middle" font-family="Inter" font-weight="600" opacity="0.7">Target Zone</text>
+          <!-- CertaPro dot: x=91 -> 60 + 91/100*620 = 624.2, y=5% -> 260 - 5/20*240 = 200 -->
+          <circle cx="624" cy="200" r="8" fill="var(--text-light)" opacity="0.6"/>
+          <text x="624" y="220" fill="var(--text-dim)" font-size="10" text-anchor="middle" font-family="Inter" font-weight="500">CertaPro</text>
+          <!-- AllPro dot: x=85 -> 60 + 85/100*620 = 587, y=8% -> 260 - 8/20*240 = 164 -->
+          <circle cx="587" cy="164" r="8" fill="var(--text-light)" opacity="0.6"/>
+          <text x="587" y="184" fill="var(--text-dim)" font-size="10" text-anchor="middle" font-family="Inter" font-weight="500">AllPro</text>
+          <!-- Ross Painting dot: x=72 -> 60 + 72/100*620 = 506.4, y=15% -> 260 - 15/20*240 = 80 -->
+          <circle cx="506" cy="80" r="11" fill="var(--accent)" opacity="0.9"/>
+          <circle cx="506" cy="80" r="16" fill="none" stroke="var(--accent)" stroke-width="1" opacity="0.3"/>
+          <text x="506" y="66" fill="var(--accent)" font-size="11" text-anchor="middle" font-family="Inter" font-weight="700">Ross Painting</text>
+          <!-- Arrow from Ross toward target zone -->
+          <defs>
+            <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="var(--accent)" opacity="0.6"/>
+            </marker>
+          </defs>
+          <line x1="520" y1="72" x2="556" y2="55" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 2" opacity="0.6" marker-end="url(#arrowhead)"/>
+        </svg>
+      </div>
+
       <!-- Google Reviews Card (#14) -->
       <div class="review-card">
         <div class="section-header"><span class="section-title">Google Reviews</span></div>
@@ -1271,7 +1688,8 @@ a { color: var(--accent); text-decoration: none; }
                 <li><strong>Follow up via email</strong> &mdash; send a friendly reminder 3 days after the job</li>
                 <li><strong>Respond to every review</strong> &mdash; this signals to Google that you're active</li>
               </ol>
-              <div class="action-link" onclick="showScreen('tasks')">&#10132; Added "Set up review request flow" to your tasks</div>
+              <!-- Chat -> Task Integration (Change #7) -->
+              <div class="action-link" onclick="showScreen('tasks')">&#10003; Task #15 created: Set up review request flow &rarr; View in Action Plan</div>
             </div>
           </div>
           <div class="chat-msg user">
@@ -1291,6 +1709,25 @@ a { color: var(--accent); text-decoration: none; }
               </ul>
               <p>Good news: <strong>You lead in AI visibility</strong> (15% vs 8% vs 5%) and <strong>page speed</strong> (89 vs 72 vs 67).</p>
               <div class="action-link" onclick="showScreen('competitors')">&#10132; View full competitor comparison</div>
+            </div>
+          </div>
+          <!-- Third chat exchange (Change #7) -->
+          <div class="chat-msg user">
+            <div class="chat-msg-avatar">SK</div>
+            <div class="chat-msg-bubble">Create a task for YouTube channel setup</div>
+          </div>
+          <div class="chat-msg ai">
+            <div class="chat-msg-avatar" style="color:var(--accent);">G</div>
+            <div class="chat-msg-bubble">
+              <h4>YouTube Strategy Tasks Created</h4>
+              <p>Done! I created 3 tasks for your YouTube strategy:</p>
+              <ol>
+                <li><strong>Set up YouTube channel</strong> (10 min)</li>
+                <li><strong>Record first project timelapse</strong> (1 hr)</li>
+                <li><strong>Write video descriptions with keywords</strong> (20 min)</li>
+              </ol>
+              <p>These tasks are now in your Action Plan under "Channels" category.</p>
+              <div class="action-link" onclick="showScreen('tasks')">&#10132; View tasks</div>
             </div>
           </div>
         </div>
@@ -1712,6 +2149,56 @@ function onboardStep(step) {
     if (i < step) dot.classList.add('done');
     if (i === step) dot.classList.add('active');
   }
+}
+
+// Add Task Form toggle (Change #4)
+function toggleAddTaskForm() {
+  const form = document.getElementById('addTaskForm');
+  form.classList.toggle('visible');
+  if (form.classList.contains('visible')) {
+    document.getElementById('newTaskName').focus();
+  }
+}
+
+// Add Task category chip selection
+function selectAddTaskCat(el) {
+  el.parentElement.querySelectorAll('.add-task-cat-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// Add custom task
+function addCustomTask() {
+  const nameInput = document.getElementById('newTaskName');
+  const name = nameInput.value.trim();
+  if (!name) return;
+  const selectedCat = document.querySelector('.add-task-cat-chip.selected');
+  const cat = selectedCat ? selectedCat.getAttribute('data-cat') : 'seo';
+  const catLabel = selectedCat ? selectedCat.textContent : 'SEO';
+
+  // Create new task item
+  const taskItem = document.createElement('div');
+  taskItem.className = 'task-item';
+  taskItem.setAttribute('data-tab', 'week');
+  taskItem.setAttribute('data-cat', cat);
+  taskItem.setAttribute('onclick', 'toggleTask(this)');
+  taskItem.innerHTML = '<div class="task-row">' +
+    '<div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>' +
+    '<span class="task-title">' + name + '</span>' +
+    '<div class="task-meta">' +
+    '<span class="task-cat-badge">' + catLabel + '</span>' +
+    '<span class="task-badge badge-med">MED</span>' +
+    '</div></div>';
+
+  // Insert before the first task item
+  const firstTask = document.querySelector('#screen-tasks .task-item');
+  if (firstTask) {
+    firstTask.parentNode.insertBefore(taskItem, firstTask);
+  }
+
+  // Clear and hide form
+  nameInput.value = '';
+  toggleAddTaskForm();
+  applyTaskFilters();
 }
 
 // Initial filter state
