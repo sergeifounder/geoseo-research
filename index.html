@@ -394,7 +394,7 @@ a { color: var(--accent); text-decoration: none; }
     </div>
     <div class="nav-item" data-screen="ai" onclick="showScreen('ai')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-      AI Visibility
+      Search Visibility
     </div>
     <div class="nav-item" data-screen="competitors" onclick="showScreen('competitors')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
@@ -477,13 +477,15 @@ a { color: var(--accent); text-decoration: none; }
             Platforms: 3/8 active
           </div>
         </div>
-        <!-- Layer 3: AI Readiness (from existing GEO data) -->
-        <div class="layer-card">
-          <div class="layer-label">AI Readiness</div>
-          <div class="layer-number" style="color:var(--warning);">45<small>/100</small></div>
-          <div class="layer-trend" style="color:var(--pass);">&#9650; +15 this month</div>
-          <div class="layer-bar"><div class="layer-bar-fill" style="width:45%;background:linear-gradient(90deg,#b8860b,var(--warning));"></div></div>
-          <div class="layer-sub">AI bot access, content structure,<br>citation-readiness, BLUF, evidence</div>
+        <!-- Layer 3: Search Visibility (real data from SERP + AI checks) -->
+        <div class="layer-card" style="cursor:pointer" onclick="showScreen('ai')">
+          <div class="layer-label">Search Visibility</div>
+          <div style="display:flex;justify-content:center;gap:20px;margin:12px 0;">
+            <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--warning);">#18</div><div style="font-size:10px;color:var(--text-dim);">avg Google</div></div>
+            <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--pass);">5<small style="font-size:12px;color:var(--text-dim);">/15</small></div><div style="font-size:10px;color:var(--text-dim);">AI mentions</div></div>
+          </div>
+          <div class="layer-trend" style="color:var(--pass);">&#9650; +3 positions this month</div>
+          <div class="layer-sub">Google rankings + AI citations<br><span class="data-source">via DataForSEO + Perplexity API</span></div>
         </div>
       </div>
 
@@ -859,13 +861,33 @@ a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
-    <!-- ==================== SCREEN 3: AI VISIBILITY ==================== -->
+    <!-- ==================== SCREEN 3: SEARCH VISIBILITY ==================== -->
     <div class="screen" id="screen-ai">
-      <div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);border-radius:8px;padding:12px 16px;margin-bottom:24px;font-size:12px;color:var(--warning);display:flex;align-items:center;gap:8px;">
-        <span style="font-size:16px;">&#8505;</span>
-        <span>AI Visibility monitoring requires API integrations with ChatGPT, Perplexity, and Gemini. Data shown below is a preview of what this screen will look like once configured.</span>
+
+      <!-- Google Rankings section -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Google Rankings <span class="data-source">via DataForSEO &middot; updated weekly</span></span><span style="font-size:11px;color:var(--text-dim);">20 tracked queries</span></div>
+        <table style="width:100%;border-collapse:collapse;">
+          <thead>
+            <tr>
+              <th style="text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--border);">Query</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--border);">Position</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--border);">Change</th>
+              <th style="text-align:center;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-dim);padding:8px 12px;border-bottom:1px solid var(--border);">Top Competitor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;">"exterior painting san diego"</td><td style="text-align:center;font-family:var(--mono);font-weight:700;padding:10px;border-bottom:1px solid var(--border);color:var(--pass);">#7</td><td style="text-align:center;font-weight:600;padding:10px;border-bottom:1px solid var(--border);color:var(--pass);">&#8593;5</td><td style="text-align:center;padding:10px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-dim);">CertaPro #2</td></tr>
+            <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;">"house painters san diego"</td><td style="text-align:center;font-family:var(--mono);font-weight:700;padding:10px;border-bottom:1px solid var(--border);color:var(--warning);">#12</td><td style="text-align:center;font-weight:600;padding:10px;border-bottom:1px solid var(--border);color:var(--pass);">&#8593;3</td><td style="text-align:center;padding:10px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-dim);">AllPro #4</td></tr>
+            <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;">"painting company near me"</td><td style="text-align:center;font-family:var(--mono);font-weight:700;padding:10px;border-bottom:1px solid var(--border);color:var(--warning);">#18</td><td style="text-align:center;font-weight:600;padding:10px;border-bottom:1px solid var(--border);color:var(--pass);">&#8593;1</td><td style="text-align:center;padding:10px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-dim);">CertaPro #3</td></tr>
+            <tr><td style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;">"best painters la jolla"</td><td style="text-align:center;font-family:var(--mono);font-weight:700;padding:10px;border-bottom:1px solid var(--border);color:var(--text-dim);">#24</td><td style="text-align:center;font-weight:600;padding:10px;border-bottom:1px solid var(--border);color:var(--pass);">NEW</td><td style="text-align:center;padding:10px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text-dim);">La Jolla Paint #1</td></tr>
+            <tr><td style="padding:10px 12px;font-size:13px;">"interior painting cost sd"</td><td style="text-align:center;font-family:var(--mono);font-weight:700;padding:10px;color:var(--text-dim);">#47</td><td style="text-align:center;font-weight:600;padding:10px;color:var(--critical);">&#8595;2</td><td style="text-align:center;padding:10px;font-size:12px;color:var(--text-dim);">ColorWorld #8</td></tr>
+          </tbody>
+        </table>
+        <div style="text-align:center;margin-top:12px;"><a href="#" style="font-size:12px;" onclick="return false;">View all 20 queries &rarr;</a></div>
       </div>
 
+      <div style="font-size:13px;font-weight:700;margin-bottom:16px;">AI Mentions by Engine <span class="data-source">via Perplexity Sonar + OpenAI API</span></div>
       <div class="grid-4" style="margin-bottom:24px;">
         <div class="card" style="text-align:center;"><div class="card-title" style="margin-bottom:8px;">ChatGPT</div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--warning);">2<small style="font-size:14px;color:var(--text-dim);">/15</small></div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">13% visibility</div></div>
         <div class="card" style="text-align:center;"><div class="card-title" style="margin-bottom:8px;">Perplexity</div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--pass);">5<small style="font-size:14px;color:var(--text-dim);">/15</small></div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">33% visibility</div></div>
@@ -902,35 +924,93 @@ a { color: var(--accent); text-decoration: none; }
 
     <!-- ==================== SCREEN 4: COMPETITORS ==================== -->
     <div class="screen" id="screen-competitors">
-      <div class="grid-3" style="margin-bottom:24px;">
-        <div class="card" style="border-color:var(--accent);text-align:center;">
-          <div style="font-size:11px;color:var(--accent);font-weight:600;margin-bottom:8px;">YOUR SITE</div>
-          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">rosspaintinggroup.com</div>
-          <div style="font-size:12px;color:var(--text-dim);">Site Health: 72/100</div>
-        </div>
-        <div class="card" style="text-align:center;">
-          <div style="font-size:11px;color:var(--text-dim);font-weight:600;margin-bottom:8px;">COMPETITOR 1</div>
-          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">allpropaintingsd.com</div>
-          <div style="font-size:12px;color:var(--text-dim);">Site Health: 78/100</div>
-        </div>
-        <div class="card" style="text-align:center;">
-          <div style="font-size:11px;color:var(--text-dim);font-weight:600;margin-bottom:8px;">COMPETITOR 2</div>
-          <div style="font-size:14px;font-weight:700;margin-bottom:4px;">certapro-sandiego.com</div>
-          <div style="font-size:12px;color:var(--text-dim);">Site Health: 82/100</div>
+
+      <!-- Competitor ranking bar (scrollable, all competitors) -->
+      <div class="card" style="margin-bottom:24px;overflow-x:auto;">
+        <div class="section-header"><span class="section-title">Your Market &mdash; 7 competitors found <span class="data-source">via Google Maps + SERP for "house painters San Diego"</span></span></div>
+        <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;">
+          <div style="min-width:140px;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:2px solid var(--accent);border-radius:12px;">
+            <div style="font-size:10px;color:var(--accent);font-weight:700;margin-bottom:6px;">YOU</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Ross Painting</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);color:var(--accent);">72</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.8&#9733; &middot; 47 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--critical);font-weight:700;margin-bottom:6px;">#1 AHEAD</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">CertaPro SD</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">82</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.7&#9733; &middot; 156 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--warning);font-weight:700;margin-bottom:6px;">#2</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">AllPro Painting</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">78</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.6&#9733; &middot; 89 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:6px;">#3</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">ColorWorld</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">71</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.5&#9733; &middot; 63 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:6px;">#4</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">La Jolla Paint</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">64</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.4&#9733; &middot; 31 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:6px;">#5</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">ProCoat SD</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">58</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.3&#9733; &middot; 22 reviews</div>
+          </div>
+          <div style="min-width:140px;text-align:center;padding:16px;background:var(--surface2);border:1px solid var(--border);border-radius:12px;">
+            <div style="font-size:10px;color:var(--text-dim);font-weight:700;margin-bottom:6px;">#6</div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:2px;">Painters Inc</div>
+            <div style="font-size:22px;font-weight:800;font-family:var(--mono);">52</div>
+            <div style="font-size:10px;color:var(--text-dim);">4.1&#9733; &middot; 15 reviews</div>
+          </div>
         </div>
       </div>
 
+      <!-- Competitor changes feed (what they did recently) -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Competitor Moves <span class="data-source">detected by weekly scans</span></span><span style="font-size:11px;color:var(--text-dim);">Last 30 days</span></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
+            <div style="min-width:90px;"><div style="font-size:12px;font-weight:700;">CertaPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 9</div></div>
+            <div><div style="font-size:13px;font-weight:500;">Added Service schema to all pages</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">GEO score +5 &middot; Now has 7 schema types (you have 3)</div></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+            <div style="min-width:90px;"><div style="font-size:12px;font-weight:700;">AllPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 5</div></div>
+            <div><div style="font-size:13px;font-weight:500;">Published 2 new blog posts</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Content score +3 &middot; "How to choose a painter" + "Interior vs Exterior costs"</div></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+            <div style="min-width:90px;"><div style="font-size:12px;font-weight:700;">CertaPro</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 28</div></div>
+            <div><div style="font-size:13px;font-weight:500;">+12 new Google reviews (144 &rarr; 156)</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">Review velocity: ~3/week &middot; Your pace: ~1/week</div></div>
+          </div>
+          <div style="display:flex;gap:12px;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--info);">
+            <div style="min-width:90px;"><div style="font-size:12px;font-weight:700;">ColorWorld</div><div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 22</div></div>
+            <div><div style="font-size:13px;font-weight:500;">Created YouTube channel, uploaded 3 videos</div><div style="font-size:11px;color:var(--text-dim);margin-top:2px;">New channel detected &middot; "House painting timelapse" getting 2K views</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Head-to-head (top 3) -->
       <div class="card" style="margin-bottom:24px;overflow-x:auto;">
-        <div class="section-header"><span class="section-title">Head-to-Head Comparison <span class="data-source">via site audit + Google Places API</span></span></div>
+        <div class="section-header"><span class="section-title">Head-to-Head vs Top Competitors <span class="data-source">via site audit + Google Places API + Bing Webmaster</span></span></div>
         <table class="comp-table">
-          <thead><tr><th style="text-align:left;">Metric</th><th>You</th><th>AllPro</th><th>CertaPro</th></tr></thead>
+          <thead><tr><th style="text-align:left;">Metric</th><th>You</th><th>CertaPro</th><th>AllPro</th><th>ColorWorld</th></tr></thead>
           <tbody>
-            <tr><td>Site Health</td><td class="comp-you">72</td><td>78</td><td class="comp-win">82</td></tr>
-            <tr><td>GEO Score</td><td class="comp-you comp-win">56</td><td>42</td><td>38</td></tr>
-            <tr><td>Speed</td><td class="comp-you comp-win">89</td><td>72</td><td>67</td></tr>
-            <tr><td>Schema Types</td><td class="comp-you">3</td><td>5</td><td class="comp-win">7</td></tr>
-            <tr><td>Backlinks <span class="data-source">via Bing Webmaster</span></td><td class="comp-you">124</td><td>287</td><td class="comp-win">412</td></tr>
-            <tr><td>Google Reviews <span class="data-source">via Places API</span></td><td class="comp-you">4.8 (47)</td><td>4.6 (89)</td><td class="comp-win">4.7 (156)</td></tr>
+            <tr><td>Site Health</td><td class="comp-you">72</td><td class="comp-win">82</td><td>78</td><td>71</td></tr>
+            <tr><td>GEO Score</td><td class="comp-you comp-win">56</td><td>38</td><td>42</td><td>35</td></tr>
+            <tr><td>Speed</td><td class="comp-you comp-win">89</td><td>67</td><td>72</td><td>81</td></tr>
+            <tr><td>Schema Types</td><td class="comp-you">3</td><td class="comp-win">7</td><td>5</td><td>2</td></tr>
+            <tr><td>Backlinks</td><td class="comp-you">124</td><td class="comp-win">412</td><td>287</td><td>98</td></tr>
+            <tr><td>Google Reviews</td><td class="comp-you">4.8 (47)</td><td class="comp-win">4.7 (156)</td><td>4.6 (89)</td><td>4.5 (63)</td></tr>
+            <tr><td>Avg Google Position</td><td class="comp-you">#18</td><td class="comp-win">#4</td><td>#8</td><td>#15</td></tr>
+            <tr><td>AI Mentions (of 15)</td><td class="comp-you">5</td><td>3</td><td class="comp-win">6</td><td>1</td></tr>
           </tbody>
         </table>
       </div>
@@ -1243,7 +1323,7 @@ function showScreen(name) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   const nav = document.querySelector('[data-screen="' + name + '"]');
   if (nav) nav.classList.add('active');
-  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', progress:'Your Progress', monitoring:'Monitoring' };
+  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'Search Visibility', competitors:'Competitors', progress:'Your Progress', monitoring:'Monitoring' };
   document.getElementById('page-title').textContent = titles[name] || name;
   closeSidebar();
   window.scrollTo(0, 0);
