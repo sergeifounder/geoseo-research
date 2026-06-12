@@ -1112,6 +1112,14 @@ a { color: var(--accent); text-decoration: none; }
         </svg>
       </div>
 
+      <!-- Show more details toggle -->
+      <div style="text-align:center;margin-bottom:16px;">
+        <span id="dashMore" onclick="toggleDashDetails()" style="font-size:12px;color:var(--accent);cursor:pointer;font-weight:500;display:inline-flex;align-items:center;gap:4px;">
+          <span id="dashMoreIcon">&#9660;</span> Show more details
+        </span>
+      </div>
+      <div id="dashDetails" style="display:none;">
+
       <!-- Keyword Rankings Preview -->
       <div class="card" style="margin-bottom:24px;">
         <div class="card-header">
@@ -1189,6 +1197,8 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
       <div style="font-size:10px;color:var(--text-light);font-style:italic;margin-top:-16px;margin-bottom:24px;">* Projections based on industry benchmarks. Individual results vary.</div>
+
+      </div><!-- /dashDetails -->
 
       <div class="grid-1-2">
         <!-- Action Plan Preview -->
@@ -1341,6 +1351,7 @@ a { color: var(--accent); text-decoration: none; }
             <div class="task-why">3 AI engines blocked &rarr; 0% visibility on ChatGPT &amp; Claude</div>
           </div>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(45,212,160,.1);color:var(--accent);border-color:rgba(45,212,160,.2);">Month 1</span>
             <span class="task-cat-badge">Technical</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">5 min</span>
@@ -1363,6 +1374,7 @@ a { color: var(--accent); text-decoration: none; }
             <div class="task-why">Pages with quotes cited 2x more (Princeton 2024)</div>
           </div>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(45,212,160,.1);color:var(--accent);border-color:rgba(45,212,160,.2);">Month 1</span>
             <span class="task-cat-badge">GEO</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">15 min</span>
@@ -1381,6 +1393,7 @@ a { color: var(--accent); text-decoration: none; }
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Write meta description for /services page</span>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(45,212,160,.1);color:var(--accent);border-color:rgba(45,212,160,.2);">Month 1</span>
             <span class="task-cat-badge">Content</span>
             <span class="task-badge badge-med">MED</span>
             <span class="task-time">5 min</span>
@@ -1402,6 +1415,7 @@ a { color: var(--accent); text-decoration: none; }
             <div class="task-why">Competitor CertaPro has this &rarr; +5 GEO score</div>
           </div>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(45,212,160,.1);color:var(--accent);border-color:rgba(45,212,160,.2);">Month 1</span>
             <span class="task-cat-badge">Schema</span>
             <span class="task-badge badge-med">MED</span>
             <span class="task-time">10 min</span>
@@ -1420,6 +1434,7 @@ a { color: var(--accent); text-decoration: none; }
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Register on Houzz &mdash; upload 10 project photos</span>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(59,130,246,.1);color:var(--info);border-color:rgba(59,130,246,.2);">Month 2</span>
             <span class="task-cat-badge">Channels</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">30 min</span>
@@ -1437,6 +1452,7 @@ a { color: var(--accent); text-decoration: none; }
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Create YouTube channel &mdash; record first timelapse video</span>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(59,130,246,.1);color:var(--info);border-color:rgba(59,130,246,.2);">Month 2</span>
             <span class="task-cat-badge">Channels</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">2 hrs</span>
@@ -1454,6 +1470,7 @@ a { color: var(--accent); text-decoration: none; }
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Get 5 more Yelp reviews &mdash; send requests to recent clients</span>
           <div class="task-meta">
+            <span class="task-cat-badge" style="background:rgba(59,130,246,.1);color:var(--info);border-color:rgba(59,130,246,.2);">Month 2</span>
             <span class="task-cat-badge">Channels</span>
             <span class="task-badge badge-med">MED</span>
             <span class="task-time">15 min</span>
@@ -2015,26 +2032,29 @@ a { color: var(--accent); text-decoration: none; }
       <div class="card">
         <div class="section-header"><span class="section-title">Recommended Channel Actions</span><span style="font-size:11px;color:var(--text-dim);">Sorted by AI citation impact</span></div>
         <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
+          <div onclick="showScreen('tasks')" style="cursor:pointer;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div style="font-size:13px;font-weight:600;">Register on Houzz &mdash; add 10+ project photos</div>
               <div><span class="task-badge badge-high" style="margin-right:6px;">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">30 min</span></div>
             </div>
             <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">AI cites Houzz in 15% of painter queries. CertaPro gets 3 AI mentions from their Houzz portfolio alone.</div>
+            <div style="font-size:11px;color:var(--accent);margin-top:6px;font-weight:600;">&rarr; Task #8 in Action Plan</div>
           </div>
-          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
+          <div onclick="showScreen('tasks')" style="cursor:pointer;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div style="font-size:13px;font-weight:600;">Create YouTube channel &mdash; record 3 project timelapses</div>
               <div><span class="task-badge badge-high" style="margin-right:6px;">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">2 hrs</span></div>
             </div>
             <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">YouTube is the 4th most-cited source for painters. "House painting timelapse" gets 50K+ searches/month. AllPro already has 8 videos.</div>
+            <div style="font-size:11px;color:var(--accent);margin-top:6px;font-weight:600;">&rarr; Task #9 in Action Plan</div>
           </div>
-          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+          <div onclick="showScreen('tasks')" style="cursor:pointer;padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
               <div style="font-size:13px;font-weight:600;">Get 10+ Yelp reviews from past clients</div>
               <div><span class="task-badge badge-med" style="margin-right:6px;">MED</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">15 min</span></div>
             </div>
             <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">You have 2 Yelp reviews vs CertaPro's 34. Yelp is the 2nd most-cited source (22%). Send review requests to your last 10 clients.</div>
+            <div style="font-size:11px;color:var(--accent);margin-top:6px;font-weight:600;">&rarr; Task #10 in Action Plan</div>
           </div>
           <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -2064,12 +2084,20 @@ a { color: var(--accent); text-decoration: none; }
           <div class="card" style="border-color:var(--accent);border-width:2px;">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;">Month 1: Foundation <span style="font-size:9px;background:var(--accent);color:#000;padding:1px 6px;border-radius:3px;margin-left:6px;">CURRENT</span></div>
             <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Fix technical issues</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Add schema markup</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Allow AI bots</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Expert quotes</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Fix technical issues</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Add schema markup</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Allow AI bots</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Expert quotes</span></div>
             </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">80</strong></div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;">
+                <span>Progress</span><span>3 of 5 done</span>
+              </div>
+              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;">
+                <div style="width:60%;height:100%;background:var(--accent);border-radius:2px;"></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;margin-bottom:6px;">Score target: <strong style="color:var(--text);">80</strong></div>
             <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:72%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
             <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">20%</strong></div>
             <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+40%</strong></div>
@@ -2077,13 +2105,21 @@ a { color: var(--accent); text-decoration: none; }
           <div class="card">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Month 2: Growth</div>
             <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Start YouTube channel</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Get 20+ Yelp reviews</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Register on Houzz</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> FAQ schema all pages</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> BBB accreditation</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Start YouTube channel</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Get 20+ Yelp reviews</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Register on Houzz</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">FAQ schema all pages</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">BBB accreditation</span></div>
             </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">88</strong></div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;">
+                <span>Progress</span><span>0 of 5 done</span>
+              </div>
+              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;">
+                <div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;margin-bottom:6px;">Score target: <strong style="color:var(--text);">88</strong></div>
             <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:0%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
             <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">35%</strong></div>
             <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+80%</strong></div>
@@ -2091,19 +2127,45 @@ a { color: var(--accent); text-decoration: none; }
           <div class="card">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Month 3: Scale</div>
             <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Blog: 2 posts/month</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Outreach to local dirs</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Guest posts on SD blogs</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Video testimonials</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Nextdoor profile</div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Blog: 2 posts/month</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Outreach to local dirs</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Guest posts on SD blogs</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Video testimonials</span></div>
+              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> <span style="cursor:pointer;color:var(--accent);" onclick="showScreen('tasks')">Nextdoor profile</span></div>
             </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;">Score target: <strong style="color:var(--text);">92+</strong></div>
+            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
+              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;">
+                <span>Progress</span><span>0 of 5 done</span>
+              </div>
+              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;">
+                <div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;margin-bottom:6px;">Score target: <strong style="color:var(--text);">92+</strong></div>
             <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:6px;"><div style="width:0%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:3px;"></div></div>
             <div style="font-size:11px;color:var(--text-dim);">AI Visibility: <strong style="color:var(--text);">50%+</strong></div>
             <div style="font-size:11px;color:var(--text-dim);">Est. traffic: <strong style="color:var(--pass);">+150%</strong></div>
           </div>
         </div>
         <div style="font-size:10px;color:var(--text-light);font-style:italic;">* Targets based on industry benchmarks. Progress depends on execution consistency.</div>
+
+        <div class="card" style="margin-top:24px;border-color:var(--info);border-style:dashed;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <span style="font-size:20px;">&#128260;</span>
+            <div>
+              <div style="font-size:13px;font-weight:700;color:var(--info);">This roadmap updates automatically</div>
+              <div style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.7;">
+                <strong>Every week</strong> we re-scan your site, competitors, and AI visibility. When data changes:<br>
+                &bull; Completed tasks are marked done and removed from the plan<br>
+                &bull; New issues found &rarr; new tasks auto-generated<br>
+                &bull; Score targets adjust based on your actual progress<br>
+                &bull; If competitors make changes &rarr; we update your priorities<br>
+                &bull; Timeline shifts if you're ahead or behind schedule
+              </div>
+              <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Last roadmap update: Jun 9, 2026 &bull; Next update: Jun 16, 2026 (after weekly scan)</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- B) Where You'll Be in 90 Days -->
@@ -2179,6 +2241,7 @@ a { color: var(--accent); text-decoration: none; }
             </tr>
           </tbody>
         </table>
+        <div style="font-size:10px;color:var(--text-light);margin-top:8px;font-style:italic;">Sources: SEO scores from GeoSEO database (500+ audits). AI visibility from Perplexity/ChatGPT checks. Speed from Google Lighthouse. Reviews from Google Places API. Updated monthly.</div>
       </div>
 
     </div>
@@ -2205,6 +2268,48 @@ a { color: var(--accent); text-decoration: none; }
           <div class="toggle-row" style="border:none;padding:8px 0;">
             <div><div class="toggle-label">Telegram alerts</div><div class="toggle-desc">@sergeifounder</div></div>
             <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How Your Data Updates -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">How Your Data Updates</span></div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:8px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--accent);flex-shrink:0;">W</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">Weekly: Site re-scan + competitor check</div>
+              <div style="font-size:11px;color:var(--text-dim);">Every Monday we crawl your site (200 pages), run 135+ checks, scan competitors. New tasks auto-generated if issues found.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--warning);flex-shrink:0;">W</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">Weekly: AI visibility check</div>
+              <div style="font-size:11px;color:var(--text-dim);">We test 15-20 prompts across ChatGPT, Perplexity, Google AIO, Gemini. Check if you gained or lost mentions.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--info);flex-shrink:0;">W</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">Weekly: Keyword position tracking</div>
+              <div style="font-size:11px;color:var(--text-dim);">Track your Google positions for 20 target keywords. See which went up or down. via DataForSEO.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(34,197,94,.12);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--pass);flex-shrink:0;">M</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">Monthly: Roadmap recalculation</div>
+              <div style="font-size:11px;color:var(--text-dim);">Score targets, traffic projections, and timeline adjust based on your actual progress vs plan. Strategy recommendations refresh.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;">
+            <div style="width:36px;height:36px;border-radius:8px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--critical);flex-shrink:0;">!</div>
+            <div>
+              <div style="font-size:13px;font-weight:600;">Instant: Competitor change alerts</div>
+              <div style="font-size:11px;color:var(--text-dim);">If a competitor adds new schema, changes content, or gains reviews &mdash; you get an alert + new tasks if needed.</div>
+            </div>
           </div>
         </div>
       </div>
@@ -2494,6 +2599,23 @@ function addCustomTask() {
   nameInput.value = '';
   toggleAddTaskForm();
   applyTaskFilters();
+}
+
+// Dashboard show more details toggle
+function toggleDashDetails() {
+  const d = document.getElementById('dashDetails');
+  const icon = document.getElementById('dashMoreIcon');
+  const label = document.getElementById('dashMore');
+  if (d.style.display === 'none') {
+    d.style.display = 'block';
+    d.style.animation = 'fadeUp 0.3s var(--ease)';
+    icon.textContent = '\u25B2';
+    label.lastChild.textContent = ' Hide details';
+  } else {
+    d.style.display = 'none';
+    icon.textContent = '\u25BC';
+    label.lastChild.textContent = ' Show more details';
+  }
 }
 
 // Initial filter state
