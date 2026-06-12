@@ -39,6 +39,25 @@ a { color: var(--accent); text-decoration: none; }
 /* ========== LAYOUT ========== */
 .app { display: flex; min-height: 100vh; }
 
+/* ========== BREATHING BLOB (#10) ========== */
+.breathing-blob {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(45,212,160,0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  animation: breathe 4s ease-in-out infinite alternate;
+}
+@keyframes breathe {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
+  100% { transform: translate(-50%, -45%) scale(1.1); opacity: 0.25; }
+}
+
 /* ========== SIDEBAR ========== */
 .sidebar {
   width: var(--sidebar-w);
@@ -88,9 +107,11 @@ a { color: var(--accent); text-decoration: none; }
   border-radius: 10px;
 }
 
+/* ========== PROJECT SWITCHER (#1) ========== */
 .sidebar-project {
   padding: 16px 24px;
   border-top: 1px solid var(--border);
+  position: relative;
 }
 .project-selector {
   background: var(--surface2);
@@ -104,13 +125,58 @@ a { color: var(--accent); text-decoration: none; }
 .project-selector:hover { border-color: var(--accent); }
 .project-selector .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); flex-shrink: 0; }
 .project-selector .name { font-size: 12px; font-weight: 600; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.project-selector .arrow { color: var(--text-dim); font-size: 10px; }
+.project-selector .arrow { color: var(--text-dim); font-size: 10px; transition: transform 0.2s; }
+.project-selector.open .arrow { transform: rotate(180deg); }
+
+.project-dropdown {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 16px;
+  right: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 -8px 32px rgba(0,0,0,.5);
+  margin-bottom: 4px;
+  z-index: 60;
+}
+.project-dropdown.open { display: block; animation: fadeUp 0.2s var(--ease); }
+.project-dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-dim);
+  transition: all 0.15s;
+}
+.project-dropdown-item:hover { background: var(--surface2); color: var(--text); }
+.project-dropdown-item.active { color: var(--accent); font-weight: 600; }
+.project-dropdown-item .pdot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-light); flex-shrink: 0; }
+.project-dropdown-item.active .pdot { background: var(--pass); }
+.project-dropdown-item.add-project { border-top: 1px solid var(--border); color: var(--accent); font-weight: 600; }
+.project-dropdown-item.add-project .pdot { background: none; font-size: 14px; width: auto; height: auto; }
+
+/* ========== MOBILE BACKDROP (#6) ========== */
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(10,15,13,0.7);
+  z-index: 45;
+  backdrop-filter: blur(4px);
+}
+.sidebar-backdrop.visible { display: block; }
 
 /* ========== MAIN ========== */
 .main {
   flex: 1;
   margin-left: var(--sidebar-w);
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 .topbar {
   height: var(--header-h);
@@ -168,6 +234,14 @@ a { color: var(--accent); text-decoration: none; }
 .card-trend.up { color: var(--pass); }
 .card-trend.down { color: var(--critical); }
 
+/* Score cards hover scale (#16) */
+.score-card { transition: all 0.25s var(--ease); }
+.score-card:hover { transform: scale(1.02); }
+
+/* Sparkline container (#9) */
+.sparkline-wrap { margin-top: 8px; width: 100%; height: 30px; }
+.sparkline-wrap svg { width: 100%; height: 100%; }
+
 /* ========== GRID ========== */
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
@@ -182,6 +256,8 @@ a { color: var(--accent); text-decoration: none; }
   padding: 32px;
   display: flex; align-items: center; gap: 40px;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
 }
 .hero-number { font-size: 72px; font-weight: 900; font-family: var(--mono); color: var(--accent); line-height: 1; }
 .hero-number small { font-size: 28px; color: var(--text-dim); font-weight: 500; }
@@ -190,6 +266,9 @@ a { color: var(--accent); text-decoration: none; }
 .hero-trend { font-size: 20px; font-weight: 700; color: var(--pass); margin-bottom: 12px; }
 .hero-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
 .hero-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 3px; transition: width 0.8s var(--ease); }
+.hero-dollar { font-size: 14px; color: var(--text-dim); margin-top: 10px; }
+.hero-dollar strong { color: var(--accent); font-weight: 700; }
+.hero-scanned { font-size: 12px; color: var(--text-light); margin-top: 6px; }
 
 /* ========== CHART ========== */
 .chart-container {
@@ -219,6 +298,22 @@ a { color: var(--accent); text-decoration: none; }
 .task-tab.active { color: var(--accent); background: var(--accent-glow); border-color: rgba(45,212,160,.2); }
 .task-tab:hover:not(.active) { color: var(--text); }
 
+/* Category filter chips (#5) */
+.cat-filters { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.cat-chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-dim);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.cat-chip.active { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
+.cat-chip:hover:not(.active) { color: var(--text); border-color: var(--text-dim); }
+
 .task-progress { margin-bottom: 20px; }
 .task-progress-bar { height: 8px; background: var(--surface2); border-radius: 4px; overflow: hidden; margin-top: 8px; }
 .task-progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius: 4px; width: 25%; }
@@ -235,6 +330,14 @@ a { color: var(--accent); text-decoration: none; }
 .task-item:hover { border-color: var(--accent-dim); }
 .task-item.done { opacity: 0.5; }
 .task-item.done .task-title { text-decoration: line-through; }
+
+/* Task check animation (#16) */
+.task-item.just-checked { animation: taskPop 0.3s var(--ease); }
+@keyframes taskPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
 
 .task-row {
   padding: 14px 16px;
@@ -261,6 +364,20 @@ a { color: var(--accent); text-decoration: none; }
 .badge-high { background: rgba(239,68,68,.12); color: var(--critical); }
 .badge-med { background: rgba(245,158,11,.12); color: var(--warning); }
 .badge-low { background: rgba(59,130,246,.12); color: var(--info); }
+
+/* Category badge (#15) */
+.task-cat-badge {
+  font-size: 9px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: var(--surface2);
+  color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+
 .task-time { font-size: 11px; color: var(--text-dim); font-family: var(--mono); }
 .task-dollar { font-size: 11px; color: var(--pass); font-family: var(--mono); }
 
@@ -306,6 +423,16 @@ a { color: var(--accent); text-decoration: none; }
 .comp-win { color: var(--pass); font-weight: 700; }
 .comp-lose { color: var(--critical); }
 .comp-you { background: rgba(45,212,160,.05); }
+
+/* Google Reviews stars (#14) */
+.stars { display: inline-flex; gap: 2px; }
+.star { color: var(--warning); font-size: 14px; }
+.star.empty { opacity: 0.25; }
+.review-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+.review-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.review-row:last-child { border: none; }
+.review-snippet { background: var(--surface2); border-radius: 8px; padding: 12px 14px; margin-top: 12px; font-size: 12px; color: var(--text-dim); font-style: italic; line-height: 1.6; }
+.review-insight { margin-top: 14px; padding: 10px 14px; background: rgba(245,158,11,.08); border-left: 3px solid var(--warning); border-radius: 0 8px 8px 0; font-size: 12px; color: var(--warning); font-weight: 500; }
 
 /* ========== CHAT ========== */
 .chat-container { display: flex; flex-direction: column; height: calc(100vh - var(--header-h) - 56px); }
@@ -475,6 +602,15 @@ a { color: var(--accent); text-decoration: none; }
   transition: all 0.2s;
 }
 .onboard-btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.onboard-back {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.onboard-back:hover { color: var(--accent); }
 
 .toggle-row {
   display: flex; align-items: center; justify-content: space-between;
@@ -541,6 +677,12 @@ a { color: var(--accent); text-decoration: none; }
 </head>
 <body>
 
+<!-- Breathing blob (#10) -->
+<div class="breathing-blob"></div>
+
+<!-- Mobile backdrop (#6) -->
+<div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebar()"></div>
+
 <div class="app">
 
 <!-- ===== SIDEBAR ===== -->
@@ -579,10 +721,29 @@ a { color: var(--accent); text-decoration: none; }
     </div>
   </nav>
 
+  <!-- Project switcher (#1) -->
   <div class="sidebar-project">
-    <div class="project-selector">
+    <div class="project-dropdown" id="projectDropdown">
+      <div class="project-dropdown-item active" data-project="rosspaintinggroup.com" onclick="selectProject(this)">
+        <span class="pdot"></span>
+        rosspaintinggroup.com
+      </div>
+      <div class="project-dropdown-item" data-project="geoseo.today" onclick="selectProject(this)">
+        <span class="pdot"></span>
+        geoseo.today
+      </div>
+      <div class="project-dropdown-item" data-project="indogig.com" onclick="selectProject(this)">
+        <span class="pdot"></span>
+        indogig.com
+      </div>
+      <div class="project-dropdown-item add-project" onclick="closeProjectDropdown();showOnboarding();">
+        <span class="pdot">+</span>
+        Add Project
+      </div>
+    </div>
+    <div class="project-selector" id="projectSelector" onclick="toggleProjectDropdown()">
       <span class="dot"></span>
-      <span class="name">rosspaintinggroup.com</span>
+      <span class="name" id="projectName">rosspaintinggroup.com</span>
       <span class="arrow">&#9662;</span>
     </div>
   </div>
@@ -592,7 +753,7 @@ a { color: var(--accent); text-decoration: none; }
 <div class="main">
   <header class="topbar">
     <div class="topbar-left">
-      <button class="hamburger" onclick="document.getElementById('sidebar').classList.toggle('open')">
+      <button class="hamburger" onclick="toggleMobileSidebar()">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
       </button>
       <h1 id="page-title">Dashboard</h1>
@@ -618,34 +779,66 @@ a { color: var(--accent); text-decoration: none; }
           <div class="hero-label">Overall Health Score</div>
           <div class="hero-trend">&#9650; +8 this month</div>
           <div class="hero-bar"><div class="hero-bar-fill" style="width:72%"></div></div>
+          <!-- Dollar value framing (#8) -->
+          <div class="hero-dollar">Your organic traffic is worth approximately <strong>~$2,400/mo</strong></div>
+          <!-- Last scanned date (#11) -->
+          <div class="hero-scanned">Last scanned: Jun 9, 2026 (3 days ago)</div>
         </div>
       </div>
 
-      <!-- Score Cards -->
+      <!-- Score Cards with sparklines (#9) and hover scale (#16) -->
       <div class="grid-4">
-        <div class="card">
+        <div class="card score-card">
           <div class="card-header"><span class="card-title">SEO Score</span></div>
           <div class="card-value">72</div>
           <div class="card-trend up">&#9650; +5</div>
+          <div class="sparkline-wrap">
+            <svg viewBox="0 0 120 30" preserveAspectRatio="none">
+              <polyline points="0,26 20,24 40,22 60,20 80,16 100,12 120,8" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,26 20,24 40,22 60,20 80,16 100,12 120,8 120,30 0,30" fill="url(#sparkGrad1)" opacity="0.2"/>
+              <defs><linearGradient id="sparkGrad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
         </div>
-        <div class="card">
+        <div class="card score-card">
           <div class="card-header"><span class="card-title">GEO Score</span></div>
           <div class="card-value">56</div>
           <div class="card-trend up">&#9650; +12</div>
+          <div class="sparkline-wrap">
+            <svg viewBox="0 0 120 30" preserveAspectRatio="none">
+              <polyline points="0,28 20,27 40,25 60,22 80,18 100,14 120,8" fill="none" stroke="var(--pass)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,28 20,27 40,25 60,22 80,18 100,14 120,8 120,30 0,30" fill="url(#sparkGrad2)" opacity="0.2"/>
+              <defs><linearGradient id="sparkGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--pass)"/><stop offset="100%" stop-color="var(--pass)" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
         </div>
-        <div class="card" style="cursor:pointer" onclick="showScreen('ai')">
+        <div class="card score-card" style="cursor:pointer" onclick="showScreen('ai')">
           <div class="card-header"><span class="card-title">AI Visibility</span></div>
           <div class="card-value" style="color:var(--warning)">15<small style="font-size:14px;color:var(--text-dim)">%</small></div>
           <div class="card-trend up">&#9650; +3%</div>
+          <div class="sparkline-wrap">
+            <svg viewBox="0 0 120 30" preserveAspectRatio="none">
+              <polyline points="0,28 20,26 40,24 60,22 80,18 100,14 120,10" fill="none" stroke="var(--warning)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,28 20,26 40,24 60,22 80,18 100,14 120,10 120,30 0,30" fill="url(#sparkGrad3)" opacity="0.2"/>
+              <defs><linearGradient id="sparkGrad3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--warning)"/><stop offset="100%" stop-color="var(--warning)" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
         </div>
-        <div class="card">
+        <div class="card score-card">
           <div class="card-header"><span class="card-title">Speed</span></div>
           <div class="card-value" style="color:var(--pass)">89</div>
           <div class="card-trend up">&#9650; +2</div>
+          <div class="sparkline-wrap">
+            <svg viewBox="0 0 120 30" preserveAspectRatio="none">
+              <polyline points="0,18 20,16 40,14 60,12 80,8 100,6 120,4" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,18 20,16 40,14 60,12 80,8 100,6 120,4 120,30 0,30" fill="url(#sparkGrad4)" opacity="0.2"/>
+              <defs><linearGradient id="sparkGrad4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
         </div>
       </div>
 
-      <!-- Chart -->
+      <!-- Chart with tooltips (#13) -->
       <div class="chart-container">
         <div class="chart-header">
           <h3>Score Over Time</h3>
@@ -674,14 +867,14 @@ a { color: var(--accent); text-decoration: none; }
           <defs><linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2dd4a0"/><stop offset="100%" stop-color="#2dd4a0" stop-opacity="0"/></linearGradient></defs>
           <!-- Line -->
           <polyline points="120,125 212,118 304,108 396,100 488,88 580,72 660,59" fill="none" stroke="#2dd4a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Dots -->
-          <circle cx="120" cy="125" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"/>
-          <circle cx="212" cy="118" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"/>
-          <circle cx="304" cy="108" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"/>
-          <circle cx="396" cy="100" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"/>
-          <circle cx="488" cy="88" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"/>
-          <circle cx="580" cy="72" r="5" fill="#2dd4a0" stroke="#0a0f0d" stroke-width="2"/>
-          <circle cx="660" cy="59" r="5" fill="#2dd4a0" stroke="#0a0f0d" stroke-width="2"/>
+          <!-- Dots with tooltips (#13) -->
+          <circle cx="120" cy="125" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>Apr 21: Score 25</title></circle>
+          <circle cx="212" cy="118" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>Apr 28: Score 30</title></circle>
+          <circle cx="304" cy="108" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 5: Score 37</title></circle>
+          <circle cx="396" cy="100" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 12: Score 43</title></circle>
+          <circle cx="488" cy="88" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 26: Score 51</title></circle>
+          <circle cx="580" cy="72" r="5" fill="#2dd4a0" stroke="#0a0f0d" stroke-width="2"><title>Jun 2: Score 64</title></circle>
+          <circle cx="660" cy="59" r="5" fill="#2dd4a0" stroke="#0a0f0d" stroke-width="2"><title>Jun 9: Score 72</title></circle>
           <!-- Action markers -->
           <line x1="396" y1="100" x2="396" y2="160" stroke="#2dd4a0" stroke-width="1" stroke-dasharray="3" opacity="0.4"/>
           <text x="396" y="148" fill="#2dd4a0" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Fixed schema +4</text>
@@ -756,17 +949,30 @@ a { color: var(--accent); text-decoration: none; }
         <div class="task-progress-bar"><div class="task-progress-fill"></div></div>
       </div>
 
+      <!-- Task tabs with filtering (#4) -->
       <div class="task-tabs">
-        <div class="task-tab active" onclick="switchTab(this)">This Week (3)</div>
-        <div class="task-tab" onclick="switchTab(this)">All Tasks (47)</div>
-        <div class="task-tab" onclick="switchTab(this)">Completed (12)</div>
+        <div class="task-tab active" data-filter="week" onclick="switchTab(this)">This Week (3)</div>
+        <div class="task-tab" data-filter="all" onclick="switchTab(this)">All Tasks (47)</div>
+        <div class="task-tab" data-filter="done" onclick="switchTab(this)">Completed (12)</div>
       </div>
 
-      <div class="task-item" onclick="toggleTask(this)">
+      <!-- Category filters (#5) -->
+      <div class="cat-filters">
+        <div class="cat-chip active" data-cat="all" onclick="filterCategory(this)">All</div>
+        <div class="cat-chip" data-cat="seo" onclick="filterCategory(this)">SEO</div>
+        <div class="cat-chip" data-cat="geo" onclick="filterCategory(this)">GEO</div>
+        <div class="cat-chip" data-cat="content" onclick="filterCategory(this)">Content</div>
+        <div class="cat-chip" data-cat="technical" onclick="filterCategory(this)">Technical</div>
+        <div class="cat-chip" data-cat="speed" onclick="filterCategory(this)">Speed</div>
+      </div>
+
+      <!-- Tasks with data-tab and data-cat (#4, #5, #15) -->
+      <div class="task-item" data-tab="week" data-cat="technical" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Fix robots.txt &mdash; allow AI bots to crawl your site</span>
           <div class="task-meta">
+            <span class="task-cat-badge">Technical</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">5 min</span>
             <span class="task-dollar">~$80/mo</span>
@@ -779,11 +985,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <div class="task-item" onclick="toggleTask(this)">
+      <div class="task-item" data-tab="week" data-cat="geo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Add an expert quote to your homepage</span>
           <div class="task-meta">
+            <span class="task-cat-badge">GEO</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">15 min</span>
             <span class="task-dollar">~$120/mo</span>
@@ -796,11 +1003,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <div class="task-item" onclick="toggleTask(this)">
+      <div class="task-item" data-tab="week" data-cat="content" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Write meta description for /services page</span>
           <div class="task-meta">
+            <span class="task-cat-badge">Content</span>
             <span class="task-badge badge-med">MED</span>
             <span class="task-time">5 min</span>
             <span class="task-dollar">~$40/mo</span>
@@ -812,11 +1020,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <div class="task-item" onclick="toggleTask(this)">
+      <div class="task-item" data-tab="week" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Add FAQ schema to your services page</span>
           <div class="task-meta">
+            <span class="task-cat-badge">Schema</span>
             <span class="task-badge badge-med">MED</span>
             <span class="task-time">10 min</span>
             <span class="task-dollar">~$60/mo</span>
@@ -828,11 +1037,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <div class="task-item done">
+      <div class="task-item done" data-tab="done" data-cat="seo" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Added LocalBusiness schema markup</span>
           <div class="task-meta">
+            <span class="task-cat-badge">Schema</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">Done</span>
             <span class="task-dollar" style="color:var(--pass);">+4 pts</span>
@@ -840,11 +1050,12 @@ a { color: var(--accent); text-decoration: none; }
         </div>
       </div>
 
-      <div class="task-item done">
+      <div class="task-item done" data-tab="done" data-cat="speed" onclick="toggleTask(this)">
         <div class="task-row">
           <div class="task-check checked" onclick="event.stopPropagation();toggleCheck(this)"></div>
           <span class="task-title">Fixed mobile page speed (images compressed)</span>
           <div class="task-meta">
+            <span class="task-cat-badge">Speed</span>
             <span class="task-badge badge-high">HIGH</span>
             <span class="task-time">Done</span>
             <span class="task-dollar" style="color:var(--pass);">+7 pts</span>
@@ -860,6 +1071,55 @@ a { color: var(--accent); text-decoration: none; }
         <div class="card" style="text-align:center;"><div class="card-title" style="margin-bottom:8px;">Perplexity</div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--pass);">5<small style="font-size:14px;color:var(--text-dim);">/15</small></div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">33% visibility</div></div>
         <div class="card" style="text-align:center;"><div class="card-title" style="margin-bottom:8px;">Google AIO</div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--warning);">3<small style="font-size:14px;color:var(--text-dim);">/10</small></div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">30% visibility</div></div>
         <div class="card" style="text-align:center;"><div class="card-title" style="margin-bottom:8px;">Gemini</div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--critical);">0<small style="font-size:14px;color:var(--text-dim);">/15</small></div><div style="font-size:11px;color:var(--text-dim);margin-top:4px;">0% visibility</div></div>
+      </div>
+
+      <!-- AI Visibility Trend Chart (#12) -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3>AI Visibility Trend</h3>
+          <span style="font-size:11px;color:var(--text-dim);">Last 6 weeks</span>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 700 180">
+          <!-- Grid -->
+          <line x1="40" y1="20" x2="40" y2="160" stroke="#2a3a34" stroke-width="1"/>
+          <line x1="40" y1="160" x2="680" y2="160" stroke="#2a3a34" stroke-width="1"/>
+          <line x1="40" y1="90" x2="680" y2="90" stroke="#2a3a34" stroke-width="0.5" stroke-dasharray="4"/>
+          <line x1="40" y1="20" x2="680" y2="20" stroke="#2a3a34" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Y labels -->
+          <text x="30" y="164" fill="#5a7068" font-size="10" text-anchor="end" font-family="JetBrains Mono">0%</text>
+          <text x="30" y="94" fill="#5a7068" font-size="10" text-anchor="end" font-family="JetBrains Mono">10%</text>
+          <text x="30" y="24" fill="#5a7068" font-size="10" text-anchor="end" font-family="JetBrains Mono">20%</text>
+          <!-- X labels -->
+          <text x="148" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 5</text>
+          <text x="256" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 12</text>
+          <text x="364" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 19</text>
+          <text x="472" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 26</text>
+          <text x="580" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Jun 2</text>
+          <text x="660" y="175" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Jun 9</text>
+          <!-- Your line (accent) - 5%, 7%, 8%, 10%, 12%, 15% mapped to chart -->
+          <defs><linearGradient id="aiGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2dd4a0"/><stop offset="100%" stop-color="#2dd4a0" stop-opacity="0"/></linearGradient></defs>
+          <polygon points="148,125 256,111 364,104 472,90 580,76 660,55 660,160 148,160" fill="url(#aiGrad)" opacity="0.15"/>
+          <polyline points="148,125 256,111 364,104 472,90 580,76 660,55" fill="none" stroke="#2dd4a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="148" cy="125" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 5: 5%</title></circle>
+          <circle cx="256" cy="111" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 12: 7%</title></circle>
+          <circle cx="364" cy="104" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 19: 8%</title></circle>
+          <circle cx="472" cy="90" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>May 26: 10%</title></circle>
+          <circle cx="580" cy="76" r="4" fill="#0a0f0d" stroke="#2dd4a0" stroke-width="2"><title>Jun 2: 12%</title></circle>
+          <circle cx="660" cy="55" r="5" fill="#2dd4a0" stroke="#0a0f0d" stroke-width="2"><title>Jun 9: 15%</title></circle>
+          <!-- Competitor average line (dimmer) - 4%, 4%, 5%, 5%, 6%, 7% -->
+          <polyline points="148,132 256,132 364,125 472,125 580,118 660,111" fill="none" stroke="#5a7068" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 3"/>
+          <circle cx="148" cy="132" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>May 5: Competitor avg 4%</title></circle>
+          <circle cx="256" cy="132" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>May 12: Competitor avg 4%</title></circle>
+          <circle cx="364" cy="125" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>May 19: Competitor avg 5%</title></circle>
+          <circle cx="472" cy="125" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>May 26: Competitor avg 5%</title></circle>
+          <circle cx="580" cy="118" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>Jun 2: Competitor avg 6%</title></circle>
+          <circle cx="660" cy="111" r="3" fill="#0a0f0d" stroke="#5a7068" stroke-width="1.5"><title>Jun 9: Competitor avg 7%</title></circle>
+          <!-- Legend -->
+          <line x1="480" y1="14" x2="510" y2="14" stroke="#2dd4a0" stroke-width="2"/>
+          <text x="515" y="17" fill="#8a9e94" font-size="9" font-family="Inter">You</text>
+          <line x1="555" y1="14" x2="585" y2="14" stroke="#5a7068" stroke-width="1.5" stroke-dasharray="6 3"/>
+          <text x="590" y="17" fill="#8a9e94" font-size="9" font-family="Inter">Competitor Avg</text>
+        </svg>
       </div>
 
       <div class="card" style="margin-bottom:24px;overflow-x:auto;">
@@ -920,6 +1180,44 @@ a { color: var(--accent); text-decoration: none; }
             <tr><td>Google Reviews</td><td class="comp-you">4.8 (47)</td><td>4.6 (89)</td><td class="comp-win">4.7 (156)</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Google Reviews Card (#14) -->
+      <div class="review-card">
+        <div class="section-header"><span class="section-title">Google Reviews</span></div>
+        <div class="review-row">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--accent);">Ross Painting Group</div>
+            <div style="margin-top:4px;">
+              <span class="stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span></span>
+              <span style="font-size:13px;font-family:var(--mono);font-weight:700;margin-left:6px;">4.8</span>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);font-family:var(--mono);">47 reviews</div>
+        </div>
+        <div class="review-row">
+          <div>
+            <div style="font-size:13px;font-weight:600;">AllPro Painting SD</div>
+            <div style="margin-top:4px;">
+              <span class="stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></span>
+              <span style="font-size:13px;font-family:var(--mono);font-weight:700;margin-left:6px;">4.6</span>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);font-family:var(--mono);">89 reviews</div>
+        </div>
+        <div class="review-row">
+          <div>
+            <div style="font-size:13px;font-weight:600;">CertaPro San Diego</div>
+            <div style="margin-top:4px;">
+              <span class="stars"><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star">&#9733;</span><span class="star empty">&#9733;</span></span>
+              <span style="font-size:13px;font-family:var(--mono);font-weight:700;margin-left:6px;">4.7</span>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text-dim);font-family:var(--mono);">156 reviews</div>
+        </div>
+        <div class="review-snippet">"Victor and his team did an amazing job on our exterior. Clean, professional, and on time. Highly recommend!" &mdash; Jennifer M., La Jolla</div>
+        <div class="review-snippet" style="margin-top:8px;">"Best painting experience we've had. The attention to detail was incredible." &mdash; Mark T., Del Mar</div>
+        <div class="review-insight">You have the best rating (4.8) but the fewest reviews (47). CertaPro has 3.3x more reviews &mdash; increasing volume will boost your local SEO ranking.</div>
       </div>
 
       <div class="card">
@@ -991,14 +1289,15 @@ a { color: var(--accent); text-decoration: none; }
             </div>
           </div>
         </div>
+        <!-- Chat chips that populate input (#3) -->
         <div class="chat-suggestions">
-          <div class="chat-chip">How to improve AI visibility?</div>
-          <div class="chat-chip">What should I fix first?</div>
-          <div class="chat-chip">Create content brief for /services</div>
-          <div class="chat-chip">How to get more backlinks?</div>
+          <div class="chat-chip" onclick="populateChat(this)">How to improve AI visibility?</div>
+          <div class="chat-chip" onclick="populateChat(this)">What should I fix first?</div>
+          <div class="chat-chip" onclick="populateChat(this)">Create content brief for /services</div>
+          <div class="chat-chip" onclick="populateChat(this)">How to get more backlinks?</div>
         </div>
         <div class="chat-input-bar">
-          <input type="text" class="chat-input" placeholder="Ask anything about your marketing...">
+          <input type="text" class="chat-input" id="chatInput" placeholder="Ask anything about your marketing...">
           <button class="chat-send"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg></button>
         </div>
       </div>
@@ -1078,6 +1377,8 @@ a { color: var(--accent); text-decoration: none; }
       <input class="onboard-input" type="text" placeholder="https://competitor2.com (optional)" value="https://certapro-sandiego.com">
       <button class="onboard-btn-ghost" style="margin-bottom:8px;" onclick="onboardNext(3)">Find competitors automatically</button>
       <button class="onboard-btn" onclick="onboardNext(3)">Continue</button>
+      <!-- Back button (#7) -->
+      <div class="onboard-back" onclick="onboardNext(1)">&larr; Back</div>
     </div>
 
     <div id="onboard-step-3" style="display:none;">
@@ -1086,12 +1387,14 @@ a { color: var(--accent); text-decoration: none; }
       <div class="toggle-row"><div><div class="toggle-label">Weekly email report</div><div class="toggle-desc">sergei@example.com</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
       <div class="toggle-row"><div><div class="toggle-label">Telegram alerts</div><div class="toggle-desc">Instant notifications</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
       <button class="onboard-btn" onclick="closeOnboarding()" style="margin-top:24px;">Start Tracking</button>
+      <!-- Back button (#7) -->
+      <div class="onboard-back" onclick="onboardNext(2)">&larr; Back</div>
     </div>
   </div>
 </div>
 
 <script>
-// Screen switching
+// Screen switching (#2 scroll to top)
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
@@ -1100,7 +1403,9 @@ function showScreen(name) {
   const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', chat:'AI Chat', monitoring:'Monitoring' };
   document.getElementById('page-title').textContent = titles[name] || name;
   // Close mobile sidebar
-  document.getElementById('sidebar').classList.remove('open');
+  closeSidebar();
+  // Scroll to top (#2)
+  window.scrollTo(0, 0);
 }
 
 // Task expand
@@ -1108,17 +1413,108 @@ function toggleTask(el) {
   el.classList.toggle('expanded');
 }
 
-// Task check
+// Task check with animation (#16)
 function toggleCheck(el) {
   el.classList.toggle('checked');
   const item = el.closest('.task-item');
   item.classList.toggle('done');
+  // Add pop animation
+  item.classList.add('just-checked');
+  setTimeout(() => item.classList.remove('just-checked'), 300);
+  // Re-apply filters
+  applyTaskFilters();
 }
 
-// Tab switch
+// Current filter state
+let currentTabFilter = 'week';
+let currentCatFilter = 'all';
+
+// Tab switch with filtering (#4)
 function switchTab(el) {
   el.parentElement.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  currentTabFilter = el.getAttribute('data-filter');
+  applyTaskFilters();
+}
+
+// Category filter (#5)
+function filterCategory(el) {
+  el.parentElement.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  currentCatFilter = el.getAttribute('data-cat');
+  applyTaskFilters();
+}
+
+// Combined filter logic (#4 + #5)
+function applyTaskFilters() {
+  const items = document.querySelectorAll('#screen-tasks .task-item');
+  items.forEach(item => {
+    const tab = item.getAttribute('data-tab');
+    const cat = item.getAttribute('data-cat');
+    const isDone = item.classList.contains('done');
+
+    let showByTab = false;
+    if (currentTabFilter === 'all') {
+      showByTab = true;
+    } else if (currentTabFilter === 'week') {
+      showByTab = (tab === 'week' && !isDone);
+    } else if (currentTabFilter === 'done') {
+      showByTab = isDone;
+    }
+
+    let showByCat = (currentCatFilter === 'all') || (cat === currentCatFilter);
+
+    item.style.display = (showByTab && showByCat) ? '' : 'none';
+  });
+}
+
+// Chat chip click to populate (#3)
+function populateChat(chip) {
+  const input = document.getElementById('chatInput');
+  input.value = chip.textContent;
+  input.focus();
+}
+
+// Project switcher (#1)
+function toggleProjectDropdown() {
+  const dropdown = document.getElementById('projectDropdown');
+  const selector = document.getElementById('projectSelector');
+  dropdown.classList.toggle('open');
+  selector.classList.toggle('open');
+}
+function closeProjectDropdown() {
+  document.getElementById('projectDropdown').classList.remove('open');
+  document.getElementById('projectSelector').classList.remove('open');
+}
+function selectProject(el) {
+  const name = el.getAttribute('data-project');
+  document.getElementById('projectName').textContent = name;
+  // Update active states
+  document.querySelectorAll('.project-dropdown-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  // Update dot color
+  const dot = document.querySelector('.project-selector .dot');
+  dot.style.background = 'var(--pass)';
+  closeProjectDropdown();
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.sidebar-project')) {
+    closeProjectDropdown();
+  }
+});
+
+// Mobile sidebar (#6)
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  sidebar.classList.toggle('open');
+  backdrop.classList.toggle('visible');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarBackdrop').classList.remove('visible');
 }
 
 // Onboarding
@@ -1141,6 +1537,9 @@ function onboardStep(step) {
     if (i === step) dot.classList.add('active');
   }
 }
+
+// Initial filter state
+applyTaskFilters();
 </script>
 
 </body>
