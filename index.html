@@ -378,6 +378,45 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
+  <!-- Domain Health -->
+  <div class="card" id="domainCard" style="margin-bottom:16px;cursor:pointer;" onclick="toggleDomain()">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);" id="domainToggle">&#9654; Domain Health</span>
+        <span style="font-size:12px;color:var(--pass);font-weight:600;">&#10003; Healthy</span>
+      </div>
+      <span style="font-size:11px;color:var(--text-light);">DA 25 &middot; 5 yrs old &middot; 124 backlinks</span>
+    </div>
+    <div id="domainDetail" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Domain Authority <span class="ds">Moz</span></div>
+          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">25 <span style="font-size:12px;color:var(--text-dim);font-weight:500;">/100</span></div>
+          <div style="font-size:11px;color:var(--text-light);">CertaPro: 42 &middot; AllPro: 35</div>
+        </div>
+        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Backlinks <span class="ds">Bing Webmaster</span></div>
+          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">124</div>
+          <div style="font-size:11px;color:var(--text-light);">from 47 domains</div>
+        </div>
+        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Domain Age</div>
+          <div style="font-size:20px;font-weight:800;font-family:var(--mono);">5 yrs</div>
+          <div style="font-size:11px;color:var(--text-light);">Registered Mar 2021</div>
+        </div>
+        <div style="padding:10px 14px;background:var(--surface2);border-radius:8px;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;">Security &amp; Status</div>
+          <div style="font-size:12px;line-height:1.8;">
+            <span style="color:var(--pass);">&#10003;</span> SSL valid (exp Dec 2026)<br>
+            <span style="color:var(--pass);">&#10003;</span> Not blacklisted<br>
+            <span style="color:var(--pass);">&#10003;</span> Spam score: 2% (low)<br>
+            <span style="color:var(--pass);">&#10003;</span> 18 pages indexed
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Site Health (collapsed) -->
   <div class="card" id="healthCard" style="cursor:pointer;" onclick="toggleHealth()">
     <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -392,7 +431,7 @@ a{color:var(--accent);text-decoration:none}
       <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
         On-site quality score. Measures technical SEO, content structure, AI-readiness, and page speed.<br>
         <strong>13 categories &middot; 135+ checks</strong><br>
-        This is an <em>instrument</em>, not a KPI &mdash; a high score means your site is well-built, but rankings depend on competition, backlinks, and content authority.
+        This is a quality checklist, not a ranking predictor. Rankings depend on reviews, backlinks, and competition.
       </div>
     </div>
   </div>
@@ -739,6 +778,22 @@ a{color:var(--accent);text-decoration:none}
       <div class="ob-title">What's your business?</div>
       <div class="ob-sub">We'll scan your site, find local competitors, and check your visibility in Google &amp; AI</div>
       <input class="ob-input" type="text" placeholder="https://yoursite.com" value="https://rosspaintinggroup.com">
+      <div style="margin-bottom:12px;">
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;text-align:center;">Where are you located?</div>
+        <div style="display:flex;gap:8px;justify-content:center;">
+          <input class="ob-input" type="text" placeholder="City" value="San Diego" style="width:160px;text-align:center;margin:0;">
+          <select style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;color:var(--text);font-size:14px;font-family:var(--font);outline:none;appearance:none;cursor:pointer;min-width:120px;text-align:center;">
+            <option>United States</option>
+            <option>Indonesia</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+            <option>Canada</option>
+            <option>Germany</option>
+            <option>France</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
       <div style="margin-bottom:16px;">
         <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;text-align:center;">Industry:</div>
         <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto;">
@@ -800,6 +855,7 @@ function go(n){
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarBackdrop').classList.remove('visible')}
 function toggleTask(el){el.classList.toggle('expanded')}
 function toggleHealth(){const d=document.getElementById('healthDetail'),t=document.getElementById('healthToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Site Health Check'}else{d.style.display='none';t.textContent='▶ Site Health Check'}}
+function toggleDomain(){const d=document.getElementById('domainDetail'),t=document.getElementById('domainToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Domain Health'}else{d.style.display='none';t.textContent='▶ Domain Health'}}
 
 let curTab='open',curCat='all';
 function stab(el){el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');curTab=el.getAttribute('data-f');filterTasks()}
