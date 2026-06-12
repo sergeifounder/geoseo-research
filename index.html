@@ -1074,105 +1074,222 @@ a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
-    <!-- ==================== SCREEN 5: YOUR PROGRESS (was Strategy) ==================== -->
+    <!-- ==================== SCREEN 5: YOUR PROGRESS ==================== -->
     <div class="screen" id="screen-progress">
 
-      <!-- What you've accomplished -->
+      <!-- Key metrics summary -->
       <div class="card" style="margin-bottom:24px;border-color:var(--pass);border-width:2px;">
-        <div class="section-header"><span class="section-title" style="color:var(--pass);">What You've Accomplished</span><span style="font-size:11px;color:var(--text-dim);">Since tracking began Apr 21</span></div>
-        <div class="grid-4" style="margin-bottom:0;">
-          <div style="text-align:center;"><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--pass);">+47</div><div style="font-size:11px;color:var(--text-dim);">Site Health points</div><div style="font-size:10px;color:var(--text-light);">25 &rarr; 72</div></div>
-          <div style="text-align:center;"><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--accent);">12</div><div style="font-size:11px;color:var(--text-dim);">Tasks completed</div><div style="font-size:10px;color:var(--text-light);">of 47 total</div></div>
-          <div style="text-align:center;"><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--info);">8</div><div style="font-size:11px;color:var(--text-dim);">Weeks tracked</div><div style="font-size:10px;color:var(--text-light);">since Apr 21</div></div>
-          <div style="text-align:center;"><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--warning);">~6</div><div style="font-size:11px;color:var(--text-dim);">pts/week pace</div><div style="font-size:10px;color:var(--text-light);">your avg improvement</div></div>
+        <div class="section-header"><span class="section-title" style="color:var(--pass);">8 Weeks of Progress</span><span style="font-size:11px;color:var(--text-dim);">Since Apr 21, 2026</span></div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+          <div style="text-align:center;"><div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--pass);">+47</div><div style="font-size:10px;color:var(--text-dim);">Site Health</div><div style="font-size:9px;color:var(--text-light);">25 &rarr; 72</div></div>
+          <div style="text-align:center;"><div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--accent);">12</div><div style="font-size:10px;color:var(--text-dim);">Issues fixed</div><div style="font-size:9px;color:var(--text-light);">35 remaining</div></div>
+          <div style="text-align:center;"><div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--info);">+340</div><div style="font-size:10px;color:var(--text-dim);">Clicks/month</div><div style="font-size:9px;color:var(--text-light);">via GSC</div></div>
+          <div style="text-align:center;"><div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--warning);">+5</div><div style="font-size:10px;color:var(--text-dim);">AI mentions</div><div style="font-size:9px;color:var(--text-light);">0 &rarr; 5 of 15</div></div>
+          <div style="text-align:center;"><div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--pass);">#18</div><div style="font-size:10px;color:var(--text-dim);">Avg position</div><div style="font-size:9px;color:var(--text-light);">was #45</div></div>
         </div>
       </div>
 
-      <!-- Roadmap (fact-based, no predictions) -->
+      <!-- Traffic + Score correlation chart -->
+      <div class="chart-container" style="margin-bottom:24px;">
+        <div class="chart-header">
+          <h3>Score vs Traffic Correlation <span class="data-source">via Google Search Console</span></h3>
+          <span style="font-size:11px;color:var(--text-dim);">Actions &rarr; Results</span>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 700 200" style="height:220px;">
+          <!-- Grid -->
+          <line x1="50" y1="20" x2="50" y2="170" stroke="#2a3a34" stroke-width="1"/>
+          <line x1="50" y1="170" x2="680" y2="170" stroke="#2a3a34" stroke-width="1"/>
+          <line x1="50" y1="95" x2="680" y2="95" stroke="#2a3a34" stroke-width="0.5" stroke-dasharray="4"/>
+          <!-- Y axis left: Site Health -->
+          <text x="12" y="24" fill="#2dd4a0" font-size="9" font-family="JetBrains Mono">100</text>
+          <text x="12" y="99" fill="#2dd4a0" font-size="9" font-family="JetBrains Mono">50</text>
+          <text x="12" y="174" fill="#2dd4a0" font-size="9" font-family="JetBrains Mono">0</text>
+          <!-- Y axis right: Clicks -->
+          <text x="688" y="24" fill="#3b82f6" font-size="9" text-anchor="end" font-family="JetBrains Mono">800</text>
+          <text x="688" y="99" fill="#3b82f6" font-size="9" text-anchor="end" font-family="JetBrains Mono">400</text>
+          <text x="688" y="174" fill="#3b82f6" font-size="9" text-anchor="end" font-family="JetBrains Mono">0</text>
+          <!-- X labels -->
+          <text x="130" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Apr 21</text>
+          <text x="220" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Apr 28</text>
+          <text x="310" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 5</text>
+          <text x="400" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 12</text>
+          <text x="490" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">May 26</text>
+          <text x="580" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Jun 2</text>
+          <text x="650" y="188" fill="#5a7068" font-size="9" text-anchor="middle" font-family="JetBrains Mono">Jun 9</text>
+          <!-- Site Health line (green) - 25,30,37,43,51,64,72 mapped to 0-100 -> 170 to 20 -->
+          <polygon points="130,132 220,125 310,114 400,105 490,93 580,74 650,62 650,170 130,170" fill="url(#progGrad)" opacity="0.15"/>
+          <defs><linearGradient id="progGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2dd4a0"/><stop offset="100%" stop-color="#2dd4a0" stop-opacity="0"/></linearGradient></defs>
+          <polyline points="130,132 220,125 310,114 400,105 490,93 580,74 650,62" fill="none" stroke="#2dd4a0" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Clicks line (blue) - 120,140,180,220,310,450,460 mapped to 0-800 -> 170 to 20 -->
+          <polyline points="130,148 220,144 310,136 400,129 490,112 580,86 650,84" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-dasharray="6 3"/>
+          <!-- Action markers -->
+          <line x1="400" y1="105" x2="400" y2="170" stroke="#2dd4a0" stroke-width="1" stroke-dasharray="3" opacity="0.5"/>
+          <text x="400" y="165" fill="#2dd4a0" font-size="8" text-anchor="middle">Schema +4</text>
+          <line x1="580" y1="74" x2="580" y2="170" stroke="#2dd4a0" stroke-width="1" stroke-dasharray="3" opacity="0.5"/>
+          <text x="580" y="165" fill="#2dd4a0" font-size="8" text-anchor="middle">Quotes +7</text>
+          <!-- Legend -->
+          <line x1="380" y1="10" x2="410" y2="10" stroke="#2dd4a0" stroke-width="2.5"/>
+          <text x="415" y="13" fill="#8a9e94" font-size="9" font-family="Inter">Site Health</text>
+          <line x1="490" y1="10" x2="520" y2="10" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6 3"/>
+          <text x="525" y="13" fill="#8a9e94" font-size="9" font-family="Inter">GSC Clicks/wk</text>
+        </svg>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:4px;text-align:center;">
+          Notice: traffic follows score improvements with a 1-2 week delay. Schema fix (May 12) &rarr; clicks jumped May 26.
+        </div>
+      </div>
+
+      <!-- Week-by-week timeline -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Week-by-Week Journal</span></div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+
+          <!-- Week 8 (latest) -->
+          <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+            <div style="min-width:80px;">
+              <div style="font-size:12px;font-weight:700;color:var(--accent);">Week 8</div>
+              <div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 9</div>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex;gap:16px;margin-bottom:8px;">
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--accent);font-weight:700;">72</span> <span style="color:var(--text-light);">health</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--info);font-weight:700;">460</span> <span style="color:var(--text-light);">clicks</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--warning);font-weight:700;">5</span> <span style="color:var(--text-light);">AI mentions</span></span>
+              </div>
+              <div style="font-size:12px;color:var(--text-dim);">
+                <span style="color:var(--pass);">&#10003;</span> Expert quotes added (+5 pts) &middot;
+                <span style="color:var(--pass);">&#10003;</span> Schema expanded (+3 pts) &middot;
+                <span style="color:var(--info);">&#9733;</span> Perplexity started citing you
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+8</div>
+          </div>
+
+          <!-- Week 7 -->
+          <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+            <div style="min-width:80px;">
+              <div style="font-size:12px;font-weight:700;">Week 7</div>
+              <div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">Jun 2</div>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex;gap:16px;margin-bottom:8px;">
+                <span style="font-size:12px;font-family:var(--mono);"><span style="font-weight:700;">64</span> <span style="color:var(--text-light);">health</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--info);font-weight:700;">450</span> <span style="color:var(--text-light);">clicks</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--warning);font-weight:700;">3</span> <span style="color:var(--text-light);">AI mentions</span></span>
+              </div>
+              <div style="font-size:12px;color:var(--text-dim);">
+                <span style="color:var(--pass);">&#10003;</span> Images compressed (+7 speed) &middot;
+                <span style="color:var(--warning);">&#9888;</span> CertaPro added FAQ schema
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+3</div>
+          </div>
+
+          <!-- Week 6 -->
+          <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+            <div style="min-width:80px;">
+              <div style="font-size:12px;font-weight:700;">Week 6</div>
+              <div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 26</div>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex;gap:16px;margin-bottom:8px;">
+                <span style="font-size:12px;font-family:var(--mono);"><span style="font-weight:700;">61</span> <span style="color:var(--text-light);">health</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--info);font-weight:700;">310</span> <span style="color:var(--text-light);">clicks</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--warning);font-weight:700;">2</span> <span style="color:var(--text-light);">AI mentions</span></span>
+              </div>
+              <div style="font-size:12px;color:var(--text-dim);">
+                No changes detected. Clicks up +90 from schema fix 2 weeks ago.
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--text-dim);min-width:50px;text-align:right;">+0</div>
+          </div>
+
+          <!-- Week 5 -->
+          <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
+            <div style="min-width:80px;">
+              <div style="font-size:12px;font-weight:700;">Week 5</div>
+              <div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 19</div>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex;gap:16px;margin-bottom:8px;">
+                <span style="font-size:12px;font-family:var(--mono);"><span style="font-weight:700;">61</span> <span style="color:var(--text-light);">health</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--info);font-weight:700;">220</span> <span style="color:var(--text-light);">clicks</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--warning);font-weight:700;">1</span> <span style="color:var(--text-light);">AI mentions</span></span>
+              </div>
+              <div style="font-size:12px;color:var(--text-dim);">
+                <span style="color:var(--critical);">&#10007;</span> SSL warning detected (-2 pts) &middot; Resolved next day
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--critical);min-width:50px;text-align:right;">-2</div>
+          </div>
+
+          <!-- Week 4 -->
+          <div style="display:flex;gap:16px;padding:16px 0;">
+            <div style="min-width:80px;">
+              <div style="font-size:12px;font-weight:700;">Week 4</div>
+              <div style="font-size:10px;color:var(--text-light);font-family:var(--mono);">May 12</div>
+            </div>
+            <div style="flex:1;">
+              <div style="display:flex;gap:16px;margin-bottom:8px;">
+                <span style="font-size:12px;font-family:var(--mono);"><span style="font-weight:700;">43</span> <span style="color:var(--text-light);">health</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--info);font-weight:700;">180</span> <span style="color:var(--text-light);">clicks</span></span>
+                <span style="font-size:12px;font-family:var(--mono);"><span style="color:var(--warning);font-weight:700;">0</span> <span style="color:var(--text-light);">AI mentions</span></span>
+              </div>
+              <div style="font-size:12px;color:var(--text-dim);">
+                <span style="color:var(--pass);">&#10003;</span> robots.txt fixed (+3 pts) &middot;
+                <span style="color:var(--pass);">&#10003;</span> LocalBusiness schema (+4 pts) &middot;
+                <span style="color:var(--pass);">&#10003;</span> Mobile viewport fixed (+1 pt)
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+8</div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:12px;"><a href="#" style="font-size:12px;" onclick="return false;">View weeks 1-3 &rarr;</a></div>
+      </div>
+
+      <!-- Connect GSC prompt (if not connected) -->
+      <div class="card" style="margin-bottom:24px;border-color:var(--info);border-style:dashed;text-align:center;padding:32px;">
+        <div style="font-size:18px;margin-bottom:8px;">&#128200;</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px;">Connect Google Search Console</div>
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:16px;max-width:400px;margin-left:auto;margin-right:auto;">See real clicks, impressions, and positions alongside your score changes. Free, read-only access.</div>
+        <button class="btn-fix" style="display:inline-block;width:auto;">Connect GSC (Google OAuth)</button>
+        <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Read-only access &middot; We never modify your data</div>
+      </div>
+
+      <!-- Roadmap phases -->
       <div style="margin-bottom:24px;">
         <div class="section-header"><span class="section-title">Your Roadmap</span></div>
         <div class="grid-3">
           <div class="card" style="border-color:var(--accent);border-width:2px;">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:12px;">Phase 1: Foundation <span style="font-size:9px;background:var(--accent);color:#000;padding:1px 6px;border-radius:3px;margin-left:6px;">CURRENT</span></div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Fix technical issues</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#9679;</span> Add schema markup</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Allow AI bots</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Expert quotes</div>
             </div>
-            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;"><span>Progress</span><span>3 of 5 done</span></div>
-              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
-            </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">Focus: <strong style="color:var(--text);">On-site fixes</strong></div>
+            <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">3 of 5 auto-verified</div>
           </div>
           <div class="card">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Phase 2: Channels</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Register on Houzz</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Grow Yelp reviews</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Start YouTube channel</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> BBB accreditation</div>
             </div>
-            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;"><span>Progress</span><span>0 of 4 done</span></div>
-              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
-            </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">Focus: <strong style="color:var(--text);">Off-site presence</strong></div>
+            <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">0 of 4 &middot; Off-site presence</div>
           </div>
           <div class="card">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:12px;">Phase 3: Content</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Blog: 2 posts/month</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Local directory links</div>
               <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Video testimonials</div>
-              <div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--text-dim);">&#9675;</span> Guest posts on SD blogs</div>
             </div>
-            <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);">
-              <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-bottom:4px;"><span>Progress</span><span>0 of 4 done</span></div>
-              <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
-            </div>
-            <div style="font-size:11px;color:var(--text-dim);margin-top:10px;">Focus: <strong style="color:var(--text);">Content &amp; backlinks</strong></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Score change log (facts, not predictions) -->
-      <div class="card" style="margin-bottom:24px;">
-        <div class="section-header"><span class="section-title">Score Change Log</span><span style="font-size:11px;color:var(--text-dim);">What actually moved the needle</span></div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;">
-            <span style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+7</span>
-            <div><div style="font-size:13px;font-weight:600;">Fixed mobile page speed</div><div style="font-size:11px;color:var(--text-dim);">Jun 3 &mdash; Compressed images, lazy loading enabled</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;">
-            <span style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+4</span>
-            <div><div style="font-size:13px;font-weight:600;">Added LocalBusiness schema</div><div style="font-size:11px;color:var(--text-dim);">Jun 5 &mdash; JSON-LD structured data on homepage</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;">
-            <span style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:50px;text-align:right;">+5</span>
-            <div><div style="font-size:13px;font-weight:600;">Added expert quotes</div><div style="font-size:11px;color:var(--text-dim);">Jun 9 &mdash; Owner credentials and experience on homepage</div></div>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--surface2);border-radius:8px;">
-            <span style="font-size:18px;font-weight:800;font-family:var(--mono);color:var(--critical);min-width:50px;text-align:right;">-2</span>
-            <div><div style="font-size:13px;font-weight:600;">SSL certificate warning</div><div style="font-size:11px;color:var(--text-dim);">May 19 &mdash; Detected and resolved May 20</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Auto-update explanation -->
-      <div class="card" style="border-color:var(--info);border-style:dashed;">
-        <div style="display:flex;gap:12px;align-items:flex-start;">
-          <span style="font-size:20px;">&#128260;</span>
-          <div>
-            <div style="font-size:13px;font-weight:700;color:var(--info);">This page updates automatically</div>
-            <div style="font-size:12px;color:var(--text-dim);margin-top:6px;line-height:1.7;">
-              Every week we re-scan your site and competitors. When data changes:<br>
-              &bull; Completed tasks are verified (on-site) or kept as self-reported (off-site)<br>
-              &bull; New issues found &rarr; new tasks auto-generated<br>
-              &bull; If competitors make changes &rarr; priorities updated
-            </div>
-            <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Last update: Jun 9, 2026 &bull; Next scan: Jun 16, 2026</div>
+            <div style="height:4px;background:var(--surface2);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--accent);border-radius:2px;"></div></div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">0 of 3 &middot; Content &amp; backlinks</div>
           </div>
         </div>
       </div>
