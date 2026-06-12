@@ -299,6 +299,34 @@
     </tbody></table>
   </div>
 
+  <!-- Ask AI (contextual, knows all your data) -->
+  <div class="card" style="margin-bottom:14px;" id="askAiCard">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <div class="stitle" style="margin:0;">Ask AI About Your Business</div>
+      <span class="ds">Knows your audit, competitors, positions, reviews</span>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+      <span style="padding:6px 12px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;" onclick="showAiAnswer('agency')" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">Is my SEO agency delivering?</span>
+      <span style="padding:6px 12px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;" onclick="showAiAnswer('localpack')" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">How do I get into Local Pack?</span>
+      <span style="padding:6px 12px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;" onclick="showAiAnswer('reviews')" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">How to get more reviews?</span>
+      <span style="padding:6px 12px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;" onclick="showAiAnswer('compete')" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">What does CertaPro do better?</span>
+      <span style="padding:6px 12px;border-radius:18px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s;" onclick="showAiAnswer('blog')" onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dim)'">What blog posts should I write?</span>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <input type="text" placeholder="Ask anything about your search visibility..." style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;font-family:var(--font);outline:none;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      <button class="btn" style="font-size:12px;padding:8px 16px;">Ask</button>
+    </div>
+
+    <!-- AI Answer panel (hidden by default) -->
+    <div id="aiAnswer" style="display:none;margin-top:16px;padding:16px;background:var(--surface2);border-radius:10px;border-left:3px solid var(--accent);">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+        <div style="font-size:12px;font-weight:700;color:var(--accent);" id="aiAnswerTitle">AI Response</div>
+        <span style="font-size:11px;color:var(--text-light);cursor:pointer;" onclick="document.getElementById('aiAnswer').style.display='none'">&#10005; Close</span>
+      </div>
+      <div id="aiAnswerBody" style="font-size:13px;color:var(--text-dim);line-height:1.8;"></div>
+    </div>
+  </div>
+
   <!-- Audit report access -->
   <div class="card" style="border-color:var(--accent);display:flex;justify-content:space-between;align-items:center;">
     <div><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:2px;">Full Audit Report</div><div style="font-size:12px;color:var(--text-dim);">135+ checks &middot; 13 SEO + 8 GEO categories</div></div>
@@ -486,6 +514,96 @@ function animScan(){
 }
 
 function toggleTask(el){el.classList.toggle('expanded');}
+
+const aiAnswers = {
+  agency: {
+    title: 'Is my SEO agency delivering?',
+    body: `Based on your data over the last 4 weeks:<br><br>
+<strong style="color:var(--critical);">Core metrics show limited progress:</strong><br>
+&bull; Google positions: 0 of 20 queries improved<br>
+&bull; Maps: 1 query improved ("house painting" 25&rarr;6) &mdash; this is good<br>
+&bull; Reviews: 52 &rarr; 52 (no growth). CertaPro gained +12 in same period.<br>
+&bull; Local Pack: still NOT IN<br>
+&bull; GBP: still 80% complete (no change)<br><br>
+<strong style="color:var(--warning);">Assessment:</strong> Your agency may be doing link-building work, but the 3 highest-impact actions for a local painting business are being ignored:<br>
+1. <strong>Review strategy</strong> &mdash; you need 5+/week, currently getting ~1<br>
+2. <strong>GBP completion</strong> &mdash; still 80%, should be 100%<br>
+3. <strong>Platform presence</strong> &mdash; Houzz, Yelp still missing<br><br>
+<strong style="color:var(--accent);">Suggestion:</strong> Ask your agency to shift focus from general link building to reviews + GBP + local platforms. These directly impact Local Pack ranking.`
+  },
+  localpack: {
+    title: 'How do I get into the Local 3-Pack?',
+    body: `You're currently NOT in the Local 3-Pack for "house painters san diego".<br>
+Currently showing: #1 CertaPro, #2 AllPro, #3 ColorWorld.<br><br>
+<strong>The 3 main factors for Local Pack:</strong><br><br>
+<strong>1. Google Reviews (biggest factor)</strong><br>
+You: 52 reviews &bull; CertaPro: 312 &bull; AllPro: 89 &bull; ColorWorld: 63<br>
+Even ColorWorld (#3) has more reviews than you. You need at least 65+ to compete for #3 position.<br>
+&rarr; Action: send review request after every completed job<br><br>
+<strong>2. GBP Completeness</strong><br>
+Your profile is 80% complete. Missing: Google Posts (competitors post weekly), detailed service areas, more photos (you: 18, CertaPro: 45).<br>
+&rarr; Action: complete GBP to 100%, start posting weekly<br><br>
+<strong>3. Proximity (can't change)</strong><br>
+Google prioritizes businesses closer to the searcher. This you can't control, but reviews and GBP can compensate.<br><br>
+<strong style="color:var(--accent);">Realistic timeline:</strong> If you get 5 reviews/week and complete GBP, you could enter the 3-Pack in 2-3 months. No guarantees &mdash; depends on competitor activity.`
+  },
+  reviews: {
+    title: 'How to get more reviews?',
+    body: `You have 52 reviews (4.9 stars). Quality is excellent. Quantity is the problem &mdash; CertaPro has 312.<br><br>
+<strong>5 proven tactics for local service businesses:</strong><br><br>
+<strong>1. Ask within 24 hours</strong> &mdash; send a text/email with direct Google review link right after completing a job. Conversion rate: 10-15%.<br><br>
+<strong>2. Make it 1-tap easy</strong> &mdash; create a short link: g.page/rosspaintinggroup/review. Put it in every text, email, invoice.<br><br>
+<strong>3. QR code on materials</strong> &mdash; print QR code on business cards, invoices, yard signs. "Scan to leave a review."<br><br>
+<strong>4. Follow up on day 3</strong> &mdash; if no review after 3 days, send a friendly reminder: "How was our work? We'd love your feedback."<br><br>
+<strong>5. Respond to EVERY review</strong> &mdash; Google rewards active profiles. Thank positive reviews, professionally address negative ones.<br><br>
+<strong style="color:var(--accent);">Math:</strong> If you do 3 jobs/week and 15% leave reviews &rarr; ~2 reviews/week. Add follow-ups &rarr; 3-4/week. Target: 5+/week to close gap with CertaPro.`
+  },
+  compete: {
+    title: 'What does CertaPro do better?',
+    body: `CertaPro San Diego is #1 in your market. Here's exactly what they do that you don't:<br><br>
+<strong style="color:var(--critical);">1. Reviews: 312 vs your 52</strong><br>
+They have 6x more reviews. They're adding ~3/week. This is THE main reason they're in Local Pack and you're not.<br><br>
+<strong style="color:var(--warning);">2. Platform presence: 6/8 vs your 3/8</strong><br>
+CertaPro is on: Google, Yelp, Houzz (23 projects), YouTube, BBB (A+), LinkedIn.<br>
+You're on: Google, Yelp (2 reviews), Facebook only.<br>
+AI engines cite Houzz in 15% of painter queries. You're missing that traffic.<br><br>
+<strong style="color:var(--warning);">3. Schema markup: 7 types vs your 3</strong><br>
+They have: LocalBusiness, FAQ, Service, Review, Organization, BreadcrumbList, WebSite schema.<br>
+You have: LocalBusiness, WebSite, Organization. Missing FAQ and Service schema hurts rich results.<br><br>
+<strong style="color:var(--pass);">Where YOU lead:</strong><br>
+&bull; Rating: 4.9 vs 4.7 (you have better quality)<br>
+&bull; Site speed: 91 vs 67 (significantly faster)<br>
+&bull; GEO score: 62 vs 38 (better content structure)<br><br>
+<strong style="color:var(--accent);">Strategy:</strong> Don't try to out-spend CertaPro (they're a national franchise). Win on quality (rating), speed, and AI readiness. Close the review gap with consistent effort.`
+  },
+  blog: {
+    title: 'What blog posts should I write?',
+    body: `Based on competitor content and AI citation analysis, here are the top 3 posts you should write:<br><br>
+<strong>1. "House Painting Costs in San Diego 2026 — Complete Guide"</strong><br>
+Why: CertaPro gets AI citations for "painting cost san diego" from their pricing page. You have 0 pricing content. High commercial intent query (1,000 searches/mo).<br>
+Include: price ranges by room/exterior, factors affecting cost, comparison table.<br>
+<span style="color:var(--accent);">&rarr; Task created in Action Plan</span><br><br>
+<strong>2. "La Jolla Exterior Painting — Before & After Gallery"</strong><br>
+Why: AllPro ranks for La Jolla queries via blog + Houzz portfolio. You have no location-specific content. La Jolla is a high-income area with bigger projects.<br>
+Include: before/after photos, project details, client testimonial.<br>
+<span style="color:var(--accent);">&rarr; Task created in Action Plan</span><br><br>
+<strong>3. "How to Choose a House Painter in San Diego"</strong><br>
+Why: AllPro published this and ranks for "how to choose a painter." Classic buyer-intent content. AI engines love guide-style content with structured headers.<br>
+Include: checklist, questions to ask, red flags, licensing info.<br>
+<span style="color:var(--accent);">&rarr; Task created in Action Plan</span><br><br>
+<strong>Posting frequency:</strong> 2 posts/month is enough. Quality over quantity. Each post should have: target keyword in title, FAQ section, expert quotes, internal links to your services page.`
+  }
+};
+
+function showAiAnswer(key) {
+  const a = aiAnswers[key];
+  if (!a) return;
+  const panel = document.getElementById('aiAnswer');
+  document.getElementById('aiAnswerTitle').textContent = a.title;
+  document.getElementById('aiAnswerBody').innerHTML = a.body;
+  panel.style.display = 'block';
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 const tabTitles={db:'Dashboard',ap:'Action Plan',sv:'Search Visibility',cp:'Competitors',mn:'Monitoring'};
 function dTab(nav,id){document.querySelectorAll('.dtab').forEach(t=>{t.classList.remove('active');t.style.display='none';});document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));const tab=document.getElementById('dtab-'+id);if(tab){tab.style.display='block';tab.classList.add('active');}if(nav)nav.classList.add('active');const t=document.getElementById('dtTitle');if(t)t.textContent=tabTitles[id]||'Dashboard';window.scrollTo(0,0);}
 
