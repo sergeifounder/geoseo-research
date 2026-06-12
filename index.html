@@ -170,6 +170,11 @@ a{color:var(--accent);text-decoration:none}
 .ob-back{display:inline-block;margin-top:12px;font-size:13px;color:var(--text-dim);cursor:pointer}
 .ob-back:hover{color:var(--accent)}
 
+/* Onboarding chips */
+.ob-chip{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);transition:all .2s}
+.ob-chip:hover{border-color:var(--accent);color:var(--text)}
+.ob-chip.active{background:var(--accent-glow);color:var(--accent);border-color:var(--accent)}
+
 /* Responsive */
 @media(max-width:900px){.g4,.g3,.g2{grid-template-columns:1fr}.swot{grid-template-columns:1fr}}
 @media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main{margin-left:0}.hamburger{display:block}.content{padding:20px 16px 48px}}
@@ -732,19 +737,23 @@ a{color:var(--accent);text-decoration:none}
     <div class="onboard-dots"><div class="onboard-dot active" id="dot-1"></div><div class="onboard-dot" id="dot-2"></div><div class="onboard-dot" id="dot-3"></div></div>
     <div id="ob-1">
       <div class="ob-title">What's your business?</div>
-      <div class="ob-sub">We'll scan your site, find local competitors, and check your visibility</div>
+      <div class="ob-sub">We'll scan your site, find local competitors, and check your visibility in Google &amp; AI</div>
       <input class="ob-input" type="text" placeholder="https://yoursite.com" value="https://rosspaintinggroup.com">
       <div style="margin-bottom:16px;">
-        <div style="font-size:12px;color:var(--text-dim);margin-bottom:8px;text-align:center;">Business type:</div>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent);">Painter</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Plumber</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Dentist</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Lawyer</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Restaurant</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Salon</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Contractor</span>
-          <span style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;background:var(--surface2);color:var(--text-dim);border:1px solid var(--border);">Other</span>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;text-align:center;">Industry:</div>
+        <div style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto;">
+          <span class="ob-chip active" onclick="pickChip(this)">Home Services</span>
+          <span class="ob-chip" onclick="pickChip(this)">Legal</span>
+          <span class="ob-chip" onclick="pickChip(this)">Dental / Medical</span>
+          <span class="ob-chip" onclick="pickChip(this)">Restaurant / Cafe</span>
+          <span class="ob-chip" onclick="pickChip(this)">Hotel / Resort</span>
+          <span class="ob-chip" onclick="pickChip(this)">Beauty / Salon</span>
+          <span class="ob-chip" onclick="pickChip(this)">Fitness / Gym</span>
+          <span class="ob-chip" onclick="pickChip(this)">Auto Repair</span>
+          <span class="ob-chip" onclick="pickChip(this)">Real Estate</span>
+          <span class="ob-chip" onclick="pickChip(this)">Staffing / Agency</span>
+          <span class="ob-chip" onclick="pickChip(this)">Education</span>
+          <span class="ob-chip" onclick="pickChip(this)">Other</span>
         </div>
       </div>
       <button class="ob-btn" onclick="obGo(2)">Scan My Business</button>
@@ -801,6 +810,7 @@ function showOB(){document.getElementById('onboarding').style.display='flex';obS
 function closeOB(){document.getElementById('onboarding').style.display='none'}
 function obGo(s){obStep(s)}
 function obStep(s){for(let i=1;i<=3;i++){document.getElementById('ob-'+i).style.display=i===s?'block':'none';const d=document.getElementById('dot-'+i);d.className='onboard-dot';if(i<s)d.classList.add('done');if(i===s)d.classList.add('active')}}
+function pickChip(el){el.parentElement.querySelectorAll('.ob-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active')}
 </script>
 </body>
 </html>
