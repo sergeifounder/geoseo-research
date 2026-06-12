@@ -714,6 +714,11 @@ a { color: var(--accent); text-decoration: none; }
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
       AI Chat
     </div>
+    <div class="nav-item" data-screen="channels" onclick="showScreen('channels')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      Growth Channels
+      <span class="badge">5</span>
+    </div>
     <div class="nav-item" data-screen="monitoring" onclick="showScreen('monitoring')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
       Monitoring
@@ -1303,6 +1308,177 @@ a { color: var(--accent); text-decoration: none; }
       </div>
     </div>
 
+    <!-- ==================== SCREEN: GROWTH CHANNELS ==================== -->
+    <div class="screen" id="screen-channels">
+
+      <!-- Where AI Cites Your Niche -->
+      <div class="card" style="margin-bottom:24px;border-color:var(--accent);">
+        <div class="section-header"><span class="section-title">Where AI Gets Data in Your Niche</span><span style="font-size:11px;color:var(--text-dim);">Based on citation source analysis</span></div>
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">We analyzed where ChatGPT, Perplexity, and Google AIO source information about house painters in San Diego:</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">Google Business</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:38%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">38%</span>
+            </div>
+            <span style="font-size:16px;">&#10003;</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">Yelp</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:22%;height:100%;background:linear-gradient(90deg,var(--accent-dim),var(--accent));border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">22%</span>
+            </div>
+            <span style="font-size:16px;color:var(--warning);">!</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">Houzz</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:15%;height:100%;background:linear-gradient(90deg,var(--warning),#f59e0b);border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">15%</span>
+            </div>
+            <span style="font-size:16px;color:var(--critical);">&times;</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">YouTube</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:12%;height:100%;background:linear-gradient(90deg,var(--warning),#f59e0b);border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">12%</span>
+            </div>
+            <span style="font-size:16px;color:var(--critical);">&times;</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">BBB.org</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:8%;height:100%;background:linear-gradient(90deg,var(--info),#3b82f6);border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">8%</span>
+            </div>
+            <span style="font-size:16px;color:var(--critical);">&times;</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <span style="font-size:12px;color:var(--text-dim);width:140px;text-align:right;font-family:var(--mono);">Reddit</span>
+            <div style="flex:1;height:24px;background:var(--surface2);border-radius:6px;overflow:hidden;position:relative;">
+              <div style="width:5%;height:100%;background:linear-gradient(90deg,var(--info),#3b82f6);border-radius:6px;"></div>
+              <span style="position:absolute;right:8px;top:3px;font-size:11px;font-family:var(--mono);color:var(--text);">5%</span>
+            </div>
+            <span style="font-size:16px;color:var(--critical);">&times;</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;padding:12px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;">
+          <div style="font-size:13px;font-weight:600;color:var(--critical);">You're missing from 4 platforms that AI uses in your niche</div>
+          <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Houzz + YouTube + BBB + Reddit account for 40% of AI citations for painters. Your competitors are on 3 of these.</div>
+        </div>
+      </div>
+
+      <!-- Platform Presence Checklist -->
+      <div class="card" style="margin-bottom:24px;">
+        <div class="section-header"><span class="section-title">Your Platform Presence</span></div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(34,197,94,.12);display:flex;align-items:center;justify-content:center;color:var(--pass);font-weight:700;font-size:14px;">&#10003;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Google Business Profile</div><div style="font-size:11px;color:var(--text-dim);">4.8 stars, 47 reviews &bull; Profile 90% complete</div></div>
+            <span style="font-size:11px;color:var(--pass);font-weight:600;">Active</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;color:var(--warning);font-weight:700;font-size:14px;">!</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Yelp</div><div style="font-size:11px;color:var(--text-dim);">Profile exists but only 2 reviews &bull; CertaPro has 34</div></div>
+            <span style="font-size:11px;color:var(--warning);font-weight:600;">Needs work</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(34,197,94,.12);display:flex;align-items:center;justify-content:center;color:var(--pass);font-weight:700;font-size:14px;">&#10003;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Facebook Page</div><div style="font-size:11px;color:var(--text-dim);">Active, 312 followers, last post 2 weeks ago</div></div>
+            <span style="font-size:11px;color:var(--pass);font-weight:600;">Active</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;color:var(--critical);font-weight:700;font-size:14px;">&times;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Houzz</div><div style="font-size:11px;color:var(--text-dim);">Not registered &bull; CertaPro has 23 projects + 18 reviews here</div></div>
+            <a href="#" style="font-size:11px;font-weight:600;" onclick="showScreen('tasks');return false;">Create profile &rarr;</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;color:var(--critical);font-weight:700;font-size:14px;">&times;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">YouTube</div><div style="font-size:11px;color:var(--text-dim);">No channel &bull; AI cites YouTube in 12% of queries about painters</div></div>
+            <a href="#" style="font-size:11px;font-weight:600;" onclick="showScreen('tasks');return false;">Create channel &rarr;</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;color:var(--critical);font-weight:700;font-size:14px;">&times;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">LinkedIn Business Page</div><div style="font-size:11px;color:var(--text-dim);">No page &bull; Helps with B2B credibility and AI knowledge graphs</div></div>
+            <a href="#" style="font-size:11px;font-weight:600;" onclick="showScreen('tasks');return false;">Create page &rarr;</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.15);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;color:var(--critical);font-weight:700;font-size:14px;">&times;</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">BBB (Better Business Bureau)</div><div style="font-size:11px;color:var(--text-dim);">Not accredited &bull; AI uses BBB for trust signals in 8% of queries</div></div>
+            <a href="#" style="font-size:11px;font-weight:600;" onclick="showScreen('tasks');return false;">Apply &rarr;</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;">
+            <span style="width:28px;height:28px;border-radius:6px;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;color:var(--info);font-weight:700;font-size:14px;">~</span>
+            <div style="flex:1;"><div style="font-size:13px;font-weight:600;">Nextdoor</div><div style="font-size:11px;color:var(--text-dim);">Not active &bull; Popular for local service recommendations</div></div>
+            <span style="font-size:11px;color:var(--text-dim);">Optional</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Competitor Platform Comparison -->
+      <div class="card" style="margin-bottom:24px;overflow-x:auto;">
+        <div class="section-header"><span class="section-title">Competitor Platform Coverage</span></div>
+        <table class="comp-table">
+          <thead><tr><th style="text-align:left;">Platform</th><th>You</th><th>AllPro</th><th>CertaPro</th></tr></thead>
+          <tbody>
+            <tr><td>Google Business</td><td class="comp-you comp-win">&#10003; 4.8 (47)</td><td>&#10003; 4.6 (89)</td><td>&#10003; 4.7 (156)</td></tr>
+            <tr><td>Yelp</td><td class="comp-you" style="color:var(--warning);">&#10003; 2 reviews</td><td>&#10003; 23 reviews</td><td class="comp-win">&#10003; 34 reviews</td></tr>
+            <tr><td>Houzz</td><td class="comp-you" style="color:var(--critical);">&times;</td><td>&times;</td><td class="comp-win">&#10003; 23 projects</td></tr>
+            <tr><td>YouTube</td><td class="comp-you" style="color:var(--critical);">&times;</td><td class="comp-win">&#10003; 8 videos</td><td>&times;</td></tr>
+            <tr><td>Facebook</td><td class="comp-you">&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+            <tr><td>LinkedIn</td><td class="comp-you" style="color:var(--critical);">&times;</td><td>&times;</td><td class="comp-win">&#10003;</td></tr>
+            <tr><td>BBB</td><td class="comp-you" style="color:var(--critical);">&times;</td><td>&times;</td><td class="comp-win">&#10003; A+</td></tr>
+            <tr><td>Nextdoor</td><td class="comp-you" style="color:var(--critical);">&times;</td><td class="comp-win">&#10003;</td><td>&#10003;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Recommended Actions -->
+      <div class="card">
+        <div class="section-header"><span class="section-title">Recommended Channel Actions</span><span style="font-size:11px;color:var(--text-dim);">Sorted by AI citation impact</span></div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:13px;font-weight:600;">Register on Houzz &mdash; add 10+ project photos</div>
+              <div><span class="task-badge badge-high" style="margin-right:6px;">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">30 min</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">AI cites Houzz in 15% of painter queries. CertaPro gets 3 AI mentions from their Houzz portfolio alone.</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--critical);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:13px;font-weight:600;">Create YouTube channel &mdash; record 3 project timelapses</div>
+              <div><span class="task-badge badge-high" style="margin-right:6px;">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">2 hrs</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">YouTube is the 4th most-cited source for painters. "House painting timelapse" gets 50K+ searches/month. AllPro already has 8 videos.</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:13px;font-weight:600;">Get 10+ Yelp reviews from past clients</div>
+              <div><span class="task-badge badge-med" style="margin-right:6px;">MED</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">15 min</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">You have 2 Yelp reviews vs CertaPro's 34. Yelp is the 2nd most-cited source (22%). Send review requests to your last 10 clients.</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:13px;font-weight:600;">Apply for BBB accreditation</div>
+              <div><span class="task-badge badge-med" style="margin-right:6px;">MED</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">20 min</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">BBB A+ rating is used by AI as a trust signal. CertaPro has it. Cost: ~$500/year but increases citation trust score.</div>
+          </div>
+          <div style="padding:12px 14px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--info);">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-size:13px;font-weight:600;">Post in r/sandiego about a completed project</div>
+              <div><span class="task-badge badge-low" style="margin-right:6px;">LOW</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">15 min</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--text-dim);margin-top:4px;">Reddit threads are cited by ChatGPT and Perplexity. A genuine before/after post in r/sandiego can generate organic AI citations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ==================== SCREEN 6: MONITORING ==================== -->
     <div class="screen" id="screen-monitoring">
       <div class="grid-2" style="margin-bottom:24px;">
@@ -1400,7 +1576,7 @@ function showScreen(name) {
   document.getElementById('screen-' + name).classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.querySelector('[data-screen="' + name + '"]').classList.add('active');
-  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', chat:'AI Chat', monitoring:'Monitoring' };
+  const titles = { dashboard:'Dashboard', tasks:'Action Plan', ai:'AI Visibility', competitors:'Competitors', chat:'AI Chat', channels:'Growth Channels', monitoring:'Monitoring' };
   document.getElementById('page-title').textContent = titles[name] || name;
   // Close mobile sidebar
   closeSidebar();
