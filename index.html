@@ -255,7 +255,8 @@ a{color:var(--accent);text-decoration:none}
         </div>
         <div style="font-size:12px;color:var(--text-dim);line-height:1.8;">
           #1 CertaPro &middot; #2 AllPro &middot; #3 ColorWorld<br>
-          <span style="color:var(--text-light);">You need more reviews + complete GBP to enter</span>
+          <span style="color:var(--text-light);">You need more reviews + complete GBP to enter</span><br>
+          <a href="#" onclick="go('tasks');return false;" style="font-size:11px;">How to get into Local Pack &rarr;</a>
         </div>
       </div>
       <div>
@@ -284,19 +285,19 @@ a{color:var(--accent);text-decoration:none}
     <div class="g2" style="margin-bottom:12px;">
       <div>
         <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">Google Organic</span><span style="font-size:9px;color:var(--text-light);">DataForSEO</span></div>
-        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">8<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 20 queries</span></span></div>
+        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">8<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 20 queries</span></div>
         <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:40%;height:100%;background:var(--accent);border-radius:3px;"></div></div>
         <div style="font-size:12px;color:var(--text-dim);">Avg <strong style="font-family:var(--mono);">#18</strong> &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+3</span> this month</div>
       </div>
       <div>
         <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px;"><span style="font-size:11px;color:var(--text-dim);font-weight:600;">AI Engines</span><span style="font-size:9px;color:var(--text-light);">Perplexity + OpenAI</span></div>
-        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">5<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 15 prompts</span></span></div>
+        <div style="font-size:24px;font-weight:800;font-family:var(--mono);">5<span style="font-size:13px;color:var(--text-dim);font-weight:500;"> / 15 prompts</span></div>
         <div style="height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;margin:6px 0;"><div style="width:33%;height:100%;background:var(--warning);border-radius:3px;"></div></div>
         <div style="font-size:12px;color:var(--text-dim);">ChatGPT 2 &middot; Perplexity 5 &middot; Gemini 0 &middot; <span style="color:var(--pass);font-weight:600;">&#9650;+2 new</span></div>
       </div>
     </div>
     <div style="font-size:12px;color:var(--text-dim);padding-top:12px;border-top:1px solid rgba(45,212,160,.1);">
-      <strong style="color:var(--warning);">CertaPro</strong> ahead on 12/20 &middot; <strong>AllPro</strong> ahead on 9/20 &middot; <strong style="color:var(--accent);">You lead</strong> on 3
+      <strong style="color:var(--warning);">CertaPro</strong> #1 on 10 queries &middot; <strong>AllPro</strong> #1 on 7 &middot; <strong style="color:var(--accent);">You #1</strong> on 3
     </div>
   </div>
 
@@ -327,7 +328,7 @@ a{color:var(--accent);text-decoration:none}
     <div class="card" style="text-align:center;">
       <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-dim);margin-bottom:8px;">This Week</div>
       <div style="font-size:14px;color:var(--text);margin-top:12px;line-height:2;">
-        <span style="color:var(--pass);font-weight:700;">+3</span> Google positions<br>
+        <span style="color:var(--pass);font-weight:700;">+3</span> avg position up<br>
         <span style="color:var(--pass);font-weight:700;">+2</span> AI mentions<br>
         <span style="color:var(--pass);font-weight:700;">2</span> issues auto-fixed
       </div>
@@ -368,13 +369,21 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
-  <!-- GSC Traffic (if connected) -->
-  <div class="card" style="margin-bottom:24px;">
-    <div class="section-header"><span class="section-title">Traffic <span class="ds">via Google Search Console</span></span></div>
-    <div style="display:flex;gap:32px;align-items:center;">
-      <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);">460</div><div style="font-size:11px;color:var(--text-dim);">clicks/week <span style="color:var(--pass);font-weight:600;">&#9650;+40</span></div></div>
-      <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">8.2K</div><div style="font-size:11px;color:var(--text-dim);">impressions <span style="color:var(--pass);font-weight:600;">&#9650;+1.1K</span></div></div>
-      <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">5.6%</div><div style="font-size:11px;color:var(--text-dim);">avg CTR</div></div>
+  <!-- GSC Traffic (toggle between connected/disconnected) -->
+  <div class="card" style="margin-bottom:24px;" id="gscCard">
+    <div class="section-header"><span class="section-title">Traffic <span class="ds">via Google Search Console</span></span><span style="font-size:11px;color:var(--accent);cursor:pointer;" onclick="toggleGSC()">Toggle state</span></div>
+    <div id="gscConnected">
+      <div style="display:flex;gap:32px;align-items:center;">
+        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);">460</div><div style="font-size:11px;color:var(--text-dim);">clicks/week <span style="color:var(--pass);font-weight:600;">&#9650;+40</span></div></div>
+        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">8.2K</div><div style="font-size:11px;color:var(--text-dim);">impressions <span style="color:var(--pass);font-weight:600;">&#9650;+1.1K</span></div></div>
+        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--text-dim);">5.6%</div><div style="font-size:11px;color:var(--text-dim);">avg CTR</div></div>
+      </div>
+    </div>
+    <div id="gscDisconnected" style="display:none;text-align:center;padding:16px 0;">
+      <div style="font-size:16px;margin-bottom:6px;">&#128200;</div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:4px;">See your real traffic data</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:12px;">Connect Google Search Console to see clicks, impressions, and CTR. Read-only, we never modify data.</div>
+      <button class="btn-fix" style="display:inline-block;width:auto;">Connect Google Search Console</button>
     </div>
   </div>
 
@@ -472,10 +481,13 @@ a{color:var(--accent);text-decoration:none}
   </div>
   <div class="chips">
     <div class="chip active" data-c="all" onclick="scat(this)">All</div>
-    <div class="chip" data-c="technical" onclick="scat(this)">Technical</div>
+    <div class="chip" data-c="seo" onclick="scat(this)">SEO</div>
     <div class="chip" data-c="geo" onclick="scat(this)">GEO</div>
+    <div class="chip" data-c="technical" onclick="scat(this)">Technical</div>
     <div class="chip" data-c="content" onclick="scat(this)">Content</div>
+    <div class="chip" data-c="speed" onclick="scat(this)">Speed</div>
     <div class="chip" data-c="channels" onclick="scat(this)">Channels</div>
+    <div class="chip" data-c="gbp" onclick="scat(this)">GBP</div>
   </div>
 
   <!-- Open issues -->
@@ -486,8 +498,8 @@ a{color:var(--accent);text-decoration:none}
       <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-cat">Technical</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~5 min</span></div>
     </div>
     <div class="task-detail">
-      <p>ChatGPT и Claude заблокированы в вашем robots.txt. Они не могут узнать о вашем бизнесе и никогда вас не порекомендуют.</p>
-      <p style="font-size:11px;color:var(--accent);">&#128260; Автоматически закроется когда сканер обнаружит исправление.</p>
+      <p>GPTBot and ClaudeBot are blocked in your robots.txt. They cannot learn about your business and will never recommend you to users.</p>
+      <p style="font-size:11px;color:var(--accent);">&#128260; Auto-closes when our scanner detects the fix.</p>
       <div style="display:flex;gap:8px;"><button class="btn-fix">Fix with AI &mdash; Download robots.txt</button><button class="btn-guide">Ask AI about this</button></div>
     </div>
   </div>
@@ -499,7 +511,7 @@ a{color:var(--accent);text-decoration:none}
       <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-cat">GEO</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~15 min</span></div>
     </div>
     <div class="task-detail">
-      <p>На вашей странице нет ни одной экспертной цитаты. AI-движки предпочитают цитировать страницы с указанием опыта и квалификации.</p>
+      <p>Your homepage has no expert quotes. AI engines prefer to cite pages with credentials and experience. Auto-verified on next scan.</p>
       <div style="display:flex;gap:8px;"><button class="btn-fix">Generate Quote with AI</button><button class="btn-guide">Ask AI about this</button></div>
     </div>
   </div>
@@ -507,12 +519,12 @@ a{color:var(--accent);text-decoration:none}
   <div class="task-item" data-t="open" data-c="channels" onclick="toggleTask(this)">
     <div class="task-row">
       <div class="task-icon" style="background:rgba(245,158,11,.15);border:2px solid var(--warning);color:var(--warning);">&#8599;</div>
-      <div style="flex:1;"><span class="task-title">Register on Houzz &mdash; upload project photos</span><div class="task-why">AI ссылается на Houzz в 15% запросов. У CertaPro 23 проекта, у вас 0.</div></div>
+      <div style="flex:1;"><span class="task-title">Register on Houzz &mdash; upload project photos</span><div class="task-why">AI cites Houzz in 15% of painter queries. CertaPro has 23 projects, you have 0.</div></div>
       <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">Channels</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~30 min</span></div>
     </div>
     <div class="task-detail">
-      <p>Houzz — один из главных источников данных для AI про маляров. CertaPro получает 3 AI-упоминания только благодаря Houzz.</p>
-      <p style="font-size:11px;color:var(--warning);">&#128269; Частичная проверка: обнаружим профиль при следующем скане.</p>
+      <p>Houzz is one of the top AI data sources for painters. CertaPro gets 3 AI mentions from their Houzz portfolio alone.</p>
+      <p style="font-size:11px;color:var(--warning);">&#128269; Partially verified: we check for Houzz profile on next scan.</p>
       <button class="btn-guide">Open Houzz Registration Guide</button>
     </div>
   </div>
@@ -525,28 +537,91 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
-  <!-- New this scan -->
-  <div class="task-item" data-t="new" data-c="technical" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
+  <!-- GBP task (#19) -->
+  <div class="task-item" data-t="open" data-c="gbp" onclick="toggleTask(this)">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
+      <div style="flex:1;"><span class="task-title">Complete your Google Business Profile (75% &rarr; 100%)</span><div class="task-why">GBP completeness is a key factor for Local Pack ranking. Missing: Google Posts, business description, service areas.</div></div>
+      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">GBP</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">~20 min</span></div>
+    </div>
+    <div class="task-detail">
+      <p>Your GBP is 75% complete. Missing: regular Google Posts (competitors post weekly), detailed business description, service area definitions, and more photos (you have 12, CertaPro has 45).</p>
+      <p style="font-size:11px;color:var(--warning);">&#128269; Partially verified: we track GBP completeness via Places API.</p>
+      <button class="btn-guide">Open Google Business Profile</button>
+    </div>
+  </div>
+
+  <!-- Reviews task (#20) -->
+  <div class="task-item" data-t="open" data-c="gbp" onclick="toggleTask(this)">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div>
+      <div style="flex:1;"><span class="task-title">Get more Google reviews &mdash; you need 5+/week</span><div class="task-why">47 reviews (+1/wk) vs CertaPro 156 (+3/wk). Gap is widening. Reviews = #1 Local Pack factor.</div></div>
+      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-cat">GBP</span><span class="t-high">HIGH</span><span style="font-size:11px;color:var(--text-dim);font-family:var(--mono);">ongoing</span></div>
+    </div>
+    <div class="task-detail">
+      <p>Send a review request link to every completed job within 24 hours. Add QR code to invoices. Follow up 3 days later. Respond to every review (Google rewards active profiles).</p>
+      <p style="font-size:11px;color:var(--warning);">&#128269; Auto-tracked: we monitor your review count and velocity each scan.</p>
+      <button class="btn-guide">Generate Review Request Template</button>
+    </div>
+  </div>
+
+  <!-- New this scan (3 items to match tab count) -->
+  <div class="task-item" data-t="new" data-c="seo" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
     <div class="task-row">
       <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
       <div style="flex:1;"><span class="task-title">Competitor CertaPro added Service schema</span><div class="task-why">Detected Jun 9 &mdash; they now have 7 schema types vs your 3</div></div>
       <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-high">HIGH</span></div>
     </div>
   </div>
+  <div class="task-item" data-t="new" data-c="channels" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
+      <div style="flex:1;"><span class="task-title">ColorWorld created YouTube channel</span><div class="task-why">Detected Jun 9 &mdash; 3 timelapse videos, 2K views. New competitive threat.</div></div>
+      <div class="task-meta"><span class="tbadge t-offsite">OFF-SITE</span><span class="t-med">MED</span></div>
+    </div>
+  </div>
+  <div class="task-item" data-t="new" data-c="content" onclick="toggleTask(this)" style="display:none;border-left:3px solid var(--info);">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--info);color:var(--info);font-size:8px;">NEW</div>
+      <div style="flex:1;"><span class="task-title">AllPro published 2 blog posts</span><div class="task-why">Detected Jun 5 &mdash; content gap widening. They now have 12 blog posts, you have 0.</div></div>
+      <div class="task-meta"><span class="tbadge t-onsite">ON-SITE</span><span class="t-med">MED</span></div>
+    </div>
+  </div>
 
-  <!-- Fixed -->
-  <div class="task-item" data-t="fixed" data-c="technical" style="display:none;opacity:.5;">
+  <!-- Fixed (5 items to be more realistic for "12 fixed") -->
+  <div class="task-item" data-t="fixed" data-c="seo" style="display:none;opacity:.5;">
     <div class="task-row">
       <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
       <span class="task-title" style="text-decoration:line-through;">LocalBusiness schema added</span>
       <div class="task-meta"><span class="v-badge v-ok">Auto-verified Jun 9</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+4 pts</span></div>
     </div>
   </div>
+  <div class="task-item" data-t="fixed" data-c="speed" style="display:none;opacity:.5;">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
+      <span class="task-title" style="text-decoration:line-through;">Mobile speed optimized (images compressed)</span>
+      <div class="task-meta"><span class="v-badge v-ok">Auto-verified Jun 2</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+7 pts</span></div>
+    </div>
+  </div>
   <div class="task-item" data-t="fixed" data-c="technical" style="display:none;opacity:.5;">
     <div class="task-row">
       <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
-      <span class="task-title" style="text-decoration:line-through;">Mobile speed optimized</span>
-      <div class="task-meta"><span class="v-badge v-ok">Auto-verified Jun 2</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+7 pts</span></div>
+      <span class="task-title" style="text-decoration:line-through;">Mobile viewport meta tag added</span>
+      <div class="task-meta"><span class="v-badge v-ok">Auto-verified May 12</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+1 pt</span></div>
+    </div>
+  </div>
+  <div class="task-item" data-t="fixed" data-c="technical" style="display:none;opacity:.5;">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
+      <span class="task-title" style="text-decoration:line-through;">HTTPS redirect configured</span>
+      <div class="task-meta"><span class="v-badge v-ok">Auto-verified May 5</span><span style="font-size:11px;color:var(--pass);font-family:var(--mono);">+2 pts</span></div>
+    </div>
+  </div>
+  <div class="task-item" data-t="fixed" data-c="channels" style="display:none;opacity:.5;">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(34,197,94,.15);border:2px solid var(--pass);color:var(--pass);">&#10003;</div>
+      <span class="task-title" style="text-decoration:line-through;">Facebook page detected</span>
+      <div class="task-meta"><span class="v-badge v-ok">Auto-detected Jun 2</span></div>
     </div>
   </div>
 </div>
@@ -601,7 +676,7 @@ a{color:var(--accent);text-decoration:none}
     <div class="section-header"><span class="section-title">Your Market &mdash; 7 competitors <span class="ds">via Google Maps + SERP</span></span></div>
     <div style="display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;">
       <div style="min-width:130px;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(45,212,160,.08),rgba(45,212,160,.02));border:2px solid var(--accent);border-radius:12px;">
-        <div style="font-size:10px;color:var(--accent);font-weight:700;margin-bottom:4px;">YOU</div>
+        <div style="font-size:10px;color:var(--accent);font-weight:700;margin-bottom:4px;">YOU &mdash; #3</div>
         <div style="font-size:12px;font-weight:700;">Ross Painting</div>
         <div style="font-size:20px;font-weight:800;font-family:var(--mono);color:var(--accent);">72</div>
         <div style="font-size:10px;color:var(--text-dim);">4.8&#9733; 47 rev</div>
@@ -734,28 +809,38 @@ a{color:var(--accent);text-decoration:none}
     </div>
   </div>
 
-  <!-- Week-by-week history -->
+  <!-- Recent Alerts (#33) -->
+  <div class="card" style="margin-bottom:24px;">
+    <div class="section-header"><span class="section-title">Recent Alerts</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(34,197,94,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9650;</div><div><div style="font-size:13px;font-weight:600;">Site Health: 64 &rarr; 72 (+8)</div><div style="font-size:11px;color:var(--text-dim);">Schema + expert quotes &middot; Jun 9</div></div></div>
+      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9888;</div><div><div style="font-size:13px;font-weight:600;">Competitor: CertaPro added Service schema</div><div style="font-size:11px;color:var(--text-dim);">New task created in Action Plan &middot; Jun 9</div></div></div>
+      <div style="display:flex;gap:12px;padding:12px;background:var(--surface2);border-radius:8px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">&#9660;</div><div><div style="font-size:13px;font-weight:600;">Review gap widening: CertaPro +12 this month</div><div style="font-size:11px;color:var(--text-dim);">Their velocity 3x yours &middot; May 28</div></div></div>
+    </div>
+  </div>
+
+  <!-- Week-by-week history (#32: added Local Pack + reviews) -->
   <div class="card" style="margin-bottom:24px;">
     <div class="section-header"><span class="section-title">Week-by-Week History</span></div>
     <div style="display:flex;flex-direction:column;gap:0;">
       <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
         <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;color:var(--accent);">Jun 9</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:16px;font-size:12px;font-family:var(--mono);margin-bottom:6px;"><span><strong style="color:var(--accent);">72</strong> <span style="color:var(--text-light);">health</span></span><span><strong style="color:var(--info);">460</strong> <span style="color:var(--text-light);">clicks</span></span><span><strong>#18</strong> <span style="color:var(--text-light);">avg pos</span></span><span><strong style="color:var(--warning);">5</strong> <span style="color:var(--text-light);">AI</span></span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Expert quotes (+5) &middot; <span style="color:var(--pass);">&#10003;</span> Schema (+3) &middot; <span style="color:var(--info);">&#9733;</span> Perplexity citing you</div></div>
+        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong style="color:var(--accent);">72</strong> health</span><span><strong style="color:var(--info);">460</strong> clicks</span><span><strong>#18</strong> avg</span><span><strong style="color:var(--warning);">5</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>47 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Expert quotes (+5) &middot; <span style="color:var(--pass);">&#10003;</span> Schema (+3) &middot; <span style="color:var(--info);">&#9733;</span> Perplexity citing you</div></div>
         <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+8</div>
       </div>
       <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
         <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">Jun 2</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:16px;font-size:12px;font-family:var(--mono);margin-bottom:6px;"><span><strong>64</strong> <span style="color:var(--text-light);">health</span></span><span><strong style="color:var(--info);">450</strong> <span style="color:var(--text-light);">clicks</span></span><span><strong>#21</strong> <span style="color:var(--text-light);">avg pos</span></span><span><strong style="color:var(--warning);">3</strong> <span style="color:var(--text-light);">AI</span></span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Speed +7 &middot; <span style="color:var(--warning);">&#9888;</span> CertaPro added FAQ schema</div></div>
+        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>64</strong> health</span><span><strong style="color:var(--info);">450</strong> clicks</span><span><strong>#21</strong> avg</span><span><strong style="color:var(--warning);">3</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>46 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> Speed +7 &middot; <span style="color:var(--warning);">&#9888;</span> CertaPro added FAQ schema</div></div>
         <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+3</div>
       </div>
       <div style="display:flex;gap:16px;padding:16px 0;border-bottom:1px solid var(--border);">
         <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">May 26</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:16px;font-size:12px;font-family:var(--mono);margin-bottom:6px;"><span><strong>61</strong> <span style="color:var(--text-light);">health</span></span><span><strong style="color:var(--info);">310</strong> <span style="color:var(--text-light);">clicks</span></span><span><strong>#24</strong> <span style="color:var(--text-light);">avg pos</span></span><span><strong style="color:var(--warning);">2</strong> <span style="color:var(--text-light);">AI</span></span></div><div style="font-size:12px;color:var(--text-dim);">No site changes. Clicks up +90 from schema fix 2 weeks ago.</div></div>
+        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>61</strong> health</span><span><strong style="color:var(--info);">310</strong> clicks</span><span><strong>#24</strong> avg</span><span><strong style="color:var(--warning);">2</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>45 rev</span></div><div style="font-size:12px;color:var(--text-dim);">No site changes. Clicks up +90 from schema fix 2 weeks ago.</div></div>
         <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--text-dim);min-width:40px;text-align:right;">+0</div>
       </div>
       <div style="display:flex;gap:16px;padding:16px 0;">
         <div style="min-width:70px;"><div style="font-size:12px;font-weight:700;">May 12</div></div>
-        <div style="flex:1;"><div style="display:flex;gap:16px;font-size:12px;font-family:var(--mono);margin-bottom:6px;"><span><strong>43</strong> <span style="color:var(--text-light);">health</span></span><span><strong style="color:var(--info);">180</strong> <span style="color:var(--text-light);">clicks</span></span><span><strong>#35</strong> <span style="color:var(--text-light);">avg pos</span></span><span><strong style="color:var(--warning);">0</strong> <span style="color:var(--text-light);">AI</span></span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> robots.txt +3 &middot; <span style="color:var(--pass);">&#10003;</span> Schema +4 &middot; <span style="color:var(--pass);">&#10003;</span> Viewport +1</div></div>
+        <div style="flex:1;"><div style="display:flex;gap:12px;font-size:11px;font-family:var(--mono);margin-bottom:6px;flex-wrap:wrap;"><span><strong>43</strong> health</span><span><strong style="color:var(--info);">180</strong> clicks</span><span><strong>#35</strong> avg</span><span><strong style="color:var(--warning);">0</strong> AI</span><span style="color:var(--critical);">&#10007; 3-pack</span><span>42 rev</span></div><div style="font-size:12px;color:var(--text-dim);"><span style="color:var(--pass);">&#10003;</span> robots.txt +3 &middot; <span style="color:var(--pass);">&#10003;</span> Schema +4 &middot; <span style="color:var(--pass);">&#10003;</span> Viewport +1</div></div>
         <div style="font-size:14px;font-weight:800;font-family:var(--mono);color:var(--pass);min-width:40px;text-align:right;">+8</div>
       </div>
     </div>
@@ -871,6 +956,7 @@ function closeSidebar(){document.getElementById('sidebar').classList.remove('ope
 function toggleTask(el){el.classList.toggle('expanded')}
 function toggleHealth(){const d=document.getElementById('healthDetail'),t=document.getElementById('healthToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Site Health Check'}else{d.style.display='none';t.textContent='▶ Site Health Check'}}
 function toggleDomain(){const d=document.getElementById('domainDetail'),t=document.getElementById('domainToggle');if(d.style.display==='none'){d.style.display='block';t.textContent='▼ Domain Health'}else{d.style.display='none';t.textContent='▶ Domain Health'}}
+function toggleGSC(){const c=document.getElementById('gscConnected'),d=document.getElementById('gscDisconnected');if(c.style.display==='none'){c.style.display='';d.style.display='none'}else{c.style.display='none';d.style.display=''}}
 
 let curTab='open',curCat='all';
 function stab(el){el.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');curTab=el.getAttribute('data-f');filterTasks()}
