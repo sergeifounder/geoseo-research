@@ -299,6 +299,25 @@
     </tbody></table>
   </div>
 
+  <!-- Content & Backlink gaps (summary) -->
+  <div class="g2" style="margin-bottom:14px;">
+    <div class="card" style="cursor:pointer;" onclick="dTab(document.querySelector('[data-tab=sv]'),'sv')">
+      <div class="stitle" style="margin-bottom:10px;">Content Gaps <span class="ds">vs competitors</span></div>
+      <div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--warning);margin-bottom:4px;">12</div>
+      <div style="font-size:12px;color:var(--text-dim);">queries where competitors rank and you don't</div>
+      <div style="font-size:11px;color:var(--accent);margin-top:6px;">3 content pieces recommended &rarr;</div>
+    </div>
+    <div class="card" style="cursor:pointer;" onclick="dTab(document.querySelector('[data-tab=cp]'),'cp')">
+      <div class="stitle" style="margin-bottom:10px;">Backlink Gap <span class="ds">Bing Webmaster</span></div>
+      <div style="display:flex;gap:16px;align-items:baseline;">
+        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);">124</div><div style="font-size:11px;color:var(--text-dim);">your backlinks</div></div>
+        <div style="font-size:18px;color:var(--text-light);">vs</div>
+        <div><div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--critical);">412</div><div style="font-size:11px;color:var(--text-dim);">CertaPro</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--accent);margin-top:6px;">See where they get links &rarr;</div>
+    </div>
+  </div>
+
   <!-- Ask AI (contextual, knows all your data) -->
   <div class="card" style="margin-bottom:14px;" id="askAiCard">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -358,6 +377,69 @@
   <div class="task-item"><div class="task-row"><div class="task-icon" style="background:rgba(245,158,11,.15);border:2px solid var(--warning);color:var(--warning);">!</div><div style="flex:1;font-size:13px;font-weight:500;">Write meta description for /services</div><span class="t-on">ON-SITE</span><span style="font-size:11px;color:var(--text-dim);margin-left:6px;">~5m</span></div></div>
   <div class="task-item"><div class="task-row"><div class="task-icon" style="background:rgba(245,158,11,.15);border:2px solid var(--warning);color:var(--warning);">&#8599;</div><div style="flex:1;font-size:13px;font-weight:500;">Get 5+ Yelp reviews (currently 2)</div><span class="t-off">OFF-SITE</span></div></div>
 
+  <!-- CONTENT OPPORTUNITIES -->
+  <div class="stitle" style="color:var(--blue);margin-top:20px;">CONTENT OPPORTUNITIES <span class="ds">from competitor + AI citation analysis</span></div>
+
+  <div class="task-item" onclick="toggleTask(this)">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--blue);color:var(--blue);">&#9998;</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;">Write: "House Painting Costs in San Diego 2026"</div>
+        <div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">CertaPro ranks #3 for this (1,000 searches/mo). You have no pricing content. ChatGPT cites their page.</div>
+      </div>
+      <span class="t-on">CONTENT</span>
+    </div>
+    <div class="task-detail">
+      <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:8px;">
+        <strong style="color:var(--text);">Why:</strong> "painting cost san diego" = 1,000 searches/mo. CertaPro has a pricing guide and gets AI citations for it. You have zero pricing content.<br><br>
+        <strong style="color:var(--text);">Suggested outline:</strong><br>
+        1. Average painting costs in San Diego (interior/exterior)<br>
+        2. Factors that affect price (sq ft, paint quality, prep work)<br>
+        3. Room-by-room breakdown<br>
+        4. How to get an accurate quote<br>
+        5. FAQ: "Is it cheaper to paint yourself?"<br><br>
+        <strong style="color:var(--text);">Target keyword:</strong> "house painting cost san diego"<br>
+        <strong style="color:var(--text);">Word count:</strong> 1,200-1,500 words<br>
+        <strong style="color:var(--text);">Publish to:</strong> /blog/painting-costs-san-diego
+      </p>
+      <button class="btn" style="font-size:11px;padding:6px 14px;">Generate Full Draft with AI</button>
+    </div>
+  </div>
+
+  <div class="task-item" onclick="toggleTask(this)">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--blue);color:var(--blue);">&#9998;</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;">Write: "How to Choose a House Painter in San Diego"</div>
+        <div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">AllPro ranks #5 for this (880/mo). Perplexity cites their guide. Classic buyer-intent content.</div>
+      </div>
+      <span class="t-on">CONTENT</span>
+    </div>
+    <div class="task-detail">
+      <p style="font-size:12px;color:var(--dim);line-height:1.7;margin-bottom:8px;">
+        <strong style="color:var(--text);">Suggested outline:</strong><br>
+        1. Questions to ask before hiring<br>
+        2. Red flags to watch for<br>
+        3. License &amp; insurance checklist<br>
+        4. How to compare quotes<br>
+        5. What to expect during the project<br><br>
+        <strong style="color:var(--text);">Target:</strong> "how to choose a painter" (880/mo)
+      </p>
+      <button class="btn" style="font-size:11px;padding:6px 14px;">Generate Full Draft with AI</button>
+    </div>
+  </div>
+
+  <div class="task-item" onclick="toggleTask(this)">
+    <div class="task-row">
+      <div class="task-icon" style="background:rgba(59,130,246,.15);border:2px solid var(--blue);color:var(--blue);">&#9998;</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:500;">Write: "La Jolla Exterior Painting — Before &amp; After Gallery"</div>
+        <div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">No competitors have La Jolla-specific content. High-income area = bigger projects.</div>
+      </div>
+      <span class="t-on">CONTENT</span>
+    </div>
+  </div>
+
   <div style="font-size:12px;color:var(--text-light);margin-top:12px;text-align:center;">+ 27 more issues &middot; <a href="#" onclick="return false">View full audit &rarr;</a></div>
 </div>
 
@@ -385,6 +467,31 @@
     </tbody></table>
     <div style="margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);font-size:12px;color:var(--text-dim);">Only found for branded queries. Non-branded visibility requires: expert quotes, structured content, platform presence.</div>
   </div>
+  <!-- Content Gaps -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+      <span class="stitle" style="margin:0;">Content Gaps <span class="ds">queries where competitors rank and you don't</span></span>
+      <span style="font-size:11px;color:var(--warning);font-weight:600;">12 gaps found</span>
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Query You're Missing</th><th>Volume</th><th>Who Ranks</th><th>Their Position</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--warning);">"house painting cost san diego"</td><td class="mono">1,000/mo</td><td style="font-size:12px;">CertaPro (blog post)</td><td style="font-weight:700;">#3</td></tr>
+        <tr><td style="color:var(--warning);">"how to choose a painter"</td><td class="mono">880/mo</td><td style="font-size:12px;">AllPro (blog post)</td><td style="font-weight:700;">#5</td></tr>
+        <tr><td style="color:var(--warning);">"cabinet painting san diego"</td><td class="mono">720/mo</td><td style="font-size:12px;">CertaPro (service page)</td><td style="font-weight:700;">#7</td></tr>
+        <tr><td style="color:var(--warning);">"exterior vs interior painting cost"</td><td class="mono">590/mo</td><td style="font-size:12px;">AllPro (blog post)</td><td style="font-weight:700;">#4</td></tr>
+        <tr><td style="color:var(--warning);">"deck painting san diego"</td><td class="mono">390/mo</td><td style="font-size:12px;">ColorWorld (service page)</td><td style="font-weight:700;">#6</td></tr>
+      </tbody>
+    </table>
+    <div style="font-size:11px;color:var(--text-light);margin-top:8px;text-align:center;">Showing 5 of 12 gaps &middot; <a href="#" onclick="return false">View all + Download CSV &rarr;</a></div>
+    <div style="margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--accent);">
+      <div style="font-size:12px;color:var(--text-dim);line-height:1.7;">
+        <strong style="color:var(--accent);">What this means:</strong> Competitors rank for 12 queries that you have zero content for. Total missed search volume: ~6,200/month. Top opportunity: "house painting cost san diego" (1,000 searches/mo) — CertaPro has a blog post, you don't.
+        <br><a href="#" onclick="dTab(document.querySelector('[data-tab=ap]'),'ap');return false" style="font-size:11px;">View content tasks in Action Plan &rarr;</a>
+      </div>
+    </div>
+  </div>
+
   <div style="display:flex;gap:10px;"><button class="btn" style="font-size:11px;" onclick="return false">Report (PDF)</button><button class="btn-g" style="font-size:11px;" onclick="return false">Data (CSV)</button></div>
 </div>
 
@@ -416,6 +523,47 @@
       <div style="display:flex;gap:10px;"><span style="width:22px;height:22px;border-radius:50%;background:rgba(59,130,246,.12);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--info);flex-shrink:0;">3</span><div><div style="font-size:13px;font-weight:600;">Platforms: 3/8 vs 6/8</div><div style="font-size:11px;color:var(--text-dim);">Missing Houzz, YouTube, BBB</div></div></div>
     </div>
   </div>
+  <!-- Backlink Gap -->
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+      <span class="stitle" style="margin:0;">Backlink Gap <span class="ds">Bing Webmaster &middot; domains linking to them but not you</span></span>
+    </div>
+    <div style="display:flex;gap:20px;margin-bottom:14px;">
+      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);">124</div><div style="font-size:10px;color:var(--dim);">Your backlinks</div></div>
+      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--red);">412</div><div style="font-size:10px;color:var(--dim);">CertaPro</div></div>
+      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);">287</div><div style="font-size:10px;color:var(--dim);">AllPro</div></div>
+      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--dim);">98</div><div style="font-size:10px;color:var(--dim);">ColorWorld</div></div>
+    </div>
+    <div class="stitle" style="font-size:10px;margin-bottom:8px;color:var(--warning);">WHERE COMPETITORS GET LINKS (AND YOU DON'T)</div>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s2);border-radius:6px;">
+        <span style="color:var(--red);font-size:12px;">&times;</span>
+        <span style="flex:1;font-size:13px;font-weight:500;">houzz.com</span>
+        <span style="font-size:11px;color:var(--dim);">DA 92 &middot; CertaPro + AllPro have it</span>
+        <span class="t-off" style="font-size:8px;">OFF-SITE</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s2);border-radius:6px;">
+        <span style="color:var(--red);font-size:12px;">&times;</span>
+        <span style="flex:1;font-size:13px;font-weight:500;">bbb.org</span>
+        <span style="font-size:11px;color:var(--dim);">DA 94 &middot; CertaPro has A+ rating</span>
+        <span class="t-off" style="font-size:8px;">OFF-SITE</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s2);border-radius:6px;">
+        <span style="color:var(--red);font-size:12px;">&times;</span>
+        <span style="flex:1;font-size:13px;font-weight:500;">sandiegouniontribune.com</span>
+        <span style="font-size:11px;color:var(--dim);">DA 88 &middot; AllPro featured in article</span>
+        <span class="t-off" style="font-size:8px;">OUTREACH</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--s2);border-radius:6px;">
+        <span style="color:var(--green);font-size:12px;">&#10003;</span>
+        <span style="flex:1;font-size:13px;font-weight:500;color:var(--dim);">yelp.com</span>
+        <span style="font-size:11px;color:var(--dim);">DA 94 &middot; You have it (2 reviews)</span>
+        <span style="font-size:8px;color:var(--green);">HAS</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text-light);margin-top:8px;text-align:center;">Showing top 4 &middot; <a href="#" onclick="return false">View all 23 link gaps &rarr;</a></div>
+  </div>
+
   <div style="font-size:11px;color:var(--text-light);text-align:center;padding:10px;background:var(--surface);border:1px dashed var(--border);border-radius:8px;">Competitor Moves feed available after week 2</div>
 </div>
 
