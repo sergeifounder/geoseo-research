@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GeoSEO — Full Flow Prototype v10</title>
+<title>GeoSEO — Full Flow Prototype v10.4</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0f0d;--surface:#111916;--surface2:#1a2420;--border:#2a3a34;--accent:#2dd4a0;--accent-dim:#1a8c68;--accent-glow:rgba(45,212,160,.15);--text:#e8f0ec;--text-dim:#8a9e94;--text-light:#5a7068;--critical:#ef4444;--warning:#f59e0b;--pass:#22c55e;--info:#3b82f6;--font:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(.16,1,.3,1)}
@@ -111,7 +111,7 @@
         <div style="font-size:13px;padding:8px 10px;background:var(--surface2);border-radius:8px;">&#9679; Write meta description for /services page</div>
         <div style="font-size:13px;padding:8px 10px;background:var(--surface2);border-radius:8px;">&#9679; Add alt text to 6 images</div>
       </div>
-      <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Showing 5 of 15 recommendations</div>
+      <div style="font-size:11px;color:var(--text-light);margin-top:8px;">Showing top 5 of 35 issues. Sign up to see full action plan with fixes.</div>
     </div>
 
     <!-- AI Advice preview -->
@@ -209,7 +209,7 @@
       <div style="text-align:left;">
         <div class="scan-step done" id="ss1"><span class="ic">&#10003;</span> Site audit imported (85/100, 35 issues)</div>
         <div class="scan-step on" id="ss2"><span class="ic">&#9679;</span> Finding competitors on Google Maps...</div>
-        <div class="scan-step wait" id="ss3"><span class="ic">&#9675;</span> Scanning 7 competitor websites</div>
+        <div class="scan-step wait" id="ss3"><span class="ic">&#9675;</span> Scanning competitor websites</div>
         <div class="scan-step wait" id="ss4"><span class="ic">&#9675;</span> Checking Google Business Profile &amp; reviews</div>
         <div class="scan-step wait" id="ss5"><span class="ic">&#9675;</span> Tracking positions for 20 local queries</div>
         <div class="scan-step wait" id="ss6"><span class="ic">&#9675;</span> Testing AI visibility (ChatGPT, Perplexity)</div>
@@ -365,7 +365,7 @@
   <div class="stitle" style="color:var(--critical);">HIGH IMPACT</div>
   <div class="task-item" onclick="toggleTask(this)"><div class="task-row"><div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;">Get more Google reviews (52 vs 312)</div><div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">#1 factor for Local Pack. Need 5+/week to close gap.</div></div><span class="t-off">OFF-SITE</span></div><div class="task-detail"><p style="font-size:12px;color:var(--text-dim);line-height:1.7;">Send review request within 24h of every job. QR on invoices. Follow up day 3. Respond to all reviews.</p><button class="btn-g" style="font-size:11px;padding:6px 14px;">Generate Review Request Template</button></div></div>
 
-  <div class="task-item" onclick="toggleTask(this)"><div class="task-row"><div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;">Complete GBP (80% &rarr; 100%)</div><div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">Missing: business description, more photos (18 vs 45), opening hours details.</div></div><span class="t-off">OFF-SITE</span></div><div class="task-detail"><p style="font-size:12px;color:var(--text-dim);line-height:1.7;">CertaPro has 45 photos and posts weekly. Completeness directly impacts Local Pack.</p><button class="btn-g" style="font-size:11px;padding:6px 14px;">Open Google Business Profile</button></div></div>
+  <div class="task-item" onclick="toggleTask(this)"><div class="task-row"><div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div><div style="flex:1;"><div style="font-size:13px;font-weight:500;">Complete GBP (75% &rarr; 100%)</div><div style="font-size:11px;color:var(--text-light);font-style:italic;margin-top:2px;">Missing: business description, more photos (18 vs 45), opening hours details.</div></div><span class="t-off">OFF-SITE</span></div><div class="task-detail"><p style="font-size:12px;color:var(--text-dim);line-height:1.7;">CertaPro has 45 photos and posts weekly. Completeness directly impacts Local Pack.</p><button class="btn-g" style="font-size:11px;padding:6px 14px;">Open Google Business Profile</button></div></div>
 
   <div class="task-item" onclick="toggleTask(this)"><div class="task-row"><div class="task-icon" style="background:rgba(239,68,68,.15);border:2px solid var(--critical);color:var(--critical);">!</div><div style="flex:1;font-size:13px;font-weight:500;">Register on Houzz — upload project photos</div><span class="t-off">OFF-SITE</span></div></div>
 
@@ -465,7 +465,7 @@
       <tr><td>"Exterior painting La Jolla"</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td></tr>
       <tr><td>"Reliable painters SD"</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td><td style="color:var(--critical);opacity:.5;">&times;</td></tr>
     </tbody></table>
-    <div style="margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);font-size:12px;color:var(--text-dim);">Only found for branded queries. Non-branded visibility requires: expert quotes, structured content, platform presence.</div>
+    <div style="margin-top:12px;padding:12px;background:var(--surface2);border-radius:8px;border-left:3px solid var(--warning);font-size:12px;color:var(--text-dim);">Mostly found for branded queries. Non-branded visibility requires: expert quotes, structured content, platform presence.</div>
   </div>
   <!-- Content Gaps -->
   <div class="card">
@@ -478,7 +478,7 @@
       <tbody>
         <tr><td style="color:var(--warning);">"house painting cost san diego"</td><td class="mono">1,000/mo</td><td style="font-size:12px;">CertaPro (blog post)</td><td style="font-weight:700;">#3</td></tr>
         <tr><td style="color:var(--warning);">"how to choose a painter"</td><td class="mono">880/mo</td><td style="font-size:12px;">AllPro (blog post)</td><td style="font-weight:700;">#5</td></tr>
-        <tr><td style="color:var(--warning);">"cabinet painting san diego"</td><td class="mono">720/mo</td><td style="font-size:12px;">CertaPro (service page)</td><td style="font-weight:700;">#7</td></tr>
+        <tr><td style="color:var(--warning);">"stucco painting san diego"</td><td class="mono">720/mo</td><td style="font-size:12px;">CertaPro (service page)</td><td style="font-weight:700;">#5</td></tr>
         <tr><td style="color:var(--warning);">"exterior vs interior painting cost"</td><td class="mono">590/mo</td><td style="font-size:12px;">AllPro (blog post)</td><td style="font-weight:700;">#4</td></tr>
         <tr><td style="color:var(--warning);">"deck painting san diego"</td><td class="mono">390/mo</td><td style="font-size:12px;">ColorWorld (service page)</td><td style="font-weight:700;">#6</td></tr>
       </tbody>
@@ -510,7 +510,7 @@
   <div class="card"><div class="stitle">Head-to-Head <span class="ds">4 key metrics</span></div>
     <table class="tbl"><thead><tr><th>Metric</th><th>You</th><th>CertaPro</th><th>AllPro</th></tr></thead><tbody>
       <tr><td>Reviews</td><td style="background:rgba(45,212,160,.05);">52</td><td style="color:var(--pass);font-weight:700;">312</td><td>89</td></tr>
-      <tr><td>Avg Position</td><td style="background:rgba(45,212,160,.05);">#15</td><td style="color:var(--pass);font-weight:700;">#4</td><td>#8</td></tr>
+      <tr><td>Avg Position</td><td style="background:rgba(45,212,160,.05);">#20</td><td style="color:var(--pass);font-weight:700;">#4</td><td>#8</td></tr>
       <tr><td>Local 3-Pack</td><td style="background:rgba(45,212,160,.05);color:var(--critical);">&#10007;</td><td style="color:var(--pass);font-weight:700;">&#10003;#1</td><td>&#10003;#2</td></tr>
       <tr><td>Site Health</td><td style="background:rgba(45,212,160,.05);color:var(--pass);font-weight:700;">85</td><td>78</td><td>72</td></tr>
     </tbody></table>
@@ -529,7 +529,7 @@
       <span class="stitle" style="margin:0;">Backlink Gap <span class="ds">DataForSEO &middot; domains linking to them but not you</span></span>
     </div>
     <div style="display:flex;gap:20px;margin-bottom:14px;">
-      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);">124</div><div style="font-size:10px;color:var(--dim);">Your backlinks</div></div>
+      <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);">124</div><div style="font-size:10px;color:var(--dim);">Your domains</div></div>
       <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--red);">412</div><div style="font-size:10px;color:var(--dim);">CertaPro</div></div>
       <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);">287</div><div style="font-size:10px;color:var(--dim);">AllPro</div></div>
       <div style="text-align:center;"><div style="font-size:24px;font-weight:800;font-family:var(--mono);color:var(--dim);">98</div><div style="font-size:10px;color:var(--dim);">ColorWorld</div></div>
@@ -576,7 +576,7 @@
   <div class="card"><div class="stitle">Scan History</div>
     <div style="display:flex;gap:14px;padding:14px 0;">
       <div style="min-width:60px;"><div style="font-size:12px;font-weight:700;color:var(--accent);">Jun 12</div></div>
-      <div style="flex:1;"><div style="font-size:11px;font-family:var(--mono);color:var(--text-dim);margin-bottom:4px;"><strong style="color:var(--accent);">85</strong> health &middot; <strong>#15</strong> avg &middot; <strong style="color:var(--warning);">2</strong> AI &middot; <span style="color:var(--critical);">&#10007; 3-pack</span> &middot; 52 rev</div><div style="font-size:12px;color:var(--text-dim);">First scan. 35 issues. 7 competitors detected.</div></div>
+      <div style="flex:1;"><div style="font-size:11px;font-family:var(--mono);color:var(--text-dim);margin-bottom:4px;"><strong style="color:var(--accent);">85</strong> health &middot; <strong>#20</strong> avg &middot; <strong style="color:var(--warning);">2</strong> AI &middot; <span style="color:var(--critical);">&#10007; 3-pack</span> &middot; 52 rev</div><div style="font-size:12px;color:var(--text-dim);">First scan. 35 issues. 7 competitors detected.</div></div>
       <span class="baseline">BASELINE</span>
     </div>
     <div style="font-size:12px;color:var(--text-light);text-align:center;padding:14px;border-top:1px solid var(--border);">More history after subsequent scans.</div>
